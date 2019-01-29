@@ -75,7 +75,7 @@ public class DataReader extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         System.out.println("Reading data from file");
         
-        String filePath = ".\\src\\resources\\Planets.csv";
+        String filePath = ".\\src\\resources\\hyg.csv";
         
         File file = new File(filePath);
         System.out.println(filePath);
@@ -87,7 +87,8 @@ public class DataReader extends javax.swing.JFrame {
             String lineFromFile;
             while ((lineFromFile = reader.readLine()) != null)
             {
-                jTextArea1.setText(jTextArea1.getText() + "\n" + lineFromFile);
+                //jTextArea1.setText(jTextArea1.getText() + "\n" + lineFromFile);
+                System.out.println(lineFromFile);
             }
         }
         catch (FileNotFoundException e)

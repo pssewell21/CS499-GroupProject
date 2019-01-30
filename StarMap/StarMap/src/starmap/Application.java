@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
  */
 public class Application extends javax.swing.JFrame {
     
-    private String[] starMapData;
+    private String[][] starMapData;
 
     /**
      * Creates new form Application
@@ -148,32 +148,61 @@ public class Application extends javax.swing.JFrame {
         System.out.println(filePath);
         
         try
-        {            
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            
-            int lineCount = 0;
+        {
             String lineFromFile;
+            
+            BufferedReader reader = new BufferedReader(new FileReader(file));            
+            int rowCount = 0;
+            
             while ((lineFromFile = reader.readLine()) != null)
             {
-                System.out.println("Line: " + lineFromFile);
-                //starMapData[i] = lineFromFile;
-                lineCount++;
+                rowCount++;
+                //System.out.println("Line: " + lineFromFile);
             }
             
-            starMapData = new String[lineCount];
+            System.out.println(rowCount + " rows found");
+            
+            reader = new BufferedReader(new FileReader(file));
+            int columnCount = 0;
+            
+            if ((lineFromFile = reader.readLine()) != null)
+            {
+                int commas = 0;
+                        
+                for(int i = 0; i < lineFromFile.length(); i++) 
+                {
+                    if (lineFromFile.charAt(i) == ',') 
+                    {
+                        commas++;
+                    }
+                }
+                
+                columnCount = commas + 1;
+                System.out.println(columnCount + " columns found");
+            }
+            
+            starMapData = new String[rowCount][columnCount];
             
             reader = new BufferedReader(new FileReader(file));
             int i = 0;
             
             while ((lineFromFile = reader.readLine()) != null)
             {
-                starMapData[i] = lineFromFile;
+                String[] lineItems = lineFromFile.split(",");
+                starMapData[i] = lineItems;
                 i++;
             }
             
             for (int j = 0; j < i; j++)
             {
-                System.out.println(starMapData[j]);
+                String output = "";
+                
+                for (int k = 0; k < columnCount; k++)
+                {
+                    output += starMapData[j][k] + ",";
+                }
+                
+                System.out.println(output);
             }
         }
         catch (FileNotFoundException e)

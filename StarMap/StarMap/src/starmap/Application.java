@@ -5,17 +5,30 @@
  */
 package starmap;
 
+import java.awt.Cursor;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  *
  * @author pssew
  */
 public class Application extends javax.swing.JFrame {
+    
+    private String[] starMapData;
 
     /**
      * Creates new form Application
      */
     public Application() {
         initComponents();
+        
+        load();
     }
 
     /**
@@ -77,6 +90,104 @@ public class Application extends javax.swing.JFrame {
                 new Application().setVisible(true);
             }
         });
+    }
+    
+    private void load()
+    {
+//        Runnable r = new Runnable() 
+//        {
+//            public void run() 
+//            {
+//                runTask();
+//            }
+//        };
+        
+        Runnable r = new Runnable() 
+        {
+            public void run() 
+            {
+                readData();
+            }
+        };
+        
+        ExecutorService executor = Executors.newCachedThreadPool();
+        executor.submit(r);
+    }
+    
+//    private void runTask()
+//    {
+//        try 
+//        {
+//            System.out.println("Task Started...");
+//            
+//            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+//            
+//            Thread.sleep(5000);
+//            
+//            System.out.println("Task completed");
+//        } 
+//        catch (InterruptedException ex) 
+//        {
+//            System.out.println("Task was interrupted\n" + ex.toString());
+//        }
+//        finally
+//        {
+//            this.setCursor(Cursor.getDefaultCursor());
+//        }
+//    }
+    
+    private void readData()
+    {
+        System.out.println("Reading data from file");
+        
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        
+        String filePath = ".\\src\\resources\\hyg.csv";
+        
+        File file = new File(filePath);
+        System.out.println(filePath);
+        
+        try
+        {            
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            
+            int lineCount = 0;
+            String lineFromFile;
+            while ((lineFromFile = reader.readLine()) != null)
+            {
+                System.out.println("Line: " + lineFromFile);
+                //starMapData[i] = lineFromFile;
+                lineCount++;
+            }
+            
+            starMapData = new String[lineCount];
+            
+            reader = new BufferedReader(new FileReader(file));
+            int i = 0;
+            
+            while ((lineFromFile = reader.readLine()) != null)
+            {
+                starMapData[i] = lineFromFile;
+                i++;
+            }
+            
+            for (int j = 0; j < i; j++)
+            {
+                System.out.println(starMapData[j]);
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            System.out.println("File not found at: " + filePath + "\n" + e.toString());
+        }
+        catch (IOException e)
+        {
+            System.out.println(e.toString());
+        }
+        finally
+        {
+            this.setCursor(Cursor.getDefaultCursor());
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

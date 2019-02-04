@@ -40,22 +40,50 @@ public class Application extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 550));
+
+        jButton1.setText("Print Star Data");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(687, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 550, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(516, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        for (int j = 0; j < starMapData.length; j++)
+        {
+            String output = "";
+           
+            for (int k = 0; k < starMapData[0].length; k++)
+            {
+                output += starMapData[j][k] + ",";
+            }
+            
+            System.out.println(output);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -93,15 +121,7 @@ public class Application extends javax.swing.JFrame {
     }
     
     private void load()
-    {
-//        Runnable r = new Runnable() 
-//        {
-//            public void run() 
-//            {
-//                runTask();
-//            }
-//        };
-        
+    {        
         Runnable r = new Runnable() 
         {
             public void run() 
@@ -112,29 +132,9 @@ public class Application extends javax.swing.JFrame {
         
         ExecutorService executor = Executors.newCachedThreadPool();
         executor.submit(r);
+        
+        System.out.println("Current Greenwich Sidereal Time: " + Calculation.getLocalSiderealTime(0, 0, 0));
     }
-    
-//    private void runTask()
-//    {
-//        try 
-//        {
-//            System.out.println("Task Started...");
-//            
-//            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//            
-//            Thread.sleep(5000);
-//            
-//            System.out.println("Task completed");
-//        } 
-//        catch (InterruptedException ex) 
-//        {
-//            System.out.println("Task was interrupted\n" + ex.toString());
-//        }
-//        finally
-//        {
-//            this.setCursor(Cursor.getDefaultCursor());
-//        }
-//    }
     
     private void readData()
     {
@@ -154,10 +154,9 @@ public class Application extends javax.swing.JFrame {
             BufferedReader reader = new BufferedReader(new FileReader(file));            
             int rowCount = 0;
             
-            while ((lineFromFile = reader.readLine()) != null)
+            while ((reader.readLine()) != null)
             {
                 rowCount++;
-                //System.out.println("Line: " + lineFromFile);
             }
             
             System.out.println(rowCount + " rows found");
@@ -192,18 +191,6 @@ public class Application extends javax.swing.JFrame {
                 starMapData[i] = lineItems;
                 i++;
             }
-            
-            for (int j = 0; j < i; j++)
-            {
-                String output = "";
-                
-                for (int k = 0; k < columnCount; k++)
-                {
-                    output += starMapData[j][k] + ",";
-                }
-                
-                System.out.println(output);
-            }
         }
         catch (FileNotFoundException e)
         {
@@ -220,5 +207,6 @@ public class Application extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }

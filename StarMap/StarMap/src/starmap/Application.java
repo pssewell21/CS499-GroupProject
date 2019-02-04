@@ -13,6 +13,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -133,7 +135,14 @@ public class Application extends javax.swing.JFrame {
         ExecutorService executor = Executors.newCachedThreadPool();
         executor.submit(r);
         
-        System.out.println("Current Greenwich Sidereal Time: " + Calculation.getLocalSiderealTime(0, 0, 0));
+        try 
+        {
+            System.out.println("Current Greenwich Sidereal Time: " + Calculation.getLocalSiderealTime(0, 0, 0, "West"));
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void readData()

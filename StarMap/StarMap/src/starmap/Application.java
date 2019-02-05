@@ -41,8 +41,10 @@ public class Application extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
         latTextField = new javax.swing.JTextField();
         latitudeDegreesLabel = new javax.swing.JLabel();
         longitudeLabel = new javax.swing.JLabel();
@@ -65,15 +67,28 @@ public class Application extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("StarMapGenerator");
 
+        jButton1.setText("Read Data File");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 913, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(392, 392, 392)
+                .addComponent(jButton1)
+                .addContainerGap(448, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(226, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(218, 218, 218))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -283,23 +298,14 @@ public class Application extends javax.swing.JFrame {
     }
     
     private void load()
-    {       
-
+    {        
         Runnable r = new Runnable() 
         {
             public void run() 
             {
-                runTask();
+                readData();
             }
         };
-        
-//        Runnable r = new Runnable() 
-//        {
-//            public void run() 
-//            {
-//                readData();
-//            }
-//        };
         
         ExecutorService executor = Executors.newCachedThreadPool();
         executor.submit(r);
@@ -311,28 +317,6 @@ public class Application extends javax.swing.JFrame {
         catch (Exception ex) 
         {
             Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    private void runTask()
-    {
-        try 
-        {
-            System.out.println("Task Started...");
-            
-            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            
-            Thread.sleep(5000);
-            
-            System.out.println("Task completed");
-        } 
-        catch (InterruptedException ex) 
-        {
-            System.out.println("Task was interrupted\n" + ex.toString());
-        }
-        finally
-        {
-            this.setCursor(Cursor.getDefaultCursor());
         }
     }
     
@@ -413,6 +397,7 @@ public class Application extends javax.swing.JFrame {
     private javax.swing.JTextField dateTextField;
     private javax.swing.JButton generateButton;
     private javax.swing.JTextField hrsTextField;
+    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;

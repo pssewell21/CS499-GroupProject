@@ -13,6 +13,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,7 +41,6 @@ public class Application extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         latTextField = new javax.swing.JTextField();
@@ -220,7 +221,6 @@ public class Application extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     private void latTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_latTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_latTextFieldActionPerformed
@@ -233,6 +233,19 @@ public class Application extends javax.swing.JFrame {
         // TODO add your handling code here:
         //jPanel1.setText("You clicked Generate Image button!");
     }//GEN-LAST:event_generateButtonActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        for (int j = 0; j < starMapData.length; j++)
+        {
+            String output = "";
+           
+            for (int k = 0; k < starMapData[0].length; k++)
+            {
+                output += starMapData[j][k] + ",";
+            }
+            
+            System.out.println(output);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,7 +283,8 @@ public class Application extends javax.swing.JFrame {
     }
     
     private void load()
-    {
+    {       
+
         Runnable r = new Runnable() 
         {
             public void run() 
@@ -289,6 +303,15 @@ public class Application extends javax.swing.JFrame {
         
         ExecutorService executor = Executors.newCachedThreadPool();
         executor.submit(r);
+        
+        try 
+        {
+            System.out.println("Current Greenwich Sidereal Time: " + Calculation.getLocalSiderealTime(0, 0, 0, "West"));
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void runTask()
@@ -331,10 +354,9 @@ public class Application extends javax.swing.JFrame {
             BufferedReader reader = new BufferedReader(new FileReader(file));            
             int rowCount = 0;
             
-            while ((lineFromFile = reader.readLine()) != null)
+            while ((reader.readLine()) != null)
             {
                 rowCount++;
-                //System.out.println("Line: " + lineFromFile);
             }
             
             System.out.println(rowCount + " rows found");
@@ -368,18 +390,6 @@ public class Application extends javax.swing.JFrame {
                 String[] lineItems = lineFromFile.split(",");
                 starMapData[i] = lineItems;
                 i++;
-            }
-            
-            for (int j = 0; j < i; j++)
-            {
-                String output = "";
-                
-                for (int k = 0; k < columnCount; k++)
-                {
-                    output += starMapData[j][k] + ",";
-                }
-                
-                System.out.println(output);
             }
         }
         catch (FileNotFoundException e)

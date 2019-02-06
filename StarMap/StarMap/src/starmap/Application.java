@@ -317,7 +317,7 @@ public class Application extends javax.swing.JFrame {
         
         try 
         {
-            System.out.println("Current Greenwich Sidereal Time: " + Calculation.getLocalSiderealTime(0, 0, 0, "West"));
+            System.out.println("Current Local Sidereal Time: " + Calculation.getLocalSiderealTime(86, 38, 47, "West"));
         } 
         catch (Exception ex) 
         {

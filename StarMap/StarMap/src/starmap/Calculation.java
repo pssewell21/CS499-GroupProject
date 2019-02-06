@@ -5,11 +5,8 @@
  */
 package starmap;
 
-import static java.lang.Math.floor;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
-import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
  *

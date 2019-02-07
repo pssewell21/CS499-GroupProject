@@ -15,6 +15,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+//import java.util.GregorianCalendar;
+
 
 /**
  *
@@ -44,8 +47,10 @@ public class Application extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textArea = new javax.swing.JTextArea();
+        readDataButton = new javax.swing.JButton();
         latDegTextField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         latitudeDegreesLabel = new javax.swing.JLabel();
         lonDegreeLabel = new javax.swing.JLabel();
         lonDegTextField = new javax.swing.JTextField();
@@ -65,15 +70,22 @@ public class Application extends javax.swing.JFrame {
         latMinTextField = new javax.swing.JTextField();
         lonMinTextField = new javax.swing.JTextField();
         lonMinLabel = new javax.swing.JLabel();
+        selectAllButton = new javax.swing.JButton();
+        enterDataButton = new javax.swing.JButton();
+        dateChooser = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("StarMapGenerator");
         setResizable(false);
 
-        jButton1.setText("Read Data File");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        textArea.setColumns(20);
+        textArea.setRows(5);
+        jScrollPane2.setViewportView(textArea);
+
+        readDataButton.setText("Read Data File");
+        readDataButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                readDataButtonActionPerformed(evt);
             }
         });
 
@@ -82,16 +94,22 @@ public class Application extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(392, 392, 392)
-                .addComponent(jButton1)
-                .addContainerGap(448, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(318, 318, 318)
+                .addComponent(readDataButton)
+                .addGap(0, 230, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(226, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(218, 218, 218))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(readDataButton))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(424, 498, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -130,18 +148,63 @@ public class Application extends javax.swing.JFrame {
         colonLabel.setText(":");
 
         starsCheckBox.setText("Stars");
+        starsCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                starsCheckBoxActionPerformed(evt);
+            }
+        });
 
         planetsCheckBox.setText("Major Planets");
+        planetsCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                planetsCheckBoxActionPerformed(evt);
+            }
+        });
 
         constellationsCheckBox.setText("Major Constellations");
+        constellationsCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                constellationsCheckBoxActionPerformed(evt);
+            }
+        });
 
         messierCheckBox.setText("Messier Objects");
+        messierCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                messierCheckBoxActionPerformed(evt);
+            }
+        });
 
         unselectCheckBox.setText("Unselect All");
+        unselectCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                unselectCheckBoxActionPerformed(evt);
+            }
+        });
 
         latitudeMinLabel.setText("Latitude (in Minutes):");
 
+        latMinTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                latMinTextFieldKeyTyped(evt);
+            }
+        });
+
         lonMinLabel.setText("Longitude (in Minutes):");
+
+        selectAllButton.setText("Select All");
+        selectAllButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectAllButtonActionPerformed(evt);
+            }
+        });
+
+        enterDataButton.setText("Enter Data");
+        enterDataButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enterDataButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -183,7 +246,10 @@ public class Application extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(dateLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dateTextField)))
+                                .addComponent(dateTextField))
+                            .addComponent(selectAllButton)
+                            .addComponent(enterDataButton)
+                            .addComponent(dateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(planetsCheckBox)
@@ -223,16 +289,20 @@ public class Application extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(lonDegreeLabel)
-                                .addComponent(lonDegTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lonDegTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(enterDataButton))
                             .addComponent(constellationsCheckBox))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(lonMinLabel)
-                                .addComponent(lonMinTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lonMinTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(selectAllButton))
                             .addComponent(messierCheckBox))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(unselectCheckBox))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(unselectCheckBox)
+                            .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(generateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -255,7 +325,7 @@ public class Application extends javax.swing.JFrame {
         // TODO add your handling code here:
         //jPanel1.setText("You clicked Generate Image button!");
     }//GEN-LAST:event_generateButtonActionPerformed
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void readDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readDataButtonActionPerformed
         for (int j = 0; j < starMapData.length; j++)
         {
             String output = "";
@@ -267,8 +337,192 @@ public class Application extends javax.swing.JFrame {
             
             System.out.println(output);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_readDataButtonActionPerformed
+    /*
+    * METHOD: starsCheckBoxActionPerformed()
+    *
+    * DESCRIPTION: this method prints a message when the stars check box has
+    *               been selected.
+    */
+    private void starsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_starsCheckBoxActionPerformed
+        // TODO add your handling code here:
+        String stars = "";
+        if(starsCheckBox.isSelected())
+        {
+            stars = stars + " " + starsCheckBox.getText() + '\n';
+            textArea.setText(stars);
+        }
+        else
+            textArea.setText("");
+    }//GEN-LAST:event_starsCheckBoxActionPerformed
+    /*
+    * METHOD: planetsCheckBoxActionPerformed
+    *
+    * DESCRIPTION: this method prints a message when the planets check box has
+    *               been selected.
+    */
+    private void planetsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planetsCheckBoxActionPerformed
+        // TODO add your handling code here:
+        String planets = "";
+        if(planetsCheckBox.isSelected())
+        {
+            planets = planets + " " + planetsCheckBox.getText() + '\n';
+            textArea.setText(planets);
+        }
+        else
+            textArea.setText("");
+    }//GEN-LAST:event_planetsCheckBoxActionPerformed
+    /*
+    * METHOD: constellationsCheckBoxActionPerformed
+    *
+    * DESCRIPTION: this method prints a message when the constellations check 
+    *               box has been selected.
+    */
+    private void constellationsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_constellationsCheckBoxActionPerformed
+        // TODO add your handling code here:
+        String constellations = "";
+        if(constellationsCheckBox.isSelected())
+        {
+            constellations = constellations + " " + constellationsCheckBox.getText() + '\n';
+            textArea.setText(constellations);
+        }
+        else
+            textArea.setText("");
+    }//GEN-LAST:event_constellationsCheckBoxActionPerformed
+    /*
+    * METHOD: messierCheckBoxActionPerformed
+    *
+    * DESCRIPTION: this method prints a message when the Messier check box has
+    *               been selected.
+    */
+    private void messierCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messierCheckBoxActionPerformed
+        // TODO add your handling code here:
+        String messier = "";
+        if(messierCheckBox.isSelected())
+        {
+            messier = messier + " " + messierCheckBox.getText() + '\n';
+            textArea.setText(messier);
+        }
+        else
+            textArea.setText("");
+    }//GEN-LAST:event_messierCheckBoxActionPerformed
+    /*
+    * METHOD: unselectCheckBoxActionPerformed
+    *
+    * DESCRIPTION: this method prints a message when the unselect check box has
+    *               been selected.
+    */
+    private void unselectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unselectCheckBoxActionPerformed
+        // TODO add your handling code here:
+        String unselect = "";
+        if(unselectCheckBox.isSelected())
+        {
+            unselect = unselect + " " + unselectCheckBox.getText() + '\n';
+            textArea.setText(unselect);
+        }
+        else
+            textArea.setText("");
+    }//GEN-LAST:event_unselectCheckBoxActionPerformed
+    /*
+    * METHOD: unselectCheckBoxActionPerformed
+    *
+    * DESCRIPTION: this method prints a message when the unselect check box has
+    *               been selected.
+    */
+    private void selectAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectAllButtonActionPerformed
+        // TODO add your handling code here:
+        String s1 = "";
+        
+        if(starsCheckBox.isSelected())
+        {
+            //starsCheckBox.setSelected(true);
+            s1 = s1 + " " + starsCheckBox.getText() + '\n';  
+        }
+//        else
+//        {
+//            starsCheckBox.setSelected(false);
+//            s1 = s1 + "not selected";
+//        }
+        
+        if(planetsCheckBox.isSelected())
+        {
+            planetsCheckBox.setSelected(true);
+            s1 = s1 + " " + planetsCheckBox.getText() + '\n';
+        }
+        else
+            planetsCheckBox.setSelected(false);
+        
+        if(constellationsCheckBox.isSelected())
+        {
+            s1 = s1 + " " + constellationsCheckBox.getText() + '\n';
+        }
+        
+        if(messierCheckBox.isSelected())
+        {
+            s1 = s1 + " " + messierCheckBox.getText() + '\n';
+        }
+        
+        if(unselectCheckBox.isSelected())
+        {
+            s1 = s1 + " " + unselectCheckBox.getText() + '\n';
+        }
+        
+        textArea.setText(s1);
+    }//GEN-LAST:event_selectAllButtonActionPerformed
 
+    private void enterDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterDataButtonActionPerformed
+        // Get latitiude in degrees and print to textArea.
+        //String infoMsg = "Please enter a Latitude value between " + "[-90, +90]";
+        float latDegree = Float.parseFloat(latDegTextField.getText());
+        textArea.append(latDegree + " degrees\n");
+        
+
+        double latMinute = Double.parseDouble(latMinTextField.getText());
+        textArea.append(latMinute + " minutes\n");
+
+
+//        
+//        float lonDegree = Float.parseFloat(lonDegTextField.getText());
+//        textArea.append(lonDegree + " degrees\n");
+//        
+//        double lonMinute = Double.parseDouble(lonMinTextField.getText());
+//        textArea.append(lonMinute + " minutes\n");
+        
+//        if((latDegree < -90) || (latDegree > 90))
+//            JOptionPane.showMessageDialog(null, infoMsg);
+//        else
+//            textArea.append(latDegree + " degrees\n");
+        
+        //Get latitude in minutes and print to textArea.
+        //double latMinute = Double.parseDouble(latMinTextField.getText());
+        //textArea.append(latMinute + " minutes\n");
+        
+        //Get longitude in degrees and print to textArea.
+        //String infoMsg2 = "Please enter a Longitude value between " + "[-180, +180]";
+        //float lonDegree = Float.parseFloat(lonDegTextField.getText());
+        //textArea.append(lonDegree + " degrees\n");
+        
+//        if((lonDegree < -180) || (lonDegree > 180))
+//            JOptionPane.showMessageDialog(null, infoMsg2);
+//        else
+//            textArea.append(lonDegree + " degrees\n");
+        
+        //Get longitude in minutes and print to textArea
+        //double lonMinute = Double.parseDouble(lonMinTextField.getText());
+        //textArea.append(lonMinute + " minutes\n");
+        
+        
+//        dateChooser.getDate();
+//        textArea.setText(dateChooser);
+        
+    }//GEN-LAST:event_enterDataButtonActionPerformed
+
+    private void latMinTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_latMinTextFieldKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_latMinTextFieldKeyTyped
+
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -401,12 +655,15 @@ public class Application extends javax.swing.JFrame {
     private javax.swing.JLabel clockLabel;
     private javax.swing.JLabel colonLabel;
     private javax.swing.JCheckBox constellationsCheckBox;
+    private com.toedter.calendar.JDateChooser dateChooser;
     private javax.swing.JLabel dateLabel;
     private javax.swing.JTextField dateTextField;
+    private javax.swing.JButton enterDataButton;
     private javax.swing.JButton generateButton;
     private javax.swing.JTextField hrsTextField;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField latDegTextField;
     private javax.swing.JTextField latMinTextField;
     private javax.swing.JLabel latitudeDegreesLabel;
@@ -418,7 +675,10 @@ public class Application extends javax.swing.JFrame {
     private javax.swing.JCheckBox messierCheckBox;
     private javax.swing.JTextField minTextField;
     private javax.swing.JCheckBox planetsCheckBox;
+    private javax.swing.JButton readDataButton;
+    private javax.swing.JButton selectAllButton;
     private javax.swing.JCheckBox starsCheckBox;
+    private javax.swing.JTextArea textArea;
     private javax.swing.JCheckBox unselectCheckBox;
     // End of variables declaration//GEN-END:variables
 }

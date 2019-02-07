@@ -71,8 +71,11 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="dateTextField" max="32767" attributes="0"/>
                           </Group>
+                          <Component id="selectAllButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="enterDataButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="dateChooser" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="35" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="planetsCheckBox" min="-2" max="-2" attributes="0"/>
                           <Component id="constellationsCheckBox" min="-2" max="-2" attributes="0"/>
@@ -116,6 +119,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lonDegreeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lonDegTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="enterDataButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="constellationsCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -124,11 +128,15 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lonMinLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lonMinTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="selectAllButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="messierCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="unselectCheckBox" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="unselectCheckBox" min="-2" max="-2" attributes="0"/>
+                          <Component id="dateChooser" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
@@ -153,29 +161,53 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="392" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="448" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="292" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="318" max="-2" attributes="0"/>
+                      <Component id="readDataButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="230" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="226" max="32767" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="218" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                              <Component id="readDataButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jScrollPane2" min="-2" pref="223" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="424" pref="498" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTextArea" name="textArea">
+                  <Properties>
+                    <Property name="columns" type="int" value="20"/>
+                    <Property name="rows" type="int" value="5"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JButton" name="readDataButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Read Data File"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="readDataButtonActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -244,26 +276,41 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Stars"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="starsCheckBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="planetsCheckBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="Major Planets"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="planetsCheckBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="constellationsCheckBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="Major Constellations"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="constellationsCheckBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="messierCheckBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="Messier Objects"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="messierCheckBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="unselectCheckBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="Unselect All"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="unselectCheckBoxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="latitudeMinLabel">
       <Properties>
@@ -271,6 +318,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="latMinTextField">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="latMinTextFieldKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="lonMinTextField">
     </Component>
@@ -278,6 +328,24 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Longitude (in Minutes):"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="selectAllButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Select All"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectAllButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="enterDataButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Enter Data"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="enterDataButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="com.toedter.calendar.JDateChooser" name="dateChooser">
     </Component>
   </SubComponents>
 </Form>

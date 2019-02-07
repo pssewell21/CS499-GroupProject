@@ -73,6 +73,7 @@ public class Application extends javax.swing.JFrame {
         selectAllButton = new javax.swing.JButton();
         enterDataButton = new javax.swing.JButton();
         dateChooser = new com.toedter.calendar.JDateChooser();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("StarMapGenerator");
@@ -203,6 +204,10 @@ public class Application extends javax.swing.JFrame {
         enterDataButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 enterDataButtonActionPerformed(evt);
+        jButton1.setText("Read Data File");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -299,6 +304,8 @@ public class Application extends javax.swing.JFrame {
                                 .addComponent(lonMinTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(selectAllButton))
                             .addComponent(messierCheckBox))
+                            .addComponent(jButton1)))
+
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(unselectCheckBox)
@@ -573,7 +580,7 @@ public class Application extends javax.swing.JFrame {
         
         try 
         {
-            System.out.println("Current Greenwich Sidereal Time: " + Calculation.getLocalSiderealTime(0, 0, 0, "West"));
+            System.out.println("Current Local Sidereal Time: " + Calculation.getLocalSiderealTime(86, 38, 47, "West"));
         } 
         catch (Exception ex) 
         {
@@ -661,6 +668,7 @@ public class Application extends javax.swing.JFrame {
     private javax.swing.JButton enterDataButton;
     private javax.swing.JButton generateButton;
     private javax.swing.JTextField hrsTextField;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

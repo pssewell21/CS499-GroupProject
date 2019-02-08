@@ -143,16 +143,28 @@ public class Calculation
         }
     }
     
-//    /**
-//     *
-//     * @param rightAscention
-//     * @param declination
-//     * @param latitude
-//     * @param localSiderealTime
-//     * @return
-//     */
-//    public static Pair<double, double> getAzimuthAndElevation(double rightAscention, double declination, double latitude, LocalTime localSiderealTime)
+    /**
+     *
+     * @param rightAscention
+     * @param declination
+     * @param latitude
+     * @param localSiderealTime
+     * @return
+     */
+//    public static double getAzimuthAndElevation(double rightAscention, double declination, double latitude, LocalTime localSiderealTime)
 //    {
-//        return new Pair(0.0, 0.0);
+//        if (rightAscention < 0)
+//        {
+//            rightAscention += 360;
+//        }
+//        
+//        double rightAscentionDecimalHours = rightAscention / 360.0;                
+//        int rightAscentionHours = (int)Math.floor(rightAscentionDecimalHours);
+//        int rightAscentionMinutes = (int)Math.round(60 * (rightAscentionDecimalHours - rightAscentionHours));
+//        LocalTime rightAscentionTime = LocalTime.of(rightAscentionHours, rightAscentionMinutes);
+//        
+//        LocalTime hourAngle = localSiderealTime.minus(rightAscentionTime);
+//        
+//        return 0.0;
 //    }
 }

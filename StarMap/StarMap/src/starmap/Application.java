@@ -11,12 +11,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-//import java.util.GregorianCalendar;
 
 
 /**
@@ -330,16 +329,25 @@ public class Application extends javax.swing.JFrame {
         //jPanel1.setText("You clicked Generate Image button!");
     }//GEN-LAST:event_generateButtonActionPerformed
     private void readDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readDataButtonActionPerformed
-        for (int j = 0; j < starMapData.length; j++)
+        try
         {
-            String output = "";
-           
-            for (int k = 0; k < starMapData[0].length; k++)
-            {
-                output += starMapData[j][k] + ",";
-            }
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             
-            System.out.println(output);
+            for (int j = 0; j < starMapData.length; j++)
+            {
+                String output = "";
+
+                for (int k = 0; k < starMapData[0].length; k++)
+                {
+                    output += starMapData[j][k] + ",";
+                }
+
+                System.out.println(output);
+            }            
+        }        
+        finally
+        {
+            this.setCursor(Cursor.getDefaultCursor());
         }
     }//GEN-LAST:event_readDataButtonActionPerformed
     /*
@@ -577,7 +585,17 @@ public class Application extends javax.swing.JFrame {
         
         try 
         {
-            System.out.println("Current Local Sidereal Time: " + Calculation.getLocalSiderealTime(86, 38, 47, "West"));
+            // Coordinates for UAH are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W
+            
+            LocalTime localSiderealTime = Calculation.getLocalSiderealTime(86, 38, 47, "West");
+            System.out.println("Current Local Sidereal Time: " + localSiderealTime);
+            
+            double polarisRightAscention = 2.5303027777;
+            double polarisDeclination = 89.26411111;
+            double uahLatitude = 34.718913999;
+            
+            System.out.println("Current Azimuth/Elevation of Polaris from UAH: ");// + Calculation.getAzimuthAndElevation(RIGHT_ALIGNMENT, HEIGHT, ALLBITS, localSiderealTime));
+            Calculation.getAzimuthAndElevation(polarisRightAscention, polarisDeclination, uahLatitude, localSiderealTime);
         } 
         catch (Exception ex) 
         {
@@ -590,10 +608,6 @@ public class Application extends javax.swing.JFrame {
         System.out.println("Reading data from file");
         
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        
-        System.out.println("Working directory: ");
-        
-        System.out.println(System.getProperty("user.dir"));
         
         String filePath = "./src/resources/hyg.csv";
         

@@ -192,6 +192,9 @@ public class Application extends javax.swing.JFrame {
             }
         });
 
+        jDateChooser1.setMaxSelectableDate(new java.util.Date(4102466399000L));
+        jDateChooser1.setMinSelectableDate(new java.util.Date(-2209053600000L));
+
         minTextField.setText("min");
 
         colonLabel.setText(":");

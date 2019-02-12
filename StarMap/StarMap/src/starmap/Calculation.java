@@ -30,8 +30,8 @@ public class Calculation
         
         // Use current dateTime now
         // TODO: Update this to accept parametes from the UI
-        //LocalDateTime currentDate = LocalDateTime.now();
-        LocalDateTime currentDate = LocalDateTime.of(2019, Month.FEBRUARY, 9, 17, 5, 0);
+        LocalDateTime currentDate = LocalDateTime.now();
+        //LocalDateTime currentDate = LocalDateTime.of(2019, Month.FEBRUARY, 9, 17, 5, 0);
         
         // Get the number of days we need to add time for
         int currentDayOfYear = currentDate.getDayOfYear();

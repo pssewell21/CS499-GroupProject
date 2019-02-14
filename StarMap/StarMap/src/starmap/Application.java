@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -820,8 +821,9 @@ public class Application extends javax.swing.JFrame {
             double polarisDeclination = 89.26411111;
             double uahLatitude = 34.718913999;
             
-            System.out.println("Current Azimuth/Elevation of Polaris from UAH: ");// + Calculation.getAzimuthAndElevation(RIGHT_ALIGNMENT, HEIGHT, ALLBITS, localSiderealTime));
-            Calculation.getAzimuthAndElevation(polarisRightAscention, polarisDeclination, uahLatitude, localSiderealTime);
+            Map<String, Double> map = Calculation.getAzimuthAndElevation(polarisRightAscention, polarisDeclination, uahLatitude, localSiderealTime);
+            
+            System.out.println("Current Azimuth/Elevation of Polaris from UAH: " + map.get("Azimuth") + "°, " + map.get("Elevation") + "°");
         } 
         catch (Exception ex) 
         {

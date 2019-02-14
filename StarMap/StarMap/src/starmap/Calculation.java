@@ -9,7 +9,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
-import javafx.util.Pair;
 
 // Coordinates are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W
 
@@ -23,8 +22,9 @@ public class Calculation
     public static int JGREG = 15 + 31 * (10 + 12 * 1582);
   
     private static LocalTime getGreenwichSiderealTime()
-    {
-        LocalDateTime currentDateTime = LocalDateTime.now();
+    {        
+        //LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = LocalDateTime.of(2019, Month.FEBRUARY, 14, 7, 00, 0);
         
         // Get Julian date
         
@@ -37,10 +37,13 @@ public class Calculation
         int minute = currentDateTime.getMinute();
         int second = currentDateTime.getSecond();
         
-        double decimalHour = hour + (minute / 60) + (second / (60 * 60));
+        // Add .0 to force double prescision
+        double decimalHour = (hour + 12) + (minute / 60.0) + (second / (60 * 60));
+        double decimalDay = day + ((decimalHour - 12) / 24);
         
         int julianYear = year;
         int julianMonth = month;
+        int julianDay = day - 1;
         
         if (year < 0)
         {
@@ -59,7 +62,7 @@ public class Calculation
         
         double julianDate = Math.floor(365.25 * julianYear) 
                 + Math.floor(30.6001 * julianMonth)
-                + day
+                + julianDay
                 + 1720995.0;
         
         if (day + 31 * (month + 12 * year) >= JGREG)
@@ -75,103 +78,27 @@ public class Calculation
         System.out.println("Julian date = " + julianDate);
         
         // Convert
-        double con = (julianDate - 2415020) / 36525;
-        double stuff = (6.6460656 + (2400.051 * con) + (0.00002581 * con * con));
-        double thing = ((stuff / 24) - Math.floor(stuff / 24)) * 24;
+        double t = (julianDate - 2415020) / 36525.0;
+        double ss = (6.6460656 + (2400.051 * t) + (0.00002581 * t * t));
+        double st = ((ss / 24.0) - Math.floor(ss / 24)) * 24;
+        double sa = st + (decimalDay - Math.floor(decimalDay)) * 24 * 1.002737908;               
+                
+        if (sa < 0)
+        {
+            sa += 24;
+        }
+        if (sa > 24)
+        {
+            sa -= 24;
+        }
         
-        int gstHour = (int)Math.floor(thing);
-        int gstMinute = (int)Math.floor((thing - Math.floor(thing)) * 60);
-        int gstSecond = (int)((thing - Math.floor(thing)) * 60 - gstMinute) * 60;
+        int gstHour = (int)Math.floor(sa);
+        int gstMinute = (int)Math.floor((sa - Math.floor(sa)) * 60.0);
+        int gstSecond = (int)((sa - Math.floor(sa)) * 60.0 - gstMinute) * 60;
         
         LocalTime gstTime = LocalTime.of(gstHour, gstMinute, gstSecond);
         
-        System.out.println("GST Time = " + gstTime);
-        
-        
-        
-//        int dayMultiplier = 236;
-//        int hourMultiplier = 10;
-//        
-//        //LocalDateTime baselineDate = LocalDateTime.of(2004, Month.JANUARY, 1, 0, 0, 0);
-//        // GST at midnight on 1 JAN 2004
-//        LocalTime baselineGstTime = LocalTime.of(6, 39, 58);        
-//        
-//        // Use current dateTime now
-//        // TODO: Update this to accept parametes from the UI
-//        LocalDateTime currentDate = LocalDateTime.now();
-//        //LocalDateTime currentDate = LocalDateTime.of(2019, Month.FEBRUARY, 9, 17, 5, 0);
-//        
-//        // Get the number of days we need to add time for
-//        int currentDayOfYear = currentDate.getDayOfYear();
-//        int dayDifference = currentDayOfYear - 1;
-////        Duration dateDifference = Duration.between(baselineDate, currentDate);
-////        int dayDifference = (int) dateDifference.toDays();
-//                
-//        // Get the number of hours we need to add time for
-//        int currentHourOfDay = currentDate.getHour();
-//        
-//        System.out.println("dayDifference = " + dayDifference);
-//        System.out.println("dayDifference * dayMultiplier = " + dayDifference * dayMultiplier);
-//        System.out.println("currentHourOfDay = " + currentHourOfDay);
-//        System.out.println("currentHourOfDay * hourMultiplier = " + currentHourOfDay * hourMultiplier);
-//        
-//        // Add the multiplied seconds values to the baseline time to get the GST
-//        LocalTime greenwichSiderealTime = baselineGstTime.minusSeconds(dayDifference * dayMultiplier).plusSeconds(currentHourOfDay * hourMultiplier);
-//        
-//        System.out.println("currentTime = " + currentDate);
-//        System.out.println("greenwichSiderealTime = " + greenwichSiderealTime);
-//        //
-//        return greenwichSiderealTime;
-        
-        
-        
-        
-        
-        
-        
-        // Probably garbage, but keeping for now in case any of it is useful after discussion with Dr. Coleman - PS
-//        double dayMultiplier = 236.0;
-//        int hourMultiplier = 10;
-//        
-//        LocalDateTime baselineDate = LocalDateTime.of(2004, Month.JANUARY, 1, 0, 0, 0);
-//        // GST at midnight on 1 JAN 2004
-//        LocalTime baselineGstTime = LocalTime.of(6, 39, 58);
-//        
-//        // Use current dateTime now
-//        // TODO: Update this to accept parametes from the UI
-//        //LocalDateTime currentDate = LocalDateTime.now();
-//        LocalDateTime currentDate = LocalDateTime.of(2019, Month.FEBRUARY, 9, 17, 5, 0);
-//        
-//        // Get the number of days we need to add time for
-//        //int currentDayOfYear = currentDate.getDayOfYear();
-//        //int dayDifference = currentDayOfYear - 1;
-//        Duration dateDifference = Duration.between(baselineDate, currentDate);
-//        int dayDifference = (int) dateDifference.toDays();
-//                
-//        // Get the number of hours we need to add time for        
-//        //int hourDifference = currentDate.getHour();
-//        LocalDateTime currentDateNoTime = LocalDateTime.of(2019, Month.FEBRUARY, 9, 0, 0, 0);
-//        Duration dateDifferenceNoTime = Duration.between(baselineDate, currentDateNoTime);
-//        int hourDifference = (int) dateDifferenceNoTime.toHours();
-//        
-//        LocalTime timeToAdd = currentDate.toLocalTime().minusSeconds(hourDifference * hourMultiplier);
-//        int seconds = (timeToAdd.getHour() * 60 * 60) + (timeToAdd.getMinute() * 60) + timeToAdd.getSecond();
-//        //Duration durationToAdd = Duration.ofSeconds(seconds);
-//        
-//        System.out.println("dayDifference = " + dayDifference);
-//        System.out.println("dayDifference * dayMultiplier = " + dayDifference * dayMultiplier);
-//        System.out.println("hourDifference = " + hourDifference);
-//        System.out.println("hours adjustment = " + seconds);
-//        
-//        // Add the multiplied seconds values to the baseline time to get the GST
-//        LocalTime greenwichSiderealTime = baselineGstTime.minusSeconds(Math.round(dayDifference * dayMultiplier)).plusSeconds(seconds);
-//        //LocalTime greenwichSiderealTime = baselineGstTime.plusSeconds(Math.round(dayDifference * dayMultiplier)).minusSeconds(seconds);
-//        
-//        System.out.println("currentTime = " + currentDate);
-//        //System.out.println("greenwichSiderealTime = " + greenwichSiderealTime);
-//        
-//        return greenwichSiderealTime;
-        return LocalTime.NOON;
+        return gstTime;
     }
     
     private static double getDecimalCoordinate(int degrees, int minutes, int seconds, String direction) throws Exception
@@ -220,18 +147,6 @@ public class Calculation
         {
             throw new Exception("Invalid value of " + hours + " for hours passed into Calculation.getTimeFromDecimalHours");
         }
-        
-//        int hour = (int)Math.floor(hours);
-//        
-//        double remainder = hours - hour;        
-//        
-//        double minutes = remainder * 60;
-//        int minute = (int)Math.floor(minutes);
-//        
-//        remainder = minutes - minute;
-//        
-//        double seconds = remainder * 60;
-//        int second = (int)Math.floor(seconds);
 
         double seconds = hours * 60 * 60;
         

@@ -19,41 +19,109 @@ import javafx.util.Pair;
  */
 public class Calculation 
 {
+    // Gregorian Calendar adopted Oct. 15, 1582 (2299161)
+    public static int JGREG = 15 + 31 * (10 + 12 * 1582);
+  
     private static LocalTime getGreenwichSiderealTime()
     {
-        int dayMultiplier = 236;
-        int hourMultiplier = 10;
+        LocalDateTime currentDateTime = LocalDateTime.now();
         
-        //LocalDateTime baselineDate = LocalDateTime.of(2004, Month.JANUARY, 1, 0, 0, 0);
-        // GST at midnight on 1 JAN 2004
-        LocalTime baselineGstTime = LocalTime.of(6, 39, 58);        
+        // Get Julian date
         
-        // Use current dateTime now
-        // TODO: Update this to accept parametes from the UI
-        LocalDateTime currentDate = LocalDateTime.now();
-        //LocalDateTime currentDate = LocalDateTime.of(2019, Month.FEBRUARY, 9, 17, 5, 0);
+        // Reference: https://www.rgagnon.com/javadetails/java-0506.html
+        int year = currentDateTime.getYear();
+        int month = currentDateTime.getMonth().ordinal();
+        int day = currentDateTime.getDayOfYear();
         
-        // Get the number of days we need to add time for
-        int currentDayOfYear = currentDate.getDayOfYear();
-        int dayDifference = currentDayOfYear - 1;
-//        Duration dateDifference = Duration.between(baselineDate, currentDate);
-//        int dayDifference = (int) dateDifference.toDays();
-                
-        // Get the number of hours we need to add time for
-        int currentHourOfDay = currentDate.getHour();
+        int hour = currentDateTime.getHour();
+        int minute = currentDateTime.getMinute();
+        int second = currentDateTime.getSecond();
         
-        System.out.println("dayDifference = " + dayDifference);
-        System.out.println("dayDifference * dayMultiplier = " + dayDifference * dayMultiplier);
-        System.out.println("currentHourOfDay = " + currentHourOfDay);
-        System.out.println("currentHourOfDay * hourMultiplier = " + currentHourOfDay * hourMultiplier);
+        double decimalHour = hour + (minute / 60) + (second / (60 * 60));
         
-        // Add the multiplied seconds values to the baseline time to get the GST
-        LocalTime greenwichSiderealTime = baselineGstTime.minusSeconds(dayDifference * dayMultiplier).plusSeconds(currentHourOfDay * hourMultiplier);
+        int julianYear = year;
+        int julianMonth = month;
         
-        System.out.println("currentTime = " + currentDate);
-        System.out.println("greenwichSiderealTime = " + greenwichSiderealTime);
-        //
-        return greenwichSiderealTime;
+        if (year < 0)
+        {
+            julianYear++;
+        }
+        
+        if (month > 2)
+        {
+            julianMonth++;
+        }
+        else
+        {
+            julianYear--;
+            julianMonth += 13;
+        }
+        
+        double julianDate = Math.floor(365.25 * julianYear) 
+                + Math.floor(30.6001 * julianMonth)
+                + day
+                + 1720995.0;
+        
+        if (day + 31 * (month + 12 * year) >= JGREG)
+        {
+            // change over to gregorian calendar
+            int adjustmentValue = (int)(0.01 * julianYear);
+            julianDate += 2 - adjustmentValue + (0.25 * adjustmentValue);
+        }
+        
+        julianDate = Math.floor(julianDate);
+        julianDate += (decimalHour / 24);
+        
+        System.out.println("Julian date = " + julianDate);
+        
+        // Convert
+        double con = (julianDate - 2415020) / 36525;
+        double stuff = (6.6460656 + (2400.051 * con) + (0.00002581 * con * con));
+        double thing = ((stuff / 24) - Math.floor(stuff / 24)) * 24;
+        
+        int gstHour = (int)Math.floor(thing);
+        int gstMinute = (int)Math.floor((thing - Math.floor(thing)) * 60);
+        int gstSecond = (int)((thing - Math.floor(thing)) * 60 - gstMinute) * 60;
+        
+        LocalTime gstTime = LocalTime.of(gstHour, gstMinute, gstSecond);
+        
+        System.out.println("GST Time = " + gstTime);
+        
+        
+        
+//        int dayMultiplier = 236;
+//        int hourMultiplier = 10;
+//        
+//        //LocalDateTime baselineDate = LocalDateTime.of(2004, Month.JANUARY, 1, 0, 0, 0);
+//        // GST at midnight on 1 JAN 2004
+//        LocalTime baselineGstTime = LocalTime.of(6, 39, 58);        
+//        
+//        // Use current dateTime now
+//        // TODO: Update this to accept parametes from the UI
+//        LocalDateTime currentDate = LocalDateTime.now();
+//        //LocalDateTime currentDate = LocalDateTime.of(2019, Month.FEBRUARY, 9, 17, 5, 0);
+//        
+//        // Get the number of days we need to add time for
+//        int currentDayOfYear = currentDate.getDayOfYear();
+//        int dayDifference = currentDayOfYear - 1;
+////        Duration dateDifference = Duration.between(baselineDate, currentDate);
+////        int dayDifference = (int) dateDifference.toDays();
+//                
+//        // Get the number of hours we need to add time for
+//        int currentHourOfDay = currentDate.getHour();
+//        
+//        System.out.println("dayDifference = " + dayDifference);
+//        System.out.println("dayDifference * dayMultiplier = " + dayDifference * dayMultiplier);
+//        System.out.println("currentHourOfDay = " + currentHourOfDay);
+//        System.out.println("currentHourOfDay * hourMultiplier = " + currentHourOfDay * hourMultiplier);
+//        
+//        // Add the multiplied seconds values to the baseline time to get the GST
+//        LocalTime greenwichSiderealTime = baselineGstTime.minusSeconds(dayDifference * dayMultiplier).plusSeconds(currentHourOfDay * hourMultiplier);
+//        
+//        System.out.println("currentTime = " + currentDate);
+//        System.out.println("greenwichSiderealTime = " + greenwichSiderealTime);
+//        //
+//        return greenwichSiderealTime;
         
         
         
@@ -103,6 +171,7 @@ public class Calculation
 //        //System.out.println("greenwichSiderealTime = " + greenwichSiderealTime);
 //        
 //        return greenwichSiderealTime;
+        return LocalTime.NOON;
     }
     
     private static double getDecimalCoordinate(int degrees, int minutes, int seconds, String direction) throws Exception

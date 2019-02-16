@@ -12,7 +12,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -33,6 +36,30 @@ public class Application extends javax.swing.JFrame {
      */
     public Application() {
         initComponents();
+        latitudeButtonGroup.add(northRadioButton);
+        latitudeButtonGroup.add(southRadioButton);
+        longitudeButtonGroup.add(westRadioButton);
+        longitudeButtonGroup.add(eastRadioButton);
+        
+        // SET DEFAULT VALUES
+        
+        // UAH Tech Hall coordinates
+        westRadioButton.setSelected(true);
+        longDegreeTextField.setText("86");
+        minLongTextField.setText("38");
+        secLongTextField.setText("47");
+        
+        northRadioButton.setSelected(true);
+        latDegreeTextField.setText("34");
+        minLatTextField.setText("43");
+        secLatTextField.setText("8");
+        
+        // Set DateTime fields to current DateTime
+        LocalDateTime currentDateTime = LocalDateTime.now();
+                
+        dateTextField.setDate(new Date());
+        hourTextField.setText(Integer.toString(currentDateTime.getHour()));
+        minuteTextField.setText(Integer.toString(currentDateTime.getMinute()));        
         
         load();
     }
@@ -47,6 +74,8 @@ public class Application extends javax.swing.JFrame {
     private void initComponents() {
 
         jProgressBar1 = new javax.swing.JProgressBar();
+        latitudeButtonGroup = new javax.swing.ButtonGroup();
+        longitudeButtonGroup = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -59,15 +88,15 @@ public class Application extends javax.swing.JFrame {
         latitudeMinLabel = new javax.swing.JLabel();
         longDegreeTextField = new javax.swing.JTextField();
         dateLabel = new javax.swing.JLabel();
-        hrsLatTextField = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         minLatTextField = new javax.swing.JTextField();
+        dateTextField = new com.toedter.calendar.JDateChooser();
+        secLatTextField = new javax.swing.JTextField();
+        secLongTextField = new javax.swing.JTextField();
         minLongTextField = new javax.swing.JTextField();
-        hrsLongTextField = new javax.swing.JTextField();
         northRadioButton = new javax.swing.JRadioButton();
         eastRadioButton = new javax.swing.JRadioButton();
         westRadioButton = new javax.swing.JRadioButton();
-        southRadioButton4 = new javax.swing.JRadioButton();
+        southRadioButton = new javax.swing.JRadioButton();
         degreeLabel = new javax.swing.JLabel();
         hourLabel = new javax.swing.JLabel();
         minuteLabel = new javax.swing.JLabel();
@@ -76,6 +105,8 @@ public class Application extends javax.swing.JFrame {
         minuteLabel1 = new javax.swing.JLabel();
         enterDataButton = new javax.swing.JButton();
         selectAllButton = new javax.swing.JButton();
+        hourTextField = new javax.swing.JTextField();
+        minuteTextField = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         starsCheckBox = new javax.swing.JCheckBox();
         planetsCheckBox = new javax.swing.JCheckBox();
@@ -118,7 +149,7 @@ public class Application extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(64, 64, 64)
                         .addComponent(readDataButton)))
-                .addGap(424, 515, Short.MAX_VALUE))
+                .addGap(424, 512, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -154,16 +185,7 @@ public class Application extends javax.swing.JFrame {
             }
         });
 
-        dateLabel.setText("Date");
-
-        hrsLatTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hrsLatTextFieldActionPerformed(evt);
-            }
-        });
-
-        jDateChooser1.setMaxSelectableDate(new java.util.Date(4102466399000L));
-        jDateChooser1.setMinSelectableDate(new java.util.Date(-2209053600000L));
+        dateLabel.setText("Date/Time");
 
         minLatTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -171,15 +193,24 @@ public class Application extends javax.swing.JFrame {
             }
         });
 
-        minLongTextField.addActionListener(new java.awt.event.ActionListener() {
+        dateTextField.setMaxSelectableDate(new java.util.Date(4102466399000L));
+        dateTextField.setMinSelectableDate(new java.util.Date(-2209053600000L));
+
+        secLatTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                minLongTextFieldActionPerformed(evt);
+                secLatTextFieldActionPerformed(evt);
             }
         });
 
-        hrsLongTextField.addActionListener(new java.awt.event.ActionListener() {
+        secLongTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hrsLongTextFieldActionPerformed(evt);
+                secLongTextFieldActionPerformed(evt);
+            }
+        });
+
+        minLongTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                minLongTextFieldActionPerformed(evt);
             }
         });
 
@@ -204,10 +235,10 @@ public class Application extends javax.swing.JFrame {
             }
         });
 
-        southRadioButton4.setText("S");
-        southRadioButton4.addActionListener(new java.awt.event.ActionListener() {
+        southRadioButton.setText("S");
+        southRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                southRadioButton4ActionPerformed(evt);
+                southRadioButtonActionPerformed(evt);
             }
         });
 
@@ -245,7 +276,7 @@ public class Application extends javax.swing.JFrame {
                 .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(coordinatePanelLayout.createSequentialGroup()
                         .addComponent(enterDataButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(selectAllButton))
                     .addGroup(coordinatePanelLayout.createSequentialGroup()
                         .addContainerGap()
@@ -255,47 +286,53 @@ public class Application extends javax.swing.JFrame {
                                     .addGroup(coordinatePanelLayout.createSequentialGroup()
                                         .addComponent(latitudeMinLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(eastRadioButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(westRadioButton))
+                                        .addComponent(westRadioButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(eastRadioButton))
                                     .addGroup(coordinatePanelLayout.createSequentialGroup()
                                         .addComponent(latitudeDegreesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(northRadioButton)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(southRadioButton4)))
-                                .addGap(18, 18, 18)
+                                        .addComponent(southRadioButton)))
+                                .addGap(20, 20, 20)
                                 .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(latDegreeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                                    .addComponent(longDegreeTextField)))
+                                    .addComponent(longDegreeTextField))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(degreeLabel1)
+                                    .addComponent(degreeLabel)))
                             .addGroup(coordinatePanelLayout.createSequentialGroup()
-                                .addComponent(dateLabel)
-                                .addGap(51, 51, 51)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(coordinatePanelLayout.createSequentialGroup()
-                        .addComponent(degreeLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(hrsLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(13, 13, 13)
+                        .addComponent(minLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(coordinatePanelLayout.createSequentialGroup()
-                        .addComponent(degreeLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(hrsLatTextField)))
+                        .addGap(13, 13, 13)
+                        .addComponent(minLatTextField))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coordinatePanelLayout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(hourTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(hourLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 9, Short.MAX_VALUE)
                     .addComponent(hourLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(coordinatePanelLayout.createSequentialGroup()
-                        .addComponent(minLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(minuteLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coordinatePanelLayout.createSequentialGroup()
-                        .addComponent(minLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(minuteLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(coordinatePanelLayout.createSequentialGroup()
+                            .addComponent(secLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(minuteLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coordinatePanelLayout.createSequentialGroup()
+                            .addComponent(secLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(minuteLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(minuteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37))
         );
 
@@ -303,45 +340,50 @@ public class Application extends javax.swing.JFrame {
 
         coordinatePanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {latitudeDegreesLabel, latitudeMinLabel});
 
-        coordinatePanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {hrsLatTextField, hrsLongTextField, latDegreeTextField, longDegreeTextField, minLatTextField, minLongTextField});
+        coordinatePanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {latDegreeTextField, longDegreeTextField, minLatTextField, minLongTextField, secLatTextField, secLongTextField});
 
         coordinatePanelLayout.setVerticalGroup(
             coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(coordinatePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(latitudeDegreesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(northRadioButton)
-                    .addComponent(southRadioButton4)
-                    .addComponent(latDegreeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(degreeLabel)
-                    .addComponent(hrsLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hourLabel)
-                    .addComponent(minLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(minuteLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(eastRadioButton)
-                    .addComponent(westRadioButton)
-                    .addComponent(latitudeMinLabel)
-                    .addComponent(longDegreeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(degreeLabel1)
-                    .addComponent(hrsLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hourLabel1)
-                    .addComponent(minLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(minuteLabel1))
-                .addGap(18, 18, 18)
                 .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(coordinatePanelLayout.createSequentialGroup()
+                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(latitudeDegreesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(northRadioButton)
+                            .addComponent(southRadioButton)
+                            .addComponent(latDegreeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(degreeLabel)
+                            .addComponent(minLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hourLabel)
+                            .addComponent(secLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(minuteLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(westRadioButton)
+                            .addComponent(latitudeMinLabel)
+                            .addComponent(longDegreeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(degreeLabel1)
+                            .addComponent(minLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hourLabel1)
+                            .addComponent(secLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(minuteLabel1)
+                            .addComponent(eastRadioButton))
+                        .addGap(18, 18, 18)
+                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(hourTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(minuteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(enterDataButton)
                     .addComponent(selectAllButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        coordinatePanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {hrsLatTextField, hrsLongTextField, latDegreeTextField, longDegreeTextField, minLatTextField, minLongTextField});
+        coordinatePanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {latDegreeTextField, longDegreeTextField, minLatTextField, minLongTextField, secLatTextField, secLongTextField});
 
         coordinatePanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {latitudeDegreesLabel, latitudeMinLabel});
 
@@ -405,9 +447,9 @@ public class Application extends javax.swing.JFrame {
                 .addComponent(planetsCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(constellationsCheckBox)
-                .addGap(6, 6, 6)
-                .addComponent(messierCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(messierCheckBox)
+                .addGap(6, 6, 6)
                 .addComponent(unselectCheckBox)
                 .addContainerGap(37, Short.MAX_VALUE))
         );
@@ -460,20 +502,20 @@ public class Application extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_latDegreeTextFieldActionPerformed
 
-    private void hrsLatTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hrsLatTextFieldActionPerformed
+    private void minLatTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minLatTextFieldActionPerformed
         // Gets the Latitude Hours value from user:
-        int latHours = Integer.parseInt(hrsLatTextField.getText());
+        int latHours = Integer.parseInt(minLatTextField.getText());
         
         if((latHours < 0) || (latHours > 23))
         {
-            hrsLatTextField.setBackground(Color.YELLOW);
+            minLatTextField.setBackground(Color.YELLOW);
         }          
         else
         {
-            hrsLatTextField.setBackground(Color.WHITE);
+            minLatTextField.setBackground(Color.WHITE);
             textArea.append(latHours + "'\n");
         }
-    }//GEN-LAST:event_hrsLatTextFieldActionPerformed
+    }//GEN-LAST:event_minLatTextFieldActionPerformed
 
     private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
         // TODO add your handling code here:
@@ -699,20 +741,20 @@ public class Application extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_longDegreeTextFieldActionPerformed
 
-    private void hrsLongTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hrsLongTextFieldActionPerformed
+    private void minLongTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minLongTextFieldActionPerformed
         // Get Longitude hours from user:
-        int longHours = Integer.parseInt(hrsLongTextField.getText());
+        int longHours = Integer.parseInt(minLongTextField.getText());
         
         if((longHours < 0) || (longHours > 23))
         {
-            hrsLongTextField.setBackground(Color.YELLOW);
+            minLongTextField.setBackground(Color.YELLOW);
         }          
         else
         {
-            hrsLongTextField.setBackground(Color.WHITE);
+            minLongTextField.setBackground(Color.WHITE);
             textArea.append(longHours + "'\n");
         }
-    }//GEN-LAST:event_hrsLongTextFieldActionPerformed
+    }//GEN-LAST:event_minLongTextFieldActionPerformed
 
     private void northRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_northRadioButtonActionPerformed
         // TODO add your handling code here:
@@ -726,39 +768,39 @@ public class Application extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_westRadioButtonActionPerformed
 
-    private void southRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_southRadioButton4ActionPerformed
+    private void southRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_southRadioButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_southRadioButton4ActionPerformed
+    }//GEN-LAST:event_southRadioButtonActionPerformed
 
-    private void minLatTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minLatTextFieldActionPerformed
+    private void secLatTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secLatTextFieldActionPerformed
         // TODO add your handling code here:
-        int latMinutes = Integer.parseInt(minLatTextField.getText());
+        int latMinutes = Integer.parseInt(secLatTextField.getText());
         
         if((latMinutes < 0) || (latMinutes > 59))
         {
-            minLatTextField.setBackground(Color.YELLOW);
+            secLatTextField.setBackground(Color.YELLOW);
         }          
         else
         {
-            minLatTextField.setBackground(Color.WHITE);
+            secLatTextField.setBackground(Color.WHITE);
             textArea.append(latMinutes + "\"\n");
         }
-    }//GEN-LAST:event_minLatTextFieldActionPerformed
+    }//GEN-LAST:event_secLatTextFieldActionPerformed
 
-    private void minLongTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minLongTextFieldActionPerformed
+    private void secLongTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secLongTextFieldActionPerformed
         // TODO add your handling code here:
-        int longMinutes = Integer.parseInt(minLongTextField.getText());
+        int longMinutes = Integer.parseInt(secLongTextField.getText());
         
         if((longMinutes < 0) || (longMinutes > 59))
         {
-            minLongTextField.setBackground(Color.YELLOW);
+            secLongTextField.setBackground(Color.YELLOW);
         }          
         else
         {
-            minLongTextField.setBackground(Color.WHITE);
+            secLongTextField.setBackground(Color.WHITE);
             textArea.append(longMinutes + "\"\n");
         }
-    }//GEN-LAST:event_minLongTextFieldActionPerformed
+    }//GEN-LAST:event_secLongTextFieldActionPerformed
 
     
     
@@ -812,18 +854,67 @@ public class Application extends javax.swing.JFrame {
         
         try 
         {
-            // Coordinates for UAH are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W
+            Calendar selectedDate = dateTextField.getCalendar();
+            int hour = Integer.parseInt(hourTextField.getText());
+            int minute = Integer.parseInt(minuteTextField.getText());            
             
-            LocalTime localSiderealTime = Calculation.getLocalSiderealTime(86, 38, 47, "West");
+            LocalDateTime dateTime = LocalDateTime.of(
+                    selectedDate.get(Calendar.YEAR), 
+                    selectedDate.get(Calendar.MONTH), 
+                    selectedDate.get(Calendar.DAY_OF_MONTH), 
+                    hour, 
+                    minute);
+            
+            int latitudeDegrees = Integer.parseInt(latDegreeTextField.getText());
+            int latitudeMinutes = Integer.parseInt(minLatTextField.getText());
+            int latitudeSeconds = Integer.parseInt(secLatTextField.getText());
+            String latitudeDirection = "";
+            
+            if (northRadioButton.isSelected())
+            {
+                latitudeDirection = "North";
+            }
+            else if (southRadioButton.isSelected())
+            {
+                latitudeDirection = "South";
+            } 
+            
+            int longitudeDegrees = Integer.parseInt(longDegreeTextField.getText());
+            int longitudeMinutes = Integer.parseInt(minLongTextField.getText());
+            int longitudeSeconds = Integer.parseInt(secLongTextField.getText());
+            String longitudeDirection = "";
+            
+            if (westRadioButton.isSelected())
+            {
+                longitudeDirection = "West";
+            }
+            else if (eastRadioButton.isSelected())
+            {
+                longitudeDirection = "East";
+            }                    
+            
+            // Coordinates for UAH are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W            
+            LocalTime localSiderealTime = Calculation.getLocalSiderealTime(longitudeDegrees, longitudeMinutes, longitudeSeconds, longitudeDirection, dateTime);
             System.out.println("Current Local Sidereal Time: " + localSiderealTime);
             
-            double polarisRightAscention = 2.5303027777;
-            double polarisDeclination = 89.26411111;
+            // Polaris
+            //double rightAscention = 2.133333333;
+            //double declination = 89.26413805;
+            
+            // Alpheratz
+            //double rightAscention = 0.13976888;
+            //double declination = 29.09082805;
+
+            // Markab
+            double rightAscention = 23.07933801;
+            double declination = 15.20536786;
+
+            
             double uahLatitude = 34.718913999;
             
-            Map<String, Double> map = Calculation.getAzimuthAndElevation(polarisRightAscention, polarisDeclination, uahLatitude, localSiderealTime);
+            Map<String, Double> map = Calculation.getAzimuthAndElevation(rightAscention, declination, uahLatitude, localSiderealTime);
             
-            System.out.println("Current Azimuth/Elevation of Polaris from UAH: " + map.get("Azimuth") + "°, " + map.get("Elevation") + "°");
+            System.out.println("Current Azimuth/Elevation of selected object from UAH: " + map.get("Azimuth") + "°, " + map.get("Elevation") + "°");
         } 
         catch (Exception ex) 
         {
@@ -905,6 +996,7 @@ public class Application extends javax.swing.JFrame {
     private javax.swing.JCheckBox constellationsCheckBox;
     private javax.swing.JPanel coordinatePanel;
     private javax.swing.JLabel dateLabel;
+    private com.toedter.calendar.JDateChooser dateTextField;
     private javax.swing.JLabel degreeLabel;
     private javax.swing.JLabel degreeLabel1;
     private javax.swing.JRadioButton eastRadioButton;
@@ -912,28 +1004,31 @@ public class Application extends javax.swing.JFrame {
     private javax.swing.JButton generateButton;
     private javax.swing.JLabel hourLabel;
     private javax.swing.JLabel hourLabel1;
-    private javax.swing.JTextField hrsLatTextField;
-    private javax.swing.JTextField hrsLongTextField;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JTextField hourTextField;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField latDegreeTextField;
+    private javax.swing.ButtonGroup latitudeButtonGroup;
     private javax.swing.JLabel latitudeDegreesLabel;
     private javax.swing.JLabel latitudeMinLabel;
     private javax.swing.JTextField longDegreeTextField;
+    private javax.swing.ButtonGroup longitudeButtonGroup;
     private javax.swing.JCheckBox messierCheckBox;
     private javax.swing.JTextField minLatTextField;
     private javax.swing.JTextField minLongTextField;
     private javax.swing.JLabel minuteLabel;
     private javax.swing.JLabel minuteLabel1;
+    private javax.swing.JTextField minuteTextField;
     private javax.swing.JRadioButton northRadioButton;
     private javax.swing.JCheckBox planetsCheckBox;
     private javax.swing.JButton readDataButton;
+    private javax.swing.JTextField secLatTextField;
+    private javax.swing.JTextField secLongTextField;
     private javax.swing.JButton selectAllButton;
-    private javax.swing.JRadioButton southRadioButton4;
+    private javax.swing.JRadioButton southRadioButton;
     private javax.swing.JCheckBox starsCheckBox;
     private javax.swing.JTextArea textArea;
     private javax.swing.JCheckBox unselectCheckBox;

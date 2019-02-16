@@ -12,7 +12,7 @@ import java.time.Month;
 import java.util.HashMap;
 import java.util.Map;
 
-// Coordinates are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W
+// Coordinates for Tech Hall are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W
 
 /**
  *
@@ -23,21 +23,17 @@ public class Calculation
     // Gregorian Calendar adopted Oct. 15, 1582 (2299161)
     public static int JGREG = 15 + 31 * (10 + 12 * 1582);
   
-    private static LocalTime getGreenwichSiderealTime()
+    private static LocalTime getGreenwichSiderealTime(LocalDateTime dateTime)
     {        
-        //LocalDateTime currentDateTime = LocalDateTime.now();
-        LocalDateTime currentDateTime = LocalDateTime.of(2019, Month.FEBRUARY, 14, 7, 00, 0);
-        
-        // Get Julian date
-        
+        // Get Julian date        
         // Reference: https://www.rgagnon.com/javadetails/java-0506.html
-        int year = currentDateTime.getYear();
-        int month = currentDateTime.getMonth().ordinal();
-        int day = currentDateTime.getDayOfYear();
+        int year = dateTime.getYear();
+        int month = dateTime.getMonth().ordinal();
+        int day = dateTime.getDayOfYear();
         
-        int hour = currentDateTime.getHour();
-        int minute = currentDateTime.getMinute();
-        int second = currentDateTime.getSecond();
+        int hour = dateTime.getHour();
+        int minute = dateTime.getMinute();
+        int second = dateTime.getSecond();
         
         // Add .0 to force double prescision
         double decimalHour = (hour + 12) + (minute / 60.0) + (second / (60 * 60));
@@ -157,19 +153,23 @@ public class Calculation
         
     // Assuming we will only allow whole second values, we can easily shange this to double the precision is needed
     // TODO: Verify accuracy
-    public static LocalTime getLocalSiderealTime(int degrees, int minutes, int seconds, String direction) throws Exception
+    public static LocalTime getLocalSiderealTime(int degreesLong, 
+                                                 int minutesLong, 
+                                                 int secondsLong, 
+                                                 String directionLong,
+                                                 LocalDateTime dateTime) throws Exception
     {
         // Convert H M S to decimal coordinate value
-        double longitude = getDecimalCoordinate(degrees, minutes, seconds, direction);
+        double longitude = getDecimalCoordinate(degreesLong, minutesLong, secondsLong, directionLong);
 //        System.out.println("longitude for " + degrees + " " + minutes + " " + seconds + " " + direction + " = " + longitude);
         
-        // Devide the result by 15.  Use 15.0 to force decimal precision if the first value is a whole number
+        // Divide the result by 15.  Use 15.0 to force decimal precision if the first value is a whole number
         double hourOffset = longitude / 15.0;
         
         Duration timeOffset = getDurationFromDecimalHours(hourOffset);
 //        System.out.println("Offset of " + hourOffset + " hours = " + timeOffset);
         
-        LocalTime greenwichSiderealTime = getGreenwichSiderealTime();
+        LocalTime greenwichSiderealTime = getGreenwichSiderealTime(dateTime);
 //        System.out.println("Current Greenwich Sidereal Time: " + greenwichSiderealTime);
 
         return greenwichSiderealTime.plus(timeOffset);

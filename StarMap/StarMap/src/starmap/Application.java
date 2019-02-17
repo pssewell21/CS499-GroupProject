@@ -22,7 +22,6 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author pssew
@@ -30,6 +29,8 @@ import java.util.logging.Logger;
 public class Application extends javax.swing.JFrame {
     
     private String[][] starMapData;
+    
+    // <editor-fold defaultstate="collapsed" desc="Constructor"> 
 
     /**
      * Creates new form Application
@@ -64,6 +65,10 @@ public class Application extends javax.swing.JFrame {
         load();
     }
 
+    //</editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="UI Generated Code and Event Handlers"> 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -80,7 +85,6 @@ public class Application extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         textArea = new javax.swing.JTextArea();
-        readDataButton = new javax.swing.JButton();
         generateButton = new javax.swing.JButton();
         coordinatePanel = new javax.swing.JPanel();
         latitudeDegreesLabel = new javax.swing.JLabel();
@@ -113,6 +117,7 @@ public class Application extends javax.swing.JFrame {
         constellationsCheckBox = new javax.swing.JCheckBox();
         messierCheckBox = new javax.swing.JCheckBox();
         unselectCheckBox = new javax.swing.JCheckBox();
+        readDataButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("StarMapGenerator");
@@ -122,33 +127,19 @@ public class Application extends javax.swing.JFrame {
         textArea.setRows(5);
         jScrollPane2.setViewportView(textArea);
 
-        readDataButton.setText("Read Data File");
-        readDataButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                readDataButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(249, 249, 249)
-                .addComponent(readDataButton)
-                .addGap(0, 337, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 971, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(readDataButton)))
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(424, 512, Short.MAX_VALUE))
         );
 
@@ -215,32 +206,12 @@ public class Application extends javax.swing.JFrame {
         });
 
         northRadioButton.setText("N");
-        northRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                northRadioButtonActionPerformed(evt);
-            }
-        });
 
         eastRadioButton.setText("E");
-        eastRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eastRadioButtonActionPerformed(evt);
-            }
-        });
 
         westRadioButton.setText("W");
-        westRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                westRadioButtonActionPerformed(evt);
-            }
-        });
 
         southRadioButton.setText("S");
-        southRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                southRadioButtonActionPerformed(evt);
-            }
-        });
 
         degreeLabel.setText("°");
 
@@ -307,16 +278,11 @@ public class Application extends javax.swing.JFrame {
                                 .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(13, 13, 13)
                 .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(coordinatePanelLayout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(minLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(coordinatePanelLayout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(minLatTextField))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coordinatePanelLayout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(hourTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(minLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(minLatTextField)
+                    .addComponent(hourTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(hourLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 9, Short.MAX_VALUE)
@@ -454,6 +420,13 @@ public class Application extends javax.swing.JFrame {
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
+        readDataButton.setText("Read Data File");
+        readDataButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                readDataButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -467,7 +440,9 @@ public class Application extends javax.swing.JFrame {
                         .addGap(45, 45, 45)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
-                        .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(readDataButton))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -478,9 +453,11 @@ public class Application extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(readDataButton))
                     .addComponent(coordinatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -518,8 +495,103 @@ public class Application extends javax.swing.JFrame {
     }//GEN-LAST:event_minLatTextFieldActionPerformed
 
     private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
-        // TODO add your handling code here:
-        //jPanel1.setText("You clicked Generate Image button!");
+        try 
+        {
+            Calendar selectedDate = dateTextField.getCalendar();
+            int hour = Integer.parseInt(hourTextField.getText());
+            int minute = Integer.parseInt(minuteTextField.getText());            
+            
+            LocalDateTime dateTime = LocalDateTime.of(
+                    selectedDate.get(Calendar.YEAR), 
+                    selectedDate.get(Calendar.MONTH), 
+                    selectedDate.get(Calendar.DAY_OF_MONTH), 
+                    hour, 
+                    minute);
+            
+            int latitudeDegrees = Integer.parseInt(latDegreeTextField.getText());
+            int latitudeMinutes = Integer.parseInt(minLatTextField.getText());
+            int latitudeSeconds = Integer.parseInt(secLatTextField.getText());
+            String latitudeDirection = "";
+            
+            if (northRadioButton.isSelected())
+            {
+                latitudeDirection = "North";
+            }
+            else if (southRadioButton.isSelected())
+            {
+                latitudeDirection = "South";
+            } 
+            
+            int longitudeDegrees = Integer.parseInt(longDegreeTextField.getText());
+            int longitudeMinutes = Integer.parseInt(minLongTextField.getText());
+            int longitudeSeconds = Integer.parseInt(secLongTextField.getText());
+            String longitudeDirection = "";
+            
+            if (westRadioButton.isSelected())
+            {
+                longitudeDirection = "West";
+            }
+            else if (eastRadioButton.isSelected())
+            {
+                longitudeDirection = "East";
+            }                    
+            
+            // Coordinates for UAH are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W            
+            LocalTime localSiderealTime = Calculation.getLocalSiderealTime(longitudeDegrees, longitudeMinutes, longitudeSeconds, longitudeDirection, dateTime);
+            System.out.println("Current Local Sidereal Time: " + localSiderealTime);            
+            
+            double latitude = Calculation.getDecimalCoordinate(latitudeDegrees, latitudeMinutes, latitudeSeconds, latitudeDirection);
+            
+            // Polaris
+            String objectName = "Polaris";
+            double rightAscention = 2.133333333;
+            double declination = 89.26413805;
+            
+            Map<String, Double> map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, localSiderealTime);
+            
+            textArea.setText(textArea.getText() + "\n" 
+                    + "Current Azimuth/Elevation of " + objectName 
+                    + "from " + latitudeDegrees + "° " + latitudeMinutes + "' "
+                    + latitudeSeconds + "'' " + latitudeDirection + " " 
+                    + longitudeDegrees + "° " + longitudeMinutes + "' "
+                    + longitudeSeconds + "'' " + longitudeDirection + ": "
+                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°");
+            
+            
+            // Alpheratz
+            objectName = "Alpheratz";
+            rightAscention = 0.13976888;
+            declination = 29.09082805;
+            
+            map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, localSiderealTime);
+            
+            textArea.setText(textArea.getText() + "\n" 
+                    + "Current Azimuth/Elevation of " + objectName 
+                    + "from " + latitudeDegrees + "° " + latitudeMinutes + "' "
+                    + latitudeSeconds + "'' " + latitudeDirection + " " 
+                    + longitudeDegrees + "° " + longitudeMinutes + "' "
+                    + longitudeSeconds + "'' " + longitudeDirection + ": "
+                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°");
+            
+            // Markab
+            objectName = "Markab";
+            rightAscention = 23.07933801;
+            declination = 15.20536786;
+            
+            map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, localSiderealTime);
+            
+            textArea.setText(textArea.getText() + "\n" 
+                    + "Current Azimuth/Elevation of " + objectName 
+                    + "from " + latitudeDegrees + "° " + latitudeMinutes + "' "
+                    + latitudeSeconds + "'' " + latitudeDirection + " " 
+                    + longitudeDegrees + "° " + longitudeMinutes + "' "
+                    + longitudeSeconds + "'' " + longitudeDirection + ": "
+                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°");   
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+        }        
     }//GEN-LAST:event_generateButtonActionPerformed
     private void readDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readDataButtonActionPerformed
         try
@@ -550,7 +622,6 @@ public class Application extends javax.swing.JFrame {
     *               been selected.
     */
     private void starsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_starsCheckBoxActionPerformed
-        // TODO add your handling code here:
         String stars = "";
         if(starsCheckBox.isSelected())
         {
@@ -567,7 +638,6 @@ public class Application extends javax.swing.JFrame {
     *               been selected.
     */
     private void planetsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planetsCheckBoxActionPerformed
-        // TODO add your handling code here:
         String planets = "";
         if(planetsCheckBox.isSelected())
         {
@@ -584,7 +654,6 @@ public class Application extends javax.swing.JFrame {
     *               box has been selected.
     */
     private void constellationsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_constellationsCheckBoxActionPerformed
-        // TODO add your handling code here:
         String constellations = "";
         if(constellationsCheckBox.isSelected())
         {
@@ -601,7 +670,6 @@ public class Application extends javax.swing.JFrame {
     *               been selected.
     */
     private void messierCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messierCheckBoxActionPerformed
-        // TODO add your handling code here:
         String messier = "";
         if(messierCheckBox.isSelected())
         {
@@ -618,7 +686,6 @@ public class Application extends javax.swing.JFrame {
     *               been selected.
     */
     private void unselectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unselectCheckBoxActionPerformed
-        // TODO add your handling code here:
         String unselect = "";
         if(unselectCheckBox.isSelected())
         {
@@ -635,7 +702,6 @@ public class Application extends javax.swing.JFrame {
     *               been selected.
     */
     private void selectAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectAllButtonActionPerformed
-        // TODO add your handling code here:
         String s1 = "";
         
         if(starsCheckBox.isSelected())
@@ -756,24 +822,7 @@ public class Application extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_minLongTextFieldActionPerformed
 
-    private void northRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_northRadioButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_northRadioButtonActionPerformed
-
-    private void eastRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eastRadioButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_eastRadioButtonActionPerformed
-
-    private void westRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_westRadioButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_westRadioButtonActionPerformed
-
-    private void southRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_southRadioButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_southRadioButtonActionPerformed
-
     private void secLatTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secLatTextFieldActionPerformed
-        // TODO add your handling code here:
         int latMinutes = Integer.parseInt(secLatTextField.getText());
         
         if((latMinutes < 0) || (latMinutes > 59))
@@ -788,7 +837,6 @@ public class Application extends javax.swing.JFrame {
     }//GEN-LAST:event_secLatTextFieldActionPerformed
 
     private void secLongTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secLongTextFieldActionPerformed
-        // TODO add your handling code here:
         int longMinutes = Integer.parseInt(secLongTextField.getText());
         
         if((longMinutes < 0) || (longMinutes > 59))
@@ -801,9 +849,9 @@ public class Application extends javax.swing.JFrame {
             textArea.append(longMinutes + "\"\n");
         }
     }//GEN-LAST:event_secLongTextFieldActionPerformed
-
     
-    
+    // </editor-fold>
+        
     /**
      * @param args the command line arguments
      */
@@ -820,13 +868,7 @@ public class Application extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -851,75 +893,6 @@ public class Application extends javax.swing.JFrame {
         
         ExecutorService executor = Executors.newCachedThreadPool();
         executor.submit(r);
-        
-        try 
-        {
-            Calendar selectedDate = dateTextField.getCalendar();
-            int hour = Integer.parseInt(hourTextField.getText());
-            int minute = Integer.parseInt(minuteTextField.getText());            
-            
-            LocalDateTime dateTime = LocalDateTime.of(
-                    selectedDate.get(Calendar.YEAR), 
-                    selectedDate.get(Calendar.MONTH), 
-                    selectedDate.get(Calendar.DAY_OF_MONTH), 
-                    hour, 
-                    minute);
-            
-            int latitudeDegrees = Integer.parseInt(latDegreeTextField.getText());
-            int latitudeMinutes = Integer.parseInt(minLatTextField.getText());
-            int latitudeSeconds = Integer.parseInt(secLatTextField.getText());
-            String latitudeDirection = "";
-            
-            if (northRadioButton.isSelected())
-            {
-                latitudeDirection = "North";
-            }
-            else if (southRadioButton.isSelected())
-            {
-                latitudeDirection = "South";
-            } 
-            
-            int longitudeDegrees = Integer.parseInt(longDegreeTextField.getText());
-            int longitudeMinutes = Integer.parseInt(minLongTextField.getText());
-            int longitudeSeconds = Integer.parseInt(secLongTextField.getText());
-            String longitudeDirection = "";
-            
-            if (westRadioButton.isSelected())
-            {
-                longitudeDirection = "West";
-            }
-            else if (eastRadioButton.isSelected())
-            {
-                longitudeDirection = "East";
-            }                    
-            
-            // Coordinates for UAH are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W            
-            LocalTime localSiderealTime = Calculation.getLocalSiderealTime(longitudeDegrees, longitudeMinutes, longitudeSeconds, longitudeDirection, dateTime);
-            System.out.println("Current Local Sidereal Time: " + localSiderealTime);
-            
-            // Polaris
-            //double rightAscention = 2.133333333;
-            //double declination = 89.26413805;
-            
-            // Alpheratz
-            //double rightAscention = 0.13976888;
-            //double declination = 29.09082805;
-
-            // Markab
-            double rightAscention = 23.07933801;
-            double declination = 15.20536786;
-
-            
-            double uahLatitude = 34.718913999;
-            
-            Map<String, Double> map = Calculation.getAzimuthAndElevation(rightAscention, declination, uahLatitude, localSiderealTime);
-            
-            System.out.println("Current Azimuth/Elevation of selected object from UAH: " + map.get("Azimuth") + "°, " + map.get("Elevation") + "°");
-        } 
-        catch (Exception ex) 
-        {
-            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     private void readData()
@@ -991,6 +964,8 @@ public class Application extends javax.swing.JFrame {
             this.setCursor(Cursor.getDefaultCursor());
         }
     }
+    
+    // <editor-fold defaultstate="collapsed" desc="Generated Members">
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox constellationsCheckBox;
@@ -1034,4 +1009,6 @@ public class Application extends javax.swing.JFrame {
     private javax.swing.JCheckBox unselectCheckBox;
     private javax.swing.JRadioButton westRadioButton;
     // End of variables declaration//GEN-END:variables
+    //</editor-fold>
+
 }

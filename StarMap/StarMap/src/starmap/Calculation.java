@@ -99,7 +99,7 @@ public class Calculation
         return gstTime;
     }
     
-    private static double getDecimalCoordinate(int degrees, int minutes, int seconds, String direction) throws Exception
+    public static double getDecimalCoordinate(int degrees, int minutes, int seconds, String direction) throws Exception
     {   
         // Valudate input
         if (degrees < 0 || degrees > 180)
@@ -117,7 +117,10 @@ public class Calculation
             throw new Exception("Invalid value of " + seconds + " for seconds passed into Calculation.getDecimalCoordinate");
         }
         
-        if (!(direction.equalsIgnoreCase("East") || direction.equalsIgnoreCase("West")))
+        if (!(direction.equalsIgnoreCase("East") 
+                || direction.equalsIgnoreCase("West") 
+                || direction.equalsIgnoreCase("North") 
+                || direction.equalsIgnoreCase("South")))
         {
             throw new Exception("Invalid direction value of " + direction + " was passed into Calculation.getDecimalCoordinate");
         } 

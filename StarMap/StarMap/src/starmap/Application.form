@@ -277,7 +277,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="latDegreeTextField">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="latDegreeTextFieldActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="latDegreeTextFieldKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="latitudeMinLabel">
@@ -287,8 +287,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="longDegreeTextField">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="longDegreeTextFieldActionPerformed"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="longDegreeTextFieldKeyTyped"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="longDegreeTextFieldKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="dateLabel">
@@ -298,7 +297,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="minLatTextField">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="minLatTextFieldActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="minLatTextFieldKeyReleased"/>
           </Events>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="dateTextField">
@@ -307,23 +306,23 @@
               <SerializedValue value="-84,-19,0,5,115,114,0,14,106,97,118,97,46,117,116,105,108,46,68,97,116,101,104,106,-127,1,75,89,116,25,3,0,0,120,112,119,8,0,0,3,-69,46,13,107,24,120"/>
             </Property>
             <Property name="minSelectableDate" type="java.util.Date" editor="org.netbeans.beaninfo.editors.DateEditor">
-              <SerializedValue value="-84,-19,0,5,115,114,0,14,106,97,118,97,46,117,116,105,108,46,68,97,116,101,104,106,-127,1,75,89,116,25,3,0,0,120,112,119,8,-1,-1,-3,-3,-86,37,23,0,120"/>
+              <SerializedValue value="-84,-19,0,5,115,114,0,14,106,97,118,97,46,117,116,105,108,46,68,97,116,101,104,106,-127,1,75,89,116,25,3,0,0,120,112,119,8,-1,-1,-3,-3,-81,75,115,0,120"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="secLatTextField">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="secLatTextFieldActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="secLatTextFieldKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="secLongTextField">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="secLongTextFieldActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="secLongTextFieldKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="minLongTextField">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="minLongTextFieldActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="minLongTextFieldKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="northRadioButton">
@@ -393,8 +392,14 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="hourTextField">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="hourTextFieldKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="minuteTextField">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="minuteTextFieldKeyReleased"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

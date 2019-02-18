@@ -157,51 +157,46 @@ public class Application extends javax.swing.JFrame {
 
         latitudeDegreesLabel.setText("Latitude");
 
-        latDegreeTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                latDegreeTextFieldActionPerformed(evt);
+        latDegreeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                latDegreeTextFieldKeyReleased(evt);
             }
         });
 
         latitudeMinLabel.setText("Longitude");
 
-        longDegreeTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                longDegreeTextFieldActionPerformed(evt);
-            }
-        });
         longDegreeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                longDegreeTextFieldKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                longDegreeTextFieldKeyReleased(evt);
             }
         });
 
         dateLabel.setText("Date/Time");
 
-        minLatTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                minLatTextFieldActionPerformed(evt);
+        minLatTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                minLatTextFieldKeyReleased(evt);
             }
         });
 
         dateTextField.setMaxSelectableDate(new java.util.Date(4102466399000L));
-        dateTextField.setMinSelectableDate(new java.util.Date(-2209053600000L));
+        dateTextField.setMinSelectableDate(new java.util.Date(-2208967200000L));
 
-        secLatTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                secLatTextFieldActionPerformed(evt);
+        secLatTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                secLatTextFieldKeyReleased(evt);
             }
         });
 
-        secLongTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                secLongTextFieldActionPerformed(evt);
+        secLongTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                secLongTextFieldKeyReleased(evt);
             }
         });
 
-        minLongTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                minLongTextFieldActionPerformed(evt);
+        minLongTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                minLongTextFieldKeyReleased(evt);
             }
         });
 
@@ -236,6 +231,18 @@ public class Application extends javax.swing.JFrame {
         selectAllButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectAllButtonActionPerformed(evt);
+            }
+        });
+
+        hourTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                hourTextFieldKeyReleased(evt);
+            }
+        });
+
+        minuteTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                minuteTextFieldKeyReleased(evt);
             }
         });
 
@@ -464,35 +471,6 @@ public class Application extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void latDegreeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_latDegreeTextFieldActionPerformed
-        // Gets the Latitude Degree value from user:
-        float latDegree = Float.parseFloat(latDegreeTextField.getText());
-        
-        if((latDegree < -90) || (latDegree > 90))
-        {
-            latDegreeTextField.setBackground(Color.YELLOW);
-        }
-        else
-        {
-            latDegreeTextField.setBackground(Color.WHITE);
-            textArea.append(latDegree + "°\n");
-        }
-    }//GEN-LAST:event_latDegreeTextFieldActionPerformed
-
-    private void minLatTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minLatTextFieldActionPerformed
-        // Gets the Latitude Hours value from user:
-        int latHours = Integer.parseInt(minLatTextField.getText());
-        
-        if((latHours < 0) || (latHours > 23))
-        {
-            minLatTextField.setBackground(Color.YELLOW);
-        }          
-        else
-        {
-            minLatTextField.setBackground(Color.WHITE);
-            textArea.append(latHours + "'\n");
-        }
-    }//GEN-LAST:event_minLatTextFieldActionPerformed
 
     private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
         try 
@@ -549,13 +527,12 @@ public class Application extends javax.swing.JFrame {
             
             Map<String, Double> map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, localSiderealTime);
             
-            textArea.setText(textArea.getText() + "\n" 
-                    + "Current Azimuth/Elevation of " + objectName 
-                    + "from " + latitudeDegrees + "° " + latitudeMinutes + "' "
+            textArea.append("Current Azimuth/Elevation of " + objectName 
+                    + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
                     + latitudeSeconds + "'' " + latitudeDirection + " " 
                     + longitudeDegrees + "° " + longitudeMinutes + "' "
                     + longitudeSeconds + "'' " + longitudeDirection + ": "
-                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°");
+                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°\n");
             
             
             // Alpheratz
@@ -565,13 +542,12 @@ public class Application extends javax.swing.JFrame {
             
             map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, localSiderealTime);
             
-            textArea.setText(textArea.getText() + "\n" 
-                    + "Current Azimuth/Elevation of " + objectName 
-                    + "from " + latitudeDegrees + "° " + latitudeMinutes + "' "
+            textArea.append("\n" + "Current Azimuth/Elevation of " + objectName 
+                    + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
                     + latitudeSeconds + "'' " + latitudeDirection + " " 
                     + longitudeDegrees + "° " + longitudeMinutes + "' "
                     + longitudeSeconds + "'' " + longitudeDirection + ": "
-                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°");
+                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°\n");
             
             // Markab
             objectName = "Markab";
@@ -580,13 +556,12 @@ public class Application extends javax.swing.JFrame {
             
             map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, localSiderealTime);
             
-            textArea.setText(textArea.getText() + "\n" 
-                    + "Current Azimuth/Elevation of " + objectName 
-                    + "from " + latitudeDegrees + "° " + latitudeMinutes + "' "
+            textArea.append("Current Azimuth/Elevation of " + objectName 
+                    + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
                     + latitudeSeconds + "'' " + latitudeDirection + " " 
                     + longitudeDegrees + "° " + longitudeMinutes + "' "
                     + longitudeSeconds + "'' " + longitudeDirection + ": "
-                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°");   
+                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°\n");   
         } 
         catch (Exception ex) 
         {
@@ -788,41 +763,37 @@ public class Application extends javax.swing.JFrame {
         
     }//GEN-LAST:event_enterDataButtonActionPerformed
 
-    private void longDegreeTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_longDegreeTextFieldKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_longDegreeTextFieldKeyTyped
-
-    private void longDegreeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_longDegreeTextFieldActionPerformed
+    private void latDegreeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_latDegreeTextFieldKeyReleased
         // Gets the Longitude Degree value from user:
-        float longDegree = Float.parseFloat(longDegreeTextField.getText());
+        int latDegree = Integer.parseInt(latDegreeTextField.getText());
         
-        if((longDegree < -180) || (longDegree > 180))
+        if((latDegree < 0) || (latDegree > 90))
         {
-            longDegreeTextField.setBackground(Color.YELLOW);
+            latDegreeTextField.setBackground(Color.YELLOW);
         }
         else
         {
-            longDegreeTextField.setBackground(Color.WHITE);
-            textArea.append(longDegree + "°\n");
+            latDegreeTextField.setBackground(Color.WHITE);
+            textArea.append(latDegree + "°\n");
         }
-    }//GEN-LAST:event_longDegreeTextFieldActionPerformed
+    }//GEN-LAST:event_latDegreeTextFieldKeyReleased
 
-    private void minLongTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minLongTextFieldActionPerformed
-        // Get Longitude hours from user:
-        int longHours = Integer.parseInt(minLongTextField.getText());
+    private void minLatTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_minLatTextFieldKeyReleased
+        // Gets the Latitude Hours value from user:
+        int latHours = Integer.parseInt(minLatTextField.getText());
         
-        if((longHours < 0) || (longHours > 23))
+        if((latHours < 0) || (latHours > 59))
         {
-            minLongTextField.setBackground(Color.YELLOW);
+            minLatTextField.setBackground(Color.YELLOW);
         }          
         else
         {
-            minLongTextField.setBackground(Color.WHITE);
-            textArea.append(longHours + "'\n");
+            minLatTextField.setBackground(Color.WHITE);
+            textArea.append(latHours + "'\n");
         }
-    }//GEN-LAST:event_minLongTextFieldActionPerformed
+    }//GEN-LAST:event_minLatTextFieldKeyReleased
 
-    private void secLatTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secLatTextFieldActionPerformed
+    private void secLatTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_secLatTextFieldKeyReleased
         int latMinutes = Integer.parseInt(secLatTextField.getText());
         
         if((latMinutes < 0) || (latMinutes > 59))
@@ -834,21 +805,78 @@ public class Application extends javax.swing.JFrame {
             secLatTextField.setBackground(Color.WHITE);
             textArea.append(latMinutes + "\"\n");
         }
-    }//GEN-LAST:event_secLatTextFieldActionPerformed
+    }//GEN-LAST:event_secLatTextFieldKeyReleased
 
-    private void secLongTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secLongTextFieldActionPerformed
-        int longMinutes = Integer.parseInt(secLongTextField.getText());
+    private void longDegreeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_longDegreeTextFieldKeyReleased
+        // Gets the Longitude Degree value from user:
+        int longDegree = Integer.parseInt(longDegreeTextField.getText());
+        
+        if((longDegree < 0) || (longDegree > 180))
+        {
+            longDegreeTextField.setBackground(Color.YELLOW);
+        }
+        else
+        {
+            longDegreeTextField.setBackground(Color.WHITE);
+            textArea.append(longDegree + "°\n");
+        }
+    }//GEN-LAST:event_longDegreeTextFieldKeyReleased
+
+    private void minLongTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_minLongTextFieldKeyReleased
+        int longMinutes = Integer.parseInt(minLongTextField.getText());
         
         if((longMinutes < 0) || (longMinutes > 59))
+        {
+            minLongTextField.setBackground(Color.YELLOW);
+        }          
+        else
+        {
+            minLongTextField.setBackground(Color.WHITE);
+            textArea.append(longMinutes + "\"\n");
+        }
+    }//GEN-LAST:event_minLongTextFieldKeyReleased
+
+    private void secLongTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_secLongTextFieldKeyReleased
+        int latMinutes = Integer.parseInt(secLongTextField.getText());
+        
+        if((latMinutes < 0) || (latMinutes > 59))
         {
             secLongTextField.setBackground(Color.YELLOW);
         }          
         else
         {
             secLongTextField.setBackground(Color.WHITE);
-            textArea.append(longMinutes + "\"\n");
+            textArea.append(latMinutes + "\"\n");
         }
-    }//GEN-LAST:event_secLongTextFieldActionPerformed
+    }//GEN-LAST:event_secLongTextFieldKeyReleased
+
+    private void hourTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_hourTextFieldKeyReleased
+        int hour = Integer.parseInt(hourTextField.getText());
+        
+        if((hour < 0) || (hour > 23))
+        {
+            hourTextField.setBackground(Color.YELLOW);
+        }          
+        else
+        {
+            hourTextField.setBackground(Color.WHITE);
+            textArea.append(hour + "\"\n");
+        }
+    }//GEN-LAST:event_hourTextFieldKeyReleased
+
+    private void minuteTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_minuteTextFieldKeyReleased
+        int minute = Integer.parseInt(minuteTextField.getText());
+        
+        if((minute < 0) || (minute > 23))
+        {
+            minuteTextField.setBackground(Color.YELLOW);
+        }          
+        else
+        {
+            minuteTextField.setBackground(Color.WHITE);
+            textArea.append(minute + "\"\n");
+        }
+    }//GEN-LAST:event_minuteTextFieldKeyReleased
     
     // </editor-fold>
         

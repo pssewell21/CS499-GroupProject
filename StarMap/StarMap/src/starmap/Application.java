@@ -542,7 +542,7 @@ public class Application extends javax.swing.JFrame {
             
             map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, localSiderealTime);
             
-            textArea.append("\n" + "Current Azimuth/Elevation of " + objectName 
+            textArea.append("Current Azimuth/Elevation of " + objectName 
                     + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
                     + latitudeSeconds + "'' " + latitudeDirection + " " 
                     + longitudeDegrees + "° " + longitudeMinutes + "' "

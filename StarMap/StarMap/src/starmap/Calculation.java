@@ -24,9 +24,9 @@ public class Calculation
     public static int JGREG = 15 + 31 * (10 + 12 * 1582);
   
     private static LocalTime getGreenwichSiderealTime(LocalDateTime dateTime)
-    {        
-        // Get Julian date        
-        // Reference: https://www.rgagnon.com/javadetails/java-0506.html
+    {       
+        double julianDate = getJulianDate(dateTime);
+        
         int year = dateTime.getYear();
         int month = dateTime.getMonth().ordinal();
         int day = dateTime.getDayOfYear();
@@ -38,6 +38,44 @@ public class Calculation
         // Add .0 to force double prescision
         double decimalHour = (hour + 12) + (minute / 60.0) + (second / (60 * 60));
         double decimalDay = day + ((decimalHour - 12) / 24);
+        
+        // Convert
+        double t = (julianDate - 2415020) / 36525.0;
+        double ss = (6.6460656 + (2400.051 * t) + (0.00002581 * t * t));
+        double st = ((ss / 24.0) - Math.floor(ss / 24)) * 24;
+        double sa = st + (decimalDay - Math.floor(decimalDay)) * 24 * 1.002737908;               
+                
+        if (sa < 0)
+        {
+            sa += 24;
+        }
+        if (sa > 24)
+        {
+            sa -= 24;
+        }
+        
+        int gstHour = (int)Math.floor(sa);
+        int gstMinute = (int)Math.floor((sa - Math.floor(sa)) * 60.0);
+        int gstSecond = (int)((sa - Math.floor(sa)) * 60.0 - gstMinute) * 60;
+        
+        LocalTime gstTime = LocalTime.of(gstHour, gstMinute, gstSecond);
+        
+        return gstTime;
+    }
+    
+    public static double getJulianDate(LocalDateTime dateTime)
+    {
+        // Reference: https://www.rgagnon.com/javadetails/java-0506.html
+        int year = dateTime.getYear();
+        int month = dateTime.getMonth().ordinal();
+        int day = dateTime.getDayOfYear();
+        
+        int hour = dateTime.getHour();
+        int minute = dateTime.getMinute();
+        int second = dateTime.getSecond();
+        
+        // Add .0 to force double prescision
+        double decimalHour = (hour + 12) + (minute / 60.0) + (second / (60 * 60));
         
         int julianYear = year;
         int julianMonth = month;
@@ -74,29 +112,7 @@ public class Calculation
         julianDate += (decimalHour / 24);
         
 //        System.out.println("Julian date = " + julianDate);
-        
-        // Convert
-        double t = (julianDate - 2415020) / 36525.0;
-        double ss = (6.6460656 + (2400.051 * t) + (0.00002581 * t * t));
-        double st = ((ss / 24.0) - Math.floor(ss / 24)) * 24;
-        double sa = st + (decimalDay - Math.floor(decimalDay)) * 24 * 1.002737908;               
-                
-        if (sa < 0)
-        {
-            sa += 24;
-        }
-        if (sa > 24)
-        {
-            sa -= 24;
-        }
-        
-        int gstHour = (int)Math.floor(sa);
-        int gstMinute = (int)Math.floor((sa - Math.floor(sa)) * 60.0);
-        int gstSecond = (int)((sa - Math.floor(sa)) * 60.0 - gstMinute) * 60;
-        
-        LocalTime gstTime = LocalTime.of(gstHour, gstMinute, gstSecond);
-        
-        return gstTime;
+        return julianDate;
     }
     
     public static double getDecimalCoordinate(int degrees, int minutes, int seconds, String direction) throws Exception

@@ -519,6 +519,7 @@ public class Application extends javax.swing.JFrame {
             System.out.println("Current Local Sidereal Time: " + localSiderealTime);            
             
             double latitude = Calculation.getDecimalCoordinate(latitudeDegrees, latitudeMinutes, latitudeSeconds, latitudeDirection);
+            textArea.append("Latitude = " + latitude + "\n");
             
             // Polaris
             String objectName = "Polaris";

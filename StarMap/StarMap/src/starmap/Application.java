@@ -46,20 +46,20 @@ public class Application extends javax.swing.JFrame {
         
         // UAH Tech Hall coordinates
         westRadioButton.setSelected(true);
-        //longDegreeTextField.setText("86");
-        //minLongTextField.setText("38");
-        //secLongTextField.setText("47");
-        longDegreeTextField.setText("0");
-        minLongTextField.setText("0");
-        secLongTextField.setText("21");
+        longDegreeTextField.setText("86");
+        minLongTextField.setText("38");
+        secLongTextField.setText("47");
+        //longDegreeTextField.setText("0");
+        //minLongTextField.setText("0");
+        //secLongTextField.setText("21");
         
         northRadioButton.setSelected(true);
-        //latDegreeTextField.setText("34");
-        //minLatTextField.setText("43");
-        //secLatTextField.setText("8");        
-        latDegreeTextField.setText("51");
-        minLatTextField.setText("28");
-        secLatTextField.setText("42");
+        latDegreeTextField.setText("34");
+        minLatTextField.setText("43");
+        secLatTextField.setText("8");        
+        //latDegreeTextField.setText("51");
+        //minLatTextField.setText("28");
+        //secLatTextField.setText("42");
         
         // Set DateTime fields to current DateTime
         //LocalDateTime currentDateTime = LocalDateTime.now();
@@ -522,13 +522,10 @@ public class Application extends javax.swing.JFrame {
             {
                 longitudeDirection = "East";
             }                    
+                     
+            LocalTime greenwichSiderealTime = Calculation.getGreenwichSiderealTime(dateTime);            
             
-            // Coordinates for UAH are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W            
-            LocalTime localSiderealTime = Calculation.getLocalSiderealTime(longitudeDegrees, longitudeMinutes, longitudeSeconds, longitudeDirection, dateTime);
-            System.out.println("Current Local Sidereal Time: " + localSiderealTime);  
-            
-            LocalTime greenwichSiderealTime = Calculation.getGreenwichSiderealTime(dateTime);
-            
+            // Coordinates for UAH are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W   
             double latitude = Calculation.getDecimalCoordinate(latitudeDegrees, latitudeMinutes, latitudeSeconds, latitudeDirection);
             double longitude = Calculation.getDecimalCoordinate(longitudeDegrees, longitudeMinutes, longitudeSeconds, longitudeDirection);
             textArea.append("Latitude = " + latitude + "\n");

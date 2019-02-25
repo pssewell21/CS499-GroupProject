@@ -8,8 +8,6 @@ package starmap;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
-import static java.util.Calendar.MONTH;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -141,30 +139,6 @@ public class Calculation
         
         return Duration.ofSeconds((int)Math.floor(seconds));
     }
-        
-    // Assuming we will only allow whole second values, we can easily shange this to double the precision is needed
-    // TODO: Verify accuracy
-    public static LocalTime getLocalSiderealTime(int degreesLong, 
-                                                 int minutesLong, 
-                                                 int secondsLong, 
-                                                 String directionLong,
-                                                 LocalDateTime dateTime) throws Exception
-    {
-        // Convert H M S to decimal coordinate value
-        double longitude = getDecimalCoordinate(degreesLong, minutesLong, secondsLong, directionLong);
-//        System.out.println("longitude for " + degrees + " " + minutes + " " + seconds + " " + direction + " = " + longitude);
-        
-        // Divide the result by 15.  Use 15.0 to force decimal precision if the first value is a whole number
-        double hourOffset = longitude / 15.0;
-        
-        Duration timeOffset = getDurationFromDecimalHours(hourOffset);
-        System.out.println("Offset of " + hourOffset + " hours = " + timeOffset);
-        
-        LocalTime greenwichSiderealTime = getGreenwichSiderealTime(dateTime);
-        System.out.println("Current Greenwich Sidereal Time: " + greenwichSiderealTime);
-
-        return greenwichSiderealTime.plus(timeOffset);
-    }
     
     /**
      *
@@ -193,57 +167,24 @@ public class Calculation
         // Longitude passed is negative if west of Greenwich and will be subtracted in this case
         double hourAngleDegrees = (decimalHours - rightAscention) * 15 + longitude;        
         
-        System.out.println("hourAngleDegrees = " + hourAngleDegrees);
+//        System.out.println("hourAngleDegrees = " + hourAngleDegrees);
         
         double hourAngleRadians = hourAngleDegrees * Math.PI / 180;
         double declinationRadians = declination * Math.PI / 180;
         double latitudeRadians = latitude * Math.PI / 180;
         
-        //System.out.println("hourAngleRadians = " + hourAngleRadians);
-        //System.out.println("declinationRadians = " + declinationRadians);
-        //System.out.println("latitudeRadians = " + latitudeRadians);
-        
         double elevation = Math.asin(
                 (Math.cos(hourAngleRadians) * Math.cos(declinationRadians) * Math.cos(latitudeRadians))
                 + (Math.sin(declinationRadians) * Math.sin(latitudeRadians)));
-        
-//        double azimuth = Math.atan(
-//                (-1 * Math.sin(hourAngleRadians))
-//                / ((Math.tan(declinationRadians) * Math.cos(latitudeRadians))
-//                        - (Math.sin(latitudeRadians) * Math.cos(hourAngleRadians))));
         Double azimuth = Math.atan2(
                 -1 * Math.sin(hourAngleRadians),
                 (Math.tan(declinationRadians) * Math.cos(latitudeRadians))
-                        - (Math.sin(latitudeRadians) * Math.cos(hourAngleRadians)));             
-        
-        //System.out.println("azimuth = " + azimuth);
-        //System.out.println("elevation = " + elevation);     
-        
-//        // Convert LST to decimal hours
-//        double decimalHours = localSiderealTime.getHour() + (localSiderealTime.getMinute() / 60) + (localSiderealTime.getSecond() / (60 * 60));
-//        
-//        // Compute object hours angle      
-//        double hourAngle = decimalHours - rightAscention;
-//        
-//        // Convert hours to degrees
-//        double hourAngleDegrees = hourAngle * 15;
-//        
-//        // convert degrees to radians
-//        double hourAngleRadians = hourAngleDegrees * Math.PI / 180;
-//        double declinationRadians = declination * Math.PI / 180;
-//        double latitudeRadians = latitude * Math.PI / 180;
-//        
-//        // Compute Azimuth in radians
-//        double azimuth = Math.atan((-1 * Math.sin(hourAngleRadians) * Math.cos(declinationRadians)) / ((Math.cos(latitudeRadians) * Math.sin(declinationRadians)) - (Math.sin(latitudeRadians) * Math.cos(declinationRadians) * Math.cos(hourAngleRadians))));
-//        
-//        // Compute Elevation in radians  
-//        double elevation = Math.asin((Math.sin(latitudeRadians) * Math.sin(declinationRadians)) + (Math.cos(latitudeRadians) * Math.cos(declinationRadians) * Math.cos(hourAngleRadians)));
-        
+                        - (Math.sin(latitudeRadians) * Math.cos(hourAngleRadians)));  
         double azimuthDegrees = azimuth * (180 / Math.PI);
         double elevationDegrees = elevation * (180 / Math.PI); 
         
-        System.out.println("azimuthDegrees = " + azimuthDegrees);
-        System.out.println("elevationDegrees = " + elevationDegrees);  
+//        System.out.println("azimuthDegrees = " + azimuthDegrees);
+//        System.out.println("elevationDegrees = " + elevationDegrees);  
         
         if (azimuthDegrees < 0)
         {

@@ -8,7 +8,6 @@ package starmap;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,99 +19,70 @@ import java.util.Map;
  */
 public class Calculation 
 {
-    // Gregorian Calendar adopted Oct. 15, 1582 (2299161)
-    public static int JGREG = 15 + 31 * (10 + 12 * 1582);
-  
-    private static LocalTime getGreenwichSiderealTime(LocalDateTime dateTime)
-    {       
-        double julianDate = getJulianDate(dateTime);
-        
-        int year = dateTime.getYear();
-        int month = dateTime.getMonth().ordinal();
-        int day = dateTime.getDayOfYear();
-        
-        int hour = dateTime.getHour();
-        int minute = dateTime.getMinute();
-        int second = dateTime.getSecond();
-        
-        // Add .0 to force double prescision
-        double decimalHour = (hour + 12) + (minute / 60.0) + (second / (60 * 60));
-        double decimalDay = day + ((decimalHour - 12) / 24);
-        
-        // Convert
-        double t = (julianDate - 2415020) / 36525.0;
-        double ss = (6.6460656 + (2400.051 * t) + (0.00002581 * t * t));
-        double st = ((ss / 24.0) - Math.floor(ss / 24)) * 24;
-        double sa = st + (decimalDay - Math.floor(decimalDay)) * 24 * 1.002737908;               
-                
-        if (sa < 0)
-        {
-            sa += 24;
-        }
-        if (sa > 24)
-        {
-            sa -= 24;
-        }
-        
-        int gstHour = (int)Math.floor(sa);
-        int gstMinute = (int)Math.floor((sa - Math.floor(sa)) * 60.0);
-        int gstSecond = (int)((sa - Math.floor(sa)) * 60.0 - gstMinute) * 60;
-        
-        LocalTime gstTime = LocalTime.of(gstHour, gstMinute, gstSecond);
-        
-        return gstTime;
-    }
+    // The julian date on JAN 1, 2000
+    static double baselineJulianDate = 2451545.0;
+    static LocalDateTime baselineDate = LocalDateTime.of(2000, 1, 1, 12, 0, 0);
     
-    public static double getJulianDate(LocalDateTime dateTime)
+    public static double getJulianDate(LocalDateTime dateTime)            
     {
-        // Reference: https://www.rgagnon.com/javadetails/java-0506.html
-        int year = dateTime.getYear();
-        int month = dateTime.getMonth().ordinal();
-        int day = dateTime.getDayOfYear();
+        // Reference: https://aa.usno.navy.mil/faq/docs/GAST.php
+        Duration duration = Duration.between(baselineDate, dateTime);
         
-        int hour = dateTime.getHour();
-        int minute = dateTime.getMinute();
-        int second = dateTime.getSecond();
+        double julianDate = 0;
         
-        // Add .0 to force double prescision
-        double decimalHour = (hour + 12) + (minute / 60.0) + (second / (60 * 60));
-        
-        int julianYear = year;
-        int julianMonth = month;
-        int julianDay = day - 1;
-        
-        if (year < 0)
+        if (dateTime.getYear() >= 2000)
         {
-            julianYear++;
-        }
-        
-        if (month > 2)
-        {
-            julianMonth++;
+            julianDate = baselineJulianDate + duration.toDays();
         }
         else
         {
-            julianYear--;
-            julianMonth += 13;
+            julianDate = baselineJulianDate - duration.toDays();
         }
         
-        double julianDate = Math.floor(365.25 * julianYear) 
-                + Math.floor(30.6001 * julianMonth)
-                + julianDay
-                + 1720995.0;
+//        System.out.println("julianDate = " + julianDate);
         
-        if (day + 31 * (month + 12 * year) >= JGREG)
+        double decimalHours = dateTime.getHour() + (dateTime.getMinute() / 60.0) + (dateTime.getSecond() / (60.0 * 60));
+        
+        // Adjust for hour of day
+        if (decimalHours >= 12)
         {
-            // change over to gregorian calendar
-            int adjustmentValue = (int)(0.01 * julianYear);
-            julianDate += 2 - adjustmentValue + (0.25 * adjustmentValue);
+            julianDate += ((decimalHours - 12) / 24.0) - 1;            
+        }
+        else
+        {
+            julianDate += ((decimalHours - 12) / 24.0) + 1;            
         }
         
-        julianDate = Math.floor(julianDate);
-        julianDate += (decimalHour / 24);
+//        System.out.println("julianDate with time adjustment = " + julianDate);
         
-//        System.out.println("Julian date = " + julianDate);
         return julianDate;
+    }
+  
+    public static LocalTime getGreenwichSiderealTime(LocalDateTime dateTime)
+    {        
+        // Reference: https://aa.usno.navy.mil/faq/docs/GAST.php
+        double julianDate = getJulianDate(dateTime);
+        double d = julianDate - baselineJulianDate;
+        
+        double gstHours = (18.697374558 + 24.06570982441908 * d) % 24;
+//        System.out.println("gstHours = " + gstHours);
+
+        int hour = (int)Math.floor(gstHours);
+//        System.out.println("hour = " + hour);        
+        
+        gstHours -= hour;
+//        System.out.println("gstHours = " + gstHours);
+        
+        int minute = (int)Math.floor(gstHours * 60);
+//        System.out.println("minute = " + minute);
+        
+        gstHours -= (minute / 60.0);
+//        System.out.println("gstHours = " + gstHours);
+        
+        int second = (int)Math.floor(gstHours * 60 * 60);
+//        System.out.println("second = " + second);
+        
+        return LocalTime.of(hour, minute, second);
     }
     
     public static double getDecimalCoordinate(int degrees, int minutes, int seconds, String direction) throws Exception
@@ -149,7 +119,7 @@ public class Calculation
         
         double longitude = degrees + minutesValue + secondsValue;
         
-        if (direction.equalsIgnoreCase("West"))
+        if (direction.equalsIgnoreCase("West") || direction.equalsIgnoreCase("South"))
         {
             longitude *= -1;
         }
@@ -169,41 +139,18 @@ public class Calculation
         
         return Duration.ofSeconds((int)Math.floor(seconds));
     }
-        
-    // Assuming we will only allow whole second values, we can easily shange this to double the precision is needed
-    // TODO: Verify accuracy
-    public static LocalTime getLocalSiderealTime(int degreesLong, 
-                                                 int minutesLong, 
-                                                 int secondsLong, 
-                                                 String directionLong,
-                                                 LocalDateTime dateTime) throws Exception
-    {
-        // Convert H M S to decimal coordinate value
-        double longitude = getDecimalCoordinate(degreesLong, minutesLong, secondsLong, directionLong);
-//        System.out.println("longitude for " + degrees + " " + minutes + " " + seconds + " " + direction + " = " + longitude);
-        
-        // Divide the result by 15.  Use 15.0 to force decimal precision if the first value is a whole number
-        double hourOffset = longitude / 15.0;
-        
-        Duration timeOffset = getDurationFromDecimalHours(hourOffset);
-//        System.out.println("Offset of " + hourOffset + " hours = " + timeOffset);
-        
-        LocalTime greenwichSiderealTime = getGreenwichSiderealTime(dateTime);
-//        System.out.println("Current Greenwich Sidereal Time: " + greenwichSiderealTime);
-
-        return greenwichSiderealTime.plus(timeOffset);
-    }
     
     /**
      *
      * @param rightAscention
      * @param declination
      * @param latitude
+     * @param longitude
      * @param localSiderealTime
      * @return
      * @throws java.lang.Exception
      */
-    public static Map<String, Double> getAzimuthAndElevation(double rightAscention, double declination, double latitude, LocalTime localSiderealTime) throws Exception
+    public static Map<String, Double> getAzimuthAndElevation(double rightAscention, double declination, double latitude, double longitude, LocalTime localSiderealTime) throws Exception
     {
         if (rightAscention < 0 || rightAscention > 24)
         {
@@ -215,28 +162,29 @@ public class Calculation
             throw new Exception("Invalid value of " + declination + " for declination passed into Calculation.getAzimuthAndElevation");
         }
         
-        // Convert LST to decimal hours
-        double decimalHours = localSiderealTime.getHour() + (localSiderealTime.getMinute() / 60) + (localSiderealTime.getSecond() / (60 * 60));
+        double decimalHours = localSiderealTime.getHour() + (localSiderealTime.getMinute() / 60.0) + (localSiderealTime.getSecond() / (60.0 * 60));
         
-        // Compute object hours angle      
-        double hourAngle = decimalHours - rightAscention;
+        // Longitude passed is negative if west of Greenwich and will be subtracted in this case
+        double hourAngleDegrees = (decimalHours - rightAscention) * 15 + longitude;        
         
-        // Convert hours to degrees
-        double hourAngleDegrees = hourAngle * 15;
+//        System.out.println("hourAngleDegrees = " + hourAngleDegrees);
         
-        // convert degrees to radians
         double hourAngleRadians = hourAngleDegrees * Math.PI / 180;
         double declinationRadians = declination * Math.PI / 180;
         double latitudeRadians = latitude * Math.PI / 180;
         
-        // Compute Azimuth in radians
-        double azimuth = Math.atan((-1 * Math.sin(hourAngleRadians) * Math.cos(declinationRadians)) / ((Math.cos(latitudeRadians) * Math.sin(declinationRadians)) - (Math.sin(latitudeRadians) * Math.cos(declinationRadians) * Math.cos(hourAngleRadians))));
-        
-        // Compute Elevation in radians  
-        double elevation = Math.asin((Math.sin(latitudeRadians) * Math.sin(declinationRadians)) + (Math.cos(latitudeRadians) * Math.cos(declinationRadians) * Math.cos(hourAngleRadians)));
-        
+        double elevation = Math.asin(
+                (Math.cos(hourAngleRadians) * Math.cos(declinationRadians) * Math.cos(latitudeRadians))
+                + (Math.sin(declinationRadians) * Math.sin(latitudeRadians)));
+        Double azimuth = Math.atan2(
+                -1 * Math.sin(hourAngleRadians),
+                (Math.tan(declinationRadians) * Math.cos(latitudeRadians))
+                        - (Math.sin(latitudeRadians) * Math.cos(hourAngleRadians)));  
         double azimuthDegrees = azimuth * (180 / Math.PI);
         double elevationDegrees = elevation * (180 / Math.PI); 
+        
+//        System.out.println("azimuthDegrees = " + azimuthDegrees);
+//        System.out.println("elevationDegrees = " + elevationDegrees);  
         
         if (azimuthDegrees < 0)
         {
@@ -249,8 +197,6 @@ public class Calculation
         }
         
 //        System.out.println("hourAngleDegrees = " + hourAngleDegrees);
-//        System.out.println("azimuthDegrees = " + azimuthDegrees);
-//        System.out.println("elevationDegrees = " + elevationDegrees);     
         
         Map<String, Double> map = new HashMap<>();
         map.put("Azimuth", azimuthDegrees);

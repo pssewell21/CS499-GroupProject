@@ -49,14 +49,21 @@ public class Application extends javax.swing.JFrame {
         longDegreeTextField.setText("86");
         minLongTextField.setText("38");
         secLongTextField.setText("47");
+        //longDegreeTextField.setText("0");
+        //minLongTextField.setText("0");
+        //secLongTextField.setText("21");
         
         northRadioButton.setSelected(true);
         latDegreeTextField.setText("34");
         minLatTextField.setText("43");
-        secLatTextField.setText("8");
+        secLatTextField.setText("8");        
+        //latDegreeTextField.setText("51");
+        //minLatTextField.setText("28");
+        //secLatTextField.setText("42");
         
         // Set DateTime fields to current DateTime
-        LocalDateTime currentDateTime = LocalDateTime.now();
+        //LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = LocalDateTime.now().plusHours(6);
                 
         dateTextField.setDate(new Date());
         hourTextField.setText(Integer.toString(currentDateTime.getHour()));
@@ -481,7 +488,7 @@ public class Application extends javax.swing.JFrame {
             
             LocalDateTime dateTime = LocalDateTime.of(
                     selectedDate.get(Calendar.YEAR), 
-                    selectedDate.get(Calendar.MONTH), 
+                    selectedDate.get(Calendar.MONTH) + 1, 
                     selectedDate.get(Calendar.DAY_OF_MONTH), 
                     hour, 
                     minute);
@@ -516,20 +523,21 @@ public class Application extends javax.swing.JFrame {
             {
                 longitudeDirection = "East";
             }                    
+                     
+            LocalTime greenwichSiderealTime = Calculation.getGreenwichSiderealTime(dateTime);            
             
-            // Coordinates for UAH are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W            
-            LocalTime localSiderealTime = Calculation.getLocalSiderealTime(longitudeDegrees, longitudeMinutes, longitudeSeconds, longitudeDirection, dateTime);
-            System.out.println("Current Local Sidereal Time: " + localSiderealTime);            
-            
+            // Coordinates for UAH are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W   
             double latitude = Calculation.getDecimalCoordinate(latitudeDegrees, latitudeMinutes, latitudeSeconds, latitudeDirection);
+            double longitude = Calculation.getDecimalCoordinate(longitudeDegrees, longitudeMinutes, longitudeSeconds, longitudeDirection);
             textArea.append("Latitude = " + latitude + "\n");
+            textArea.append("Longitude = " + longitude + "\n");
             
             // Polaris
             String objectName = "Polaris";
             double rightAscention = 2.133333333;
             double declination = 89.26413805;
             
-            Map<String, Double> map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, localSiderealTime);
+            Map<String, Double> map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, longitude, greenwichSiderealTime);
             
             textArea.append("Current Azimuth/Elevation of " + objectName 
                     + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
@@ -544,7 +552,7 @@ public class Application extends javax.swing.JFrame {
             rightAscention = 0.13976888;
             declination = 29.09082805;
             
-            map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, localSiderealTime);
+            map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, longitude, greenwichSiderealTime);
             
             textArea.append("Current Azimuth/Elevation of " + objectName 
                     + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
@@ -558,7 +566,7 @@ public class Application extends javax.swing.JFrame {
             rightAscention = 23.07933801;
             declination = 15.20536786;
             
-            map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, localSiderealTime);
+            map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, longitude, greenwichSiderealTime);
             
             textArea.append("Current Azimuth/Elevation of " + objectName 
                     + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
@@ -872,7 +880,7 @@ public class Application extends javax.swing.JFrame {
     private void minuteTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_minuteTextFieldKeyReleased
         int minute = Integer.parseInt(minuteTextField.getText());
         
-        if((minute < 0) || (minute > 23))
+        if((minute < 0) || (minute > 59))
         {
             minuteTextField.setBackground(Color.YELLOW);
         }          

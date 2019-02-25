@@ -68,7 +68,7 @@ public class Calculation
         
         double gstHours = (18.697374558 + 24.06570982441908 * d) % 24;
 //        System.out.println("gstHours = " + gstHours);
-        
+
         int hour = (int)Math.floor(gstHours);
 //        System.out.println("hour = " + hour);        
         

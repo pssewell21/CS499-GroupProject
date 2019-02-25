@@ -486,6 +486,9 @@ public class Application extends javax.swing.JFrame {
                     hour, 
                     minute);
             
+            double printJD = Calculation.getJulianDate(dateTime);      
+            System.out.println("Julian Date: " + printJD);
+            
             int latitudeDegrees = Integer.parseInt(latDegreeTextField.getText());
             int latitudeMinutes = Integer.parseInt(minLatTextField.getText());
             int latitudeSeconds = Integer.parseInt(secLatTextField.getText());
@@ -567,7 +570,8 @@ public class Application extends javax.swing.JFrame {
         catch (Exception ex) 
         {
             Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }
+        
     }//GEN-LAST:event_generateButtonActionPerformed
     private void readDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readDataButtonActionPerformed
         try

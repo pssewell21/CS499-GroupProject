@@ -67,6 +67,7 @@ public class Application extends javax.swing.JFrame {
                 
         dateTextField.setDate(new Date());
         hourTextField.setText(Integer.toString(currentDateTime.getHour()));
+        hourOffsetComboBox.setSelectedItem("0");
         minuteTextField.setText(Integer.toString(currentDateTime.getMinute()));        
         
         load();
@@ -118,6 +119,7 @@ public class Application extends javax.swing.JFrame {
         selectAllButton = new javax.swing.JButton();
         hourTextField = new javax.swing.JTextField();
         minuteTextField = new javax.swing.JTextField();
+        hourOffsetComboBox = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         starsCheckBox = new javax.swing.JCheckBox();
         planetsCheckBox = new javax.swing.JCheckBox();
@@ -253,6 +255,8 @@ public class Application extends javax.swing.JFrame {
             }
         });
 
+        hourOffsetComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-12", "-11", "-10", "-9", "-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "0", "+1", "+2", "+3", "+4", "+5", "+6", "+7", "+8", "+9", "+10", "+11", "+12" }));
+
         javax.swing.GroupLayout coordinatePanelLayout = new javax.swing.GroupLayout(coordinatePanel);
         coordinatePanel.setLayout(coordinatePanelLayout);
         coordinatePanelLayout.setHorizontalGroup(
@@ -293,26 +297,31 @@ public class Application extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(13, 13, 13)
-                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(minLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(minLatTextField)
-                    .addComponent(hourTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(hourLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 9, Short.MAX_VALUE)
-                    .addComponent(hourLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(coordinatePanelLayout.createSequentialGroup()
-                            .addComponent(secLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(minuteLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coordinatePanelLayout.createSequentialGroup()
-                            .addComponent(secLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(minuteLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(minuteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(coordinatePanelLayout.createSequentialGroup()
+                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(minLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(minLatTextField)
+                            .addComponent(hourTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(hourLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 9, Short.MAX_VALUE)
+                            .addComponent(hourLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(coordinatePanelLayout.createSequentialGroup()
+                                    .addComponent(secLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(minuteLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coordinatePanelLayout.createSequentialGroup()
+                                    .addComponent(secLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(minuteLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(minuteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(coordinatePanelLayout.createSequentialGroup()
+                        .addComponent(hourOffsetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8)))
                 .addGap(37, 37, 37))
         );
 
@@ -359,7 +368,8 @@ public class Application extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(enterDataButton)
-                    .addComponent(selectAllButton))
+                    .addComponent(selectAllButton)
+                    .addComponent(hourOffsetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -484,13 +494,28 @@ public class Application extends javax.swing.JFrame {
         {
             Calendar selectedDate = dateTextField.getCalendar();
             int hour = Integer.parseInt(hourTextField.getText());
-            int minute = Integer.parseInt(minuteTextField.getText());            
+            int hourOffset = Integer.parseInt(hourOffsetComboBox.getSelectedItem().toString());
+            
+            int localHour = hour + hourOffset;
+            
+            if (localHour < 0)
+            {
+                localHour += 24;
+            }
+            
+            if (localHour > 23)
+            {
+                localHour -= 24;
+            }        
+            
+            int minute = Integer.parseInt(minuteTextField.getText());   
+            
             
             LocalDateTime dateTime = LocalDateTime.of(
                     selectedDate.get(Calendar.YEAR), 
                     selectedDate.get(Calendar.MONTH) + 1, 
                     selectedDate.get(Calendar.DAY_OF_MONTH), 
-                    hour, 
+                    localHour, 
                     minute);
             
             double printJD = Calculation.getJulianDate(dateTime);      
@@ -1020,6 +1045,7 @@ public class Application extends javax.swing.JFrame {
     private javax.swing.JButton generateButton;
     private javax.swing.JLabel hourLabel;
     private javax.swing.JLabel hourLabel1;
+    private javax.swing.JComboBox<String> hourOffsetComboBox;
     private javax.swing.JTextField hourTextField;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

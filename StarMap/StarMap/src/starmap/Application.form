@@ -4,6 +4,10 @@
   <NonVisualComponents>
     <Component class="javax.swing.JProgressBar" name="jProgressBar1">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="latitudeButtonGroup">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="longitudeButtonGroup">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -31,20 +35,18 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Component id="coordinatePanel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="selectAllButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="enterDataButton" min="-2" max="-2" attributes="0"/>
                           <Component id="generateButton" min="-2" pref="155" max="-2" attributes="0"/>
+                          <Component id="readDataButton" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" pref="833" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -53,25 +55,19 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                      <Component id="enterDataButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="selectAllButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="generateButton" min="-2" pref="154" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="readDataButton" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="coordinatePanel" max="32767" attributes="0"/>
-                          <Component id="jPanel2" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
+                  <Component id="coordinatePanel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="19" max="32767" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="434" max="-2" attributes="0"/>
+              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="748" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -88,27 +84,17 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jScrollPane2" min="-2" pref="292" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="249" max="-2" attributes="0"/>
-                      <Component id="readDataButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="299" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" pref="971" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" min="-2" pref="223" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                              <Component id="readDataButton" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="424" pref="498" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="223" max="-2" attributes="0"/>
+                      <EmptySpace min="424" pref="512" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -129,14 +115,6 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="readDataButton">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Read Data File"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="readDataButtonActionPerformed"/>
-              </Events>
-            </Component>
           </SubComponents>
         </Container>
       </SubComponents>
@@ -152,22 +130,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="generateButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="selectAllButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Select All"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectAllButtonActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="enterDataButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Enter Data"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="enterDataButtonActionPerformed"/>
-      </Events>
-    </Component>
     <Container class="javax.swing.JPanel" name="coordinatePanel">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -180,60 +142,80 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="latitudeDegreesLabel" min="-2" pref="145" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="latDegTextField" linkSize="1" min="-2" pref="148" max="-2" attributes="0"/>
-                          <EmptySpace pref="26" max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="enterDataButton" linkSize="5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="selectAllButton" linkSize="5" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="clockLabel" min="-2" max="-2" attributes="0"/>
-                                      <Component id="dateLabel" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jDateChooser1" alignment="0" min="-2" pref="138" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="hrsTextField" min="-2" pref="33" max="-2" attributes="0"/>
+                                          <Component id="latitudeMinLabel" linkSize="6" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="colonLabel" min="-2" pref="4" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="minTextField" min="-2" pref="34" max="-2" attributes="0"/>
+                                          <Component id="westRadioButton" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="eastRadioButton" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="latitudeDegreesLabel" linkSize="6" min="-2" pref="77" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="northRadioButton" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="southRadioButton" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="latDegreeTextField" linkSize="9" pref="38" max="32767" attributes="0"/>
+                                      <Component id="longDegreeTextField" linkSize="9" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="degreeLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="degreeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="directionComboBox" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lonMinLabel" min="-2" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                                  <Component id="latitudeMinLabel" min="-2" pref="145" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Component id="lonDegreeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="latMinTextField" linkSize="1" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="lonDegTextField" linkSize="1" min="-2" pref="87" max="-2" attributes="0"/>
-                                          <Component id="lonMinTextField" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="dateLabel" min="-2" pref="56" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="dateTextField" min="-2" pref="138" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace min="13" pref="13" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="minLongTextField" linkSize="9" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="minLatTextField" linkSize="9" alignment="0" max="32767" attributes="0"/>
+                      <Component id="hourTextField" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="hourLabel1" pref="9" max="32767" attributes="0"/>
+                      <Component id="hourLabel" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="secLatTextField" linkSize="9" min="-2" pref="34" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="minuteLabel" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="secLongTextField" linkSize="9" min="-2" pref="34" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="minuteLabel1" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Component id="minuteTextField" min="-2" pref="40" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -241,42 +223,48 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="latitudeDegreesLabel" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
-                      <Component id="latDegTextField" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="latMinTextField" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="latitudeMinLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lonDegTextField" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lonDegreeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lonMinTextField" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lonMinLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="latitudeDegreesLabel" linkSize="7" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
+                              <Component id="northRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="southRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="latDegreeTextField" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="degreeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="minLatTextField" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="hourLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="secLatTextField" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="minuteLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="westRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="latitudeMinLabel" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="longDegreeTextField" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="degreeLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="minLongTextField" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="hourLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="secLongTextField" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="minuteLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="eastRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="dateLabel" min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="dateTextField" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="hourTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="minuteTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="directionComboBox" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="dateLabel" min="-2" pref="26" max="-2" attributes="0"/>
-                      <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="enterDataButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="selectAllButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                          <Component id="hrsTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="colonLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="minTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="clockLabel" alignment="1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="22" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -284,87 +272,134 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="latitudeDegreesLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Latitude (in Degrees):"/>
+            <Property name="text" type="java.lang.String" value="Latitude"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="latDegTextField">
+        <Component class="javax.swing.JTextField" name="latDegreeTextField">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="latDegTextFieldActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="latDegreeTextFieldKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="latitudeMinLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Latitude (in Minutes):"/>
+            <Property name="text" type="java.lang.String" value="Longitude"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lonDegreeLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Longitude (in Degrees):"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lonMinLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Longitude (in Minutes):"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="latMinTextField">
+        <Component class="javax.swing.JTextField" name="longDegreeTextField">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="latMinTextFieldActionPerformed"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="latMinTextFieldKeyTyped"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="longDegreeTextFieldKeyReleased"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="lonDegTextField">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lonDegTextFieldActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="lonMinTextField">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lonMinTextFieldActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="directionComboBox">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="None"/>
-                <StringItem index="1" value="North"/>
-                <StringItem index="2" value="South"/>
-                <StringItem index="3" value="East"/>
-                <StringItem index="4" value="West"/>
-              </StringArray>
-            </Property>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="dateLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Date:"/>
+            <Property name="text" type="java.lang.String" value="Date/Time"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="clockLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Clock:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="hrsTextField">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="hr"/>
-          </Properties>
+        <Component class="javax.swing.JTextField" name="minLatTextField">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hrsTextFieldActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="minLatTextFieldKeyReleased"/>
           </Events>
         </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
-        </Component>
-        <Component class="javax.swing.JTextField" name="minTextField">
+        <Component class="com.toedter.calendar.JDateChooser" name="dateTextField">
           <Properties>
-            <Property name="text" type="java.lang.String" value="min"/>
+            <Property name="maxSelectableDate" type="java.util.Date" editor="org.netbeans.beaninfo.editors.DateEditor">
+              <SerializedValue value="-84,-19,0,5,115,114,0,14,106,97,118,97,46,117,116,105,108,46,68,97,116,101,104,106,-127,1,75,89,116,25,3,0,0,120,112,119,8,0,0,3,-69,46,13,107,24,120"/>
+            </Property>
+            <Property name="minSelectableDate" type="java.util.Date" editor="org.netbeans.beaninfo.editors.DateEditor">
+              <SerializedValue value="-84,-19,0,5,115,114,0,14,106,97,118,97,46,117,116,105,108,46,68,97,116,101,104,106,-127,1,75,89,116,25,3,0,0,120,112,119,8,-1,-1,-3,-3,-81,75,115,0,120"/>
+            </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="colonLabel">
+        <Component class="javax.swing.JTextField" name="secLatTextField">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="secLatTextFieldKeyReleased"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="secLongTextField">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="secLongTextFieldKeyReleased"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="minLongTextField">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="minLongTextFieldKeyReleased"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="northRadioButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value=":"/>
+            <Property name="text" type="java.lang.String" value="N"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="eastRadioButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="E"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="westRadioButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="W"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="southRadioButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="S"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="degreeLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#xb0;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="hourLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&apos;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="minuteLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&quot;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="degreeLabel1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#xb0;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="hourLabel1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&apos;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="minuteLabel1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&quot;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="enterDataButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Enter Data"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="enterDataButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="selectAllButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Select All"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectAllButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="hourTextField">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="hourTextFieldKeyReleased"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="minuteTextField">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="minuteTextFieldKeyReleased"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -389,7 +424,7 @@
                       <Component id="messierCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="planetsCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="15" max="32767" attributes="0"/>
+                  <EmptySpace pref="71" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -402,11 +437,11 @@
                   <Component id="planetsCheckBox" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="constellationsCheckBox" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                  <Component id="messierCheckBox" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="messierCheckBox" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   <Component id="unselectCheckBox" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="37" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -454,5 +489,13 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="readDataButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Read Data File"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="readDataButtonActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

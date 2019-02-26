@@ -7,7 +7,6 @@ package planetsdriver;
 import java.io.*;
 import java.lang.Math;
 import java.util.Calendar;
-import java.util.Scanner;
 //import java.lang.*;
 
 
@@ -80,10 +79,7 @@ public class Planet {
         double RADS = Math.PI / 180.0;
         
         String output;
-        Scanner scan = new Scanner(System.in);
-        //new_value = scan.nextInt();
-//        
-//        System.out.println("Please enter a 1-9: ");
+
         
         switch(new_value)
        {

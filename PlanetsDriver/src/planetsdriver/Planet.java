@@ -98,7 +98,7 @@ public class Planet {
                          "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
                          "\nInclination:              " + inclination + "°" +
                          "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
-                         "\nArgument of Perihelion:   " + perihelion + " °");
+                         "\nArgument of Perihelion:   " + perihelion + " °\n");
                 System.out.println(output);
                 break;
         /* Venus */
@@ -116,7 +116,7 @@ public class Planet {
                          "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
                          "\nInclination:              " + inclination + "°" +
                          "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
-                         "\nArgument of Perihelion:   " + perihelion + " °");
+                         "\nArgument of Perihelion:   " + perihelion + " °\n");
                 System.out.println(output);
                 break;
         /* Earth/Sun */
@@ -134,7 +134,7 @@ public class Planet {
                          "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
                          "\nInclination:              " + inclination + "°" +
                          "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
-                         "\nArgument of Perihelion:   " + perihelion + " °");
+                         "\nArgument of Perihelion:   " + perihelion + " °\n");
                 System.out.println(output);
                 break;
         /* Mars */
@@ -152,7 +152,7 @@ public class Planet {
                          "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
                          "\nInclination:              " + inclination + "°" +
                          "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
-                         "\nArgument of Perihelion:   " + perihelion + " °");
+                         "\nArgument of Perihelion:   " + perihelion + " °\n");
                 System.out.println(output);
                 break;
         /* Jupiter */
@@ -170,7 +170,7 @@ public class Planet {
                          "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
                          "\nInclination:              " + inclination + "°" +
                          "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
-                         "\nArgument of Perihelion:   " + perihelion + " °");
+                         "\nArgument of Perihelion:   " + perihelion + " °\n");
                 System.out.println(output);
                 break;
         /* Saturn */
@@ -188,7 +188,7 @@ public class Planet {
                          "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
                          "\nInclination:              " + inclination + "°" +
                          "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
-                         "\nArgument of Perihelion:   " + perihelion + " °");
+                         "\nArgument of Perihelion:   " + perihelion + " °\n");
                 System.out.println(output);
                 break;
         /* Uranus */
@@ -206,7 +206,7 @@ public class Planet {
                          "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
                          "\nInclination:              " + inclination + "°" +
                          "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
-                         "\nArgument of Perihelion:   " + perihelion + " °");
+                         "\nArgument of Perihelion:   " + perihelion + " °\n");
                 System.out.println(output);
                 break;
         /* Neptune */
@@ -224,7 +224,7 @@ public class Planet {
                          "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
                          "\nInclination:              " + inclination + "°" +
                          "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
-                         "\nArgument of Perihelion:   " + perihelion + " °");
+                         "\nArgument of Perihelion:   " + perihelion + " °\n");
                 System.out.println(output);
                 break;
         /* Pluto */
@@ -242,7 +242,7 @@ public class Planet {
                          "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
                          "\nInclination:              " + inclination + "°" +
                          "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
-                         "\nArgument of Perihelion:   " + perihelion + " °");
+                         "\nArgument of Perihelion:   " + perihelion + " °\n");
                 System.out.println(output);
                 break;
             default:

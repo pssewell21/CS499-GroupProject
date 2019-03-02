@@ -5,8 +5,7 @@
  */
 package starmap.Objects;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalTime;
 
 /**
  *
@@ -14,12 +13,7 @@ import java.util.Map;
  */
 public class Planet extends CelestrialObject
 {
-    public Map<Double, Double> getHorizonCoorfinates()
-    {
-        Map<Double, Double> map = new HashMap<>();
-    
-        map.put(1.0, 2.0);
-        
-        return map;            
+    public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime)
+    {        
     }   
 }

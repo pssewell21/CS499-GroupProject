@@ -6,6 +6,7 @@
 package starmap.DataReaders;
 
 import java.util.ArrayList;
+import starmap.Objects.Planet;
 
 /**
  *
@@ -13,9 +14,9 @@ import java.util.ArrayList;
  */
 public class PlanetDataReader extends DataReader
 {
-    public ArrayList<Object> readData()
+    public ArrayList<Planet> readData()
     {
-        ArrayList<Object> list = new ArrayList<>();
+        ArrayList<Planet> list = new ArrayList<>();
         
         return list;
     }

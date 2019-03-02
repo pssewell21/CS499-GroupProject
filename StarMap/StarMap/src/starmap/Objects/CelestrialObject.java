@@ -5,7 +5,7 @@
  */
 package starmap.Objects;
 
-import java.util.Map;
+import java.time.LocalTime;
 
 /**
  *
@@ -13,11 +13,11 @@ import java.util.Map;
  */
 public abstract class CelestrialObject 
 {
-    double azimuth;
+    public double azimuth;
     
-    double elevation;
+    public double elevation;
 
-    String name;
+    public String name;
     
-    public abstract Map<Double, Double> getHorizonCoorfinates();
+    public abstract void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) throws Exception;
 }

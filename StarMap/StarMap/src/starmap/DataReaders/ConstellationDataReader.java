@@ -6,6 +6,7 @@
 package starmap.DataReaders;
 
 import java.util.ArrayList;
+import starmap.Objects.Constellation;
 
 /**
  *
@@ -13,9 +14,9 @@ import java.util.ArrayList;
  */
 public class ConstellationDataReader extends DataReader
 {
-    public ArrayList<Object> readData()
+    public ArrayList<Constellation> readData()
     {
-        ArrayList<Object> list = new ArrayList<>();
+        ArrayList<Constellation> list = new ArrayList<>();
         
         return list;
     }

@@ -6,6 +6,7 @@
 package starmap.DataReaders;
 
 import java.util.ArrayList;
+import starmap.Objects.Meeseir;
 
 /**
  *
@@ -13,9 +14,9 @@ import java.util.ArrayList;
  */
 public class MeeseirDataReader extends DataReader
 {
-    public ArrayList<Object> readData()
+    public ArrayList<Meeseir> readData()
     {
-        ArrayList<Object> list = new ArrayList<>();
+        ArrayList<Meeseir> list = new ArrayList<>();
         
         return list;
     }

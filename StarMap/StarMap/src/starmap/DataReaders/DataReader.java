@@ -14,5 +14,5 @@ import java.util.ArrayList;
  */
 public abstract class DataReader 
 {
-    public abstract ArrayList<Object> readData();
+    public abstract ArrayList<? extends Object> readData();
 }

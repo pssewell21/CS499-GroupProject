@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -21,6 +22,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import starmap.DataReaders.StarDataReader;
+import starmap.Objects.Star;
 
 /**
  *
@@ -28,7 +31,7 @@ import java.util.logging.Logger;
  */
 public class Driver extends javax.swing.JFrame {
     
-    private String[][] starMapData;
+    ArrayList<Star> starList;
     
     // <editor-fold defaultstate="collapsed" desc="Constructor"> 
 
@@ -126,7 +129,6 @@ public class Driver extends javax.swing.JFrame {
         constellationsCheckBox = new javax.swing.JCheckBox();
         messierCheckBox = new javax.swing.JCheckBox();
         unselectCheckBox = new javax.swing.JCheckBox();
-        readDataButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("StarMapGenerator");
@@ -444,13 +446,6 @@ public class Driver extends javax.swing.JFrame {
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
-        readDataButton.setText("Read Data File");
-        readDataButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                readDataButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -464,9 +459,7 @@ public class Driver extends javax.swing.JFrame {
                         .addGap(45, 45, 45)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(readDataButton))))
+                        .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -477,11 +470,9 @@ public class Driver extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(readDataButton))
+                        .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(coordinatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -557,48 +548,70 @@ public class Driver extends javax.swing.JFrame {
             textArea.append("Latitude = " + latitude + "\n");
             textArea.append("Longitude = " + longitude + "\n");
             
-            // Polaris
-            String objectName = "Polaris";
-            double rightAscention = 2.133333333;
-            double declination = 89.26413805;
+            for (Star star : starList)
+            {
+                star.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+            }
             
-            Map<String, Double> map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, longitude, greenwichSiderealTime);
-            
-            textArea.append("Current Azimuth/Elevation of " + objectName 
-                    + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
-                    + latitudeSeconds + "'' " + latitudeDirection + " " 
-                    + longitudeDegrees + "° " + longitudeMinutes + "' "
-                    + longitudeSeconds + "'' " + longitudeDirection + ": "
-                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°\n");
-            
-            
-            // Alpheratz
-            objectName = "Alpheratz";
-            rightAscention = 0.13976888;
-            declination = 29.09082805;
-            
-            map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, longitude, greenwichSiderealTime);
-            
-            textArea.append("Current Azimuth/Elevation of " + objectName 
-                    + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
-                    + latitudeSeconds + "'' " + latitudeDirection + " " 
-                    + longitudeDegrees + "° " + longitudeMinutes + "' "
-                    + longitudeSeconds + "'' " + longitudeDirection + ": "
-                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°\n");
-            
-            // Markab
-            objectName = "Markab";
-            rightAscention = 23.07933801;
-            declination = 15.20536786;
-            
-            map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, longitude, greenwichSiderealTime);
-            
-            textArea.append("Current Azimuth/Elevation of " + objectName 
-                    + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
-                    + latitudeSeconds + "'' " + latitudeDirection + " " 
-                    + longitudeDegrees + "° " + longitudeMinutes + "' "
-                    + longitudeSeconds + "'' " + longitudeDirection + ": "
-                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°\n");   
+            for (Star star : starList)
+            {
+                if (star.name.trim().isEmpty())
+                {
+                    //textArea.append("Current Azimuth/Elevation of **NO NAME**: "
+                    //+ star.azimuth + "°, " +star.elevation + "°\n");
+                    System.out.println("Current Azimuth/Elevation of **NO NAME**: "
+                    + star.azimuth + "°, " +star.elevation + "°");
+                }
+                else
+                {                    
+                    //textArea.append("Current Azimuth/Elevation of " + star.name + ": "
+                    //+ star.azimuth + "°, " +star.elevation + "°\n");
+                    System.out.println("Current Azimuth/Elevation of " + star.name + ": "
+                    + star.azimuth + "°, " +star.elevation + "°");
+                }
+            }
+//            // Polaris
+//            String objectName = "Polaris";
+//            double rightAscention = 2.133333333;
+//            double declination = 89.26413805;
+//            
+//            Map<String, Double> map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, longitude, greenwichSiderealTime);
+//            
+//            textArea.append("Current Azimuth/Elevation of " + objectName 
+//                    + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
+//                    + latitudeSeconds + "'' " + latitudeDirection + " " 
+//                    + longitudeDegrees + "° " + longitudeMinutes + "' "
+//                    + longitudeSeconds + "'' " + longitudeDirection + ": "
+//                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°\n");
+//            
+//            
+//            // Alpheratz
+//            objectName = "Alpheratz";
+//            rightAscention = 0.13976888;
+//            declination = 29.09082805;
+//            
+//            map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, longitude, greenwichSiderealTime);
+//            
+//            textArea.append("Current Azimuth/Elevation of " + objectName 
+//                    + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
+//                    + latitudeSeconds + "'' " + latitudeDirection + " " 
+//                    + longitudeDegrees + "° " + longitudeMinutes + "' "
+//                    + longitudeSeconds + "'' " + longitudeDirection + ": "
+//                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°\n");
+//            
+//            // Markab
+//            objectName = "Markab";
+//            rightAscention = 23.07933801;
+//            declination = 15.20536786;
+//            
+//            map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, longitude, greenwichSiderealTime);
+//            
+//            textArea.append("Current Azimuth/Elevation of " + objectName 
+//                    + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
+//                    + latitudeSeconds + "'' " + latitudeDirection + " " 
+//                    + longitudeDegrees + "° " + longitudeMinutes + "' "
+//                    + longitudeSeconds + "'' " + longitudeDirection + ": "
+//                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°\n");   
         } 
         catch (Exception ex) 
         {
@@ -606,28 +619,6 @@ public class Driver extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_generateButtonActionPerformed
-    private void readDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readDataButtonActionPerformed
-        try
-        {
-            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            
-            for (int j = 0; j < starMapData.length; j++)
-            {
-                String output = "";
-
-                for (int k = 0; k < starMapData[0].length; k++)
-                {
-                    output += starMapData[j][k] + ",";
-                }
-
-                System.out.println(output);
-            }            
-        }        
-        finally
-        {
-            this.setCursor(Cursor.getDefaultCursor());
-        }
-    }//GEN-LAST:event_readDataButtonActionPerformed
     /*
     * METHOD: starsCheckBoxActionPerformed()
     *
@@ -968,68 +959,11 @@ public class Driver extends javax.swing.JFrame {
         
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         
-        String filePath = "./src/resources/hyg.csv";
+        StarDataReader starDataReader = new StarDataReader();
         
-        File file = new File(filePath);
-        System.out.println(filePath);
+        starList = starDataReader.readData();
         
-        try
-        {
-            String lineFromFile;
-            
-            BufferedReader reader = new BufferedReader(new FileReader(file));            
-            int rowCount = 0;
-            
-            while ((reader.readLine()) != null)
-            {
-                rowCount++;
-            }
-            
-            System.out.println(rowCount + " rows found");
-            
-            reader = new BufferedReader(new FileReader(file));
-            int columnCount = 0;
-            
-            if ((lineFromFile = reader.readLine()) != null)
-            {
-                int commas = 0;
-                        
-                for(int i = 0; i < lineFromFile.length(); i++) 
-                {
-                    if (lineFromFile.charAt(i) == ',') 
-                    {
-                        commas++;
-                    }
-                }
-                
-                columnCount = commas + 1;
-                System.out.println(columnCount + " columns found");
-            }
-            
-            starMapData = new String[rowCount][columnCount];
-            
-            reader = new BufferedReader(new FileReader(file));
-            int i = 0;
-            
-            while ((lineFromFile = reader.readLine()) != null)
-            {
-                String[] lineItems = lineFromFile.split(",");
-                starMapData[i] = lineItems;
-                i++;
-            }
-        }
-        catch (FileNotFoundException e)
-        {
-            System.out.println("File not found at: " + filePath + "\n" + e.toString());
-        }
-        catch (IOException e)
-        {
-            System.out.println(e.toString());
-        }
-        finally
-        {
-            this.setCursor(Cursor.getDefaultCursor());
-        }
+        this.setCursor(Cursor.getDefaultCursor());
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Members">
@@ -1067,7 +1001,6 @@ public class Driver extends javax.swing.JFrame {
     private javax.swing.JTextField minuteTextField;
     private javax.swing.JRadioButton northRadioButton;
     private javax.swing.JCheckBox planetsCheckBox;
-    private javax.swing.JButton readDataButton;
     private javax.swing.JTextField secLatTextField;
     private javax.swing.JTextField secLongTextField;
     private javax.swing.JButton selectAllButton;

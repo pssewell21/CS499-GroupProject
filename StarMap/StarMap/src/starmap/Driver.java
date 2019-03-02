@@ -63,11 +63,11 @@ public class Driver extends javax.swing.JFrame {
         
         // Set DateTime fields to current DateTime
         //LocalDateTime currentDateTime = LocalDateTime.now();
-        LocalDateTime currentDateTime = LocalDateTime.now().plusHours(6);
+        LocalDateTime currentDateTime = LocalDateTime.now();
                 
         dateTextField.setDate(new Date());
         hourTextField.setText(Integer.toString(currentDateTime.getHour()));
-        hourOffsetComboBox.setSelectedItem("0");
+        hourOffsetComboBox.setSelectedItem("-6");
         minuteTextField.setText(Integer.toString(currentDateTime.getMinute()));        
         
         load();
@@ -496,7 +496,7 @@ public class Driver extends javax.swing.JFrame {
             int hour = Integer.parseInt(hourTextField.getText());
             int hourOffset = Integer.parseInt(hourOffsetComboBox.getSelectedItem().toString());
             
-            int localHour = hour + hourOffset;
+            int localHour = hour - hourOffset;
             
             if (localHour < 0)
             {

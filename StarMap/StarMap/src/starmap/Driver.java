@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  *
  * @author pssew
  */
-public class Application extends javax.swing.JFrame {
+public class Driver extends javax.swing.JFrame {
     
     private String[][] starMapData;
     
@@ -35,7 +35,7 @@ public class Application extends javax.swing.JFrame {
     /**
      * Creates new form Application
      */
-    public Application() {
+    public Driver() {
         initComponents();
         latitudeButtonGroup.add(northRadioButton);
         latitudeButtonGroup.add(southRadioButton);
@@ -602,7 +602,7 @@ public class Application extends javax.swing.JFrame {
         } 
         catch (Exception ex) 
         {
-            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Driver.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_generateButtonActionPerformed
@@ -935,14 +935,15 @@ public class Application extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Application.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Driver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Application().setVisible(true);
+                new Driver().setVisible(true);
             }
         });
     }

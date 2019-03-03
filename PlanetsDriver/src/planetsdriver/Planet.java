@@ -80,7 +80,10 @@ public class Planet {
         
         String output;
 
-        
+        System.out.println("JD = " + JD);
+        System.out.println("cy = " + cy);
+        System.out.println("RADS = " + RADS);
+                ;
         switch(new_value)
        {
             /* Mercury */

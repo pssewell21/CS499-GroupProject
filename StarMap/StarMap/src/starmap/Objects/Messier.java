@@ -11,7 +11,7 @@ import java.time.LocalTime;
  *
  * @author pssewell21
  */
-public class Meeseir extends CelestialObject
+public class Messier extends CelestialObject
 {
     public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime)
     {      

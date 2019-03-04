@@ -11,9 +11,14 @@ import java.time.LocalTime;
  *
  * @author pssewell21
  */
-public class Planet extends CelestrialObject
+public class Planet extends CelestialObject
 {
     public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime)
     {        
-    }   
+    }
+    
+    public void getIntermediateValues()
+    {
+        
+    }
 }

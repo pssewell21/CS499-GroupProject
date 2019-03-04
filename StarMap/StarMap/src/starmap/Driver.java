@@ -22,7 +22,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import starmap.DataReaders.DataReader;
+import starmap.DataReaders.PlanetDataReader;
 import starmap.DataReaders.StarDataReader;
+import starmap.Objects.Planet;
 import starmap.Objects.Star;
 
 /**
@@ -32,6 +35,7 @@ import starmap.Objects.Star;
 public class Driver extends javax.swing.JFrame {
     
     ArrayList<Star> starList;
+    ArrayList<Planet> planetList;
     
     // <editor-fold defaultstate="collapsed" desc="Constructor"> 
 
@@ -548,11 +552,19 @@ public class Driver extends javax.swing.JFrame {
             textArea.append("Latitude = " + latitude + "\n");
             textArea.append("Longitude = " + longitude + "\n");
             
+            // Calculate azimuth and elevation coordinates from the specified time and location
             for (Star star : starList)
             {
                 star.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             
+            for (Planet planet : planetList)
+            {
+                planet.getIntermediateValues();
+                planet.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+            }
+            
+            // Output positions of objects
             for (Star star : starList)
             {
                 if (star.name.trim().isEmpty())
@@ -569,6 +581,11 @@ public class Driver extends javax.swing.JFrame {
                     System.out.println("Current Azimuth/Elevation of " + star.name + ": "
                     + star.azimuth + "°, " +star.elevation + "°");
                 }
+            }
+            
+            for (Planet planet : planetList)
+            {
+                // Do stuff with planets
             }
 //            // Polaris
 //            String objectName = "Polaris";
@@ -962,6 +979,10 @@ public class Driver extends javax.swing.JFrame {
         StarDataReader starDataReader = new StarDataReader();
         
         starList = starDataReader.readData();
+        
+        PlanetDataReader planetDataReader = new PlanetDataReader();
+        
+        planetList = planetDataReader.readData();
         
         this.setCursor(Cursor.getDefaultCursor());
     }

@@ -11,9 +11,13 @@ import java.time.LocalTime;
  *
  * @author pssewell21
  */
-public class Meeseir extends CelestrialObject
+public abstract class CelestialObject 
 {
-    public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime)
-    {      
-    }   
+    public double azimuth;
+    
+    public double elevation;
+
+    public String name;
+    
+    public abstract void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) throws Exception;
 }

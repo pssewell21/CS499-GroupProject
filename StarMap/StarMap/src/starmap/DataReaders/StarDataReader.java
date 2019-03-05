@@ -19,6 +19,7 @@ import starmap.Objects.Star;
  */
 public class StarDataReader extends DataReader
 {
+    @Override
     public ArrayList<Star> readData()
     {
         String filePath = "./src/resources/hyg.csv";

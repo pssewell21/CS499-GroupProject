@@ -127,18 +127,18 @@ public class Calculation
         return longitude;
     }
     
-    private static Duration getDurationFromDecimalHours(double hours) throws Exception
-    {
-        // Time offset can be + or - 12 hours
-        if (hours < -12 || hours > 12)
-        {
-            throw new Exception("Invalid value of " + hours + " for hours passed into Calculation.getTimeFromDecimalHours");
-        }
-
-        double seconds = hours * 60 * 60;
-        
-        return Duration.ofSeconds((int)Math.floor(seconds));
-    }
+//    private static Duration getDurationFromDecimalHours(double hours) throws Exception
+//    {
+//        // Time offset can be + or - 12 hours
+//        if (hours < -12 || hours > 12)
+//        {
+//            throw new Exception("Invalid value of " + hours + " for hours passed into Calculation.getTimeFromDecimalHours");
+//        }
+//
+//        double seconds = hours * 60 * 60;
+//        
+//        return Duration.ofSeconds((int)Math.floor(seconds));
+//    }
     
     /**
      *

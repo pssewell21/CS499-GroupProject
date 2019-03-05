@@ -11,7 +11,7 @@ import java.time.LocalTime;
  *
  * @author pssewell21
  */
-public class Star extends CelestrialObject
+public class Star extends CelestialObject
 {
     public double rightAscension;
     

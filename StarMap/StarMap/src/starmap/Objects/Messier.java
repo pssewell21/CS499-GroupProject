@@ -11,13 +11,9 @@ import java.time.LocalTime;
  *
  * @author pssewell21
  */
-public abstract class CelestrialObject 
+public class Messier extends CelestialObject
 {
-    public double azimuth;
-    
-    public double elevation;
-
-    public String name;
-    
-    public abstract void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) throws Exception;
+    public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime)
+    {      
+    }   
 }

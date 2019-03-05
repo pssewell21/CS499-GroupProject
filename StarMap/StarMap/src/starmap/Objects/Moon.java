@@ -11,7 +11,7 @@ import java.time.LocalTime;
  *
  * @author pssewell21
  */
-public class Moon extends CelestrialObject
+public class Moon extends CelestialObject
 {
     public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime)
     {         

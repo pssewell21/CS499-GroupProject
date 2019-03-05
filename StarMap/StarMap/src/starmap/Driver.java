@@ -7,22 +7,20 @@ package starmap;
 
 import java.awt.Color;
 import java.awt.Cursor;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import starmap.DataReaders.ConstellationDataReader;
+import starmap.DataReaders.PlanetDataReader;
 import starmap.DataReaders.StarDataReader;
+import starmap.Objects.Constellation;
+import starmap.Objects.Planet;
 import starmap.Objects.Star;
 
 /**
@@ -32,6 +30,8 @@ import starmap.Objects.Star;
 public class Driver extends javax.swing.JFrame {
     
     ArrayList<Star> starList;
+    ArrayList<Constellation> constellationList;
+    ArrayList<Planet> planetList;
     
     // <editor-fold defaultstate="collapsed" desc="Constructor"> 
 
@@ -52,20 +52,13 @@ public class Driver extends javax.swing.JFrame {
         longDegreeTextField.setText("86");
         minLongTextField.setText("38");
         secLongTextField.setText("47");
-        //longDegreeTextField.setText("0");
-        //minLongTextField.setText("0");
-        //secLongTextField.setText("21");
         
         northRadioButton.setSelected(true);
         latDegreeTextField.setText("34");
         minLatTextField.setText("43");
-        secLatTextField.setText("8");        
-        //latDegreeTextField.setText("51");
-        //minLatTextField.setText("28");
-        //secLatTextField.setText("42");
+        secLatTextField.setText("8");       
         
         // Set DateTime fields to current DateTime
-        //LocalDateTime currentDateTime = LocalDateTime.now();
         LocalDateTime currentDateTime = LocalDateTime.now();
                 
         dateTextField.setDate(new Date());
@@ -561,27 +554,47 @@ public class Driver extends javax.swing.JFrame {
             textArea.append("Latitude = " + latitude + "\n");
             textArea.append("Longitude = " + longitude + "\n");
             
+            // Calculate azimuth and elevation coordinates from the specified time and location
             for (Star star : starList)
             {
                 star.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             
-            for (Star star : starList)
+            for (Constellation constellation : constellationList)
             {
-                if (star.name.trim().isEmpty())
-                {
-                    //textArea.append("Current Azimuth/Elevation of **NO NAME**: "
-                    //+ star.azimuth + "°, " +star.elevation + "°\n");
-                    System.out.println("Current Azimuth/Elevation of **NO NAME**: "
-                    + star.azimuth + "°, " +star.elevation + "°");
-                }
-                else
-                {                    
-                    //textArea.append("Current Azimuth/Elevation of " + star.name + ": "
-                    //+ star.azimuth + "°, " +star.elevation + "°\n");
-                    System.out.println("Current Azimuth/Elevation of " + star.name + ": "
-                    + star.azimuth + "°, " +star.elevation + "°");
-                }
+                constellation.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+            }
+            
+            for (Planet planet : planetList)
+            {
+                planet.getIntermediateValues();
+                planet.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+            }
+            
+            // Output positions of objects
+//            for (Star star : starList)
+//            {
+//                if (star.name.trim().isEmpty())
+//                {
+//                    System.out.println("Current Azimuth/Elevation of **NO NAME**: "
+//                    + star.azimuth + "°, " +star.elevation + "°");
+//                }
+//                else
+//                {
+//                    System.out.println("Current Azimuth/Elevation of " + star.name + ": "
+//                    + star.azimuth + "°, " +star.elevation + "°");
+//                }
+//            }
+  
+            for (Constellation constellation : constellationList)
+            {
+                System.out.println("Current Azimuth/Elevation of " + constellation.name + ": "
+                + constellation.azimuth + "°, " +constellation.elevation + "°");
+            }
+
+            for (Planet planet : planetList)
+            {
+                // Do stuff with planets
             }
 //            // Polaris
 //            String objectName = "Polaris";
@@ -975,6 +988,14 @@ public class Driver extends javax.swing.JFrame {
         StarDataReader starDataReader = new StarDataReader();
         
         starList = starDataReader.readData();
+        
+        ConstellationDataReader constellationDataReader = new ConstellationDataReader();
+        
+        constellationList = constellationDataReader.readData();
+        
+        PlanetDataReader planetDataReader = new PlanetDataReader();
+        
+        planetList = planetDataReader.readData();
         
         this.setCursor(Cursor.getDefaultCursor());
     }

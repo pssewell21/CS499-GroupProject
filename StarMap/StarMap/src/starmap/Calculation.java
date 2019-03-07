@@ -8,8 +8,6 @@ package starmap;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Map;
 
 // Coordinates for Tech Hall are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W
 
@@ -41,7 +39,8 @@ public class Calculation
         
 //        System.out.println("julianDate = " + julianDate);
         
-        double decimalHours = dateTime.getHour() + (dateTime.getMinute() / 60.0) + (dateTime.getSecond() / (60.0 * 60));
+        double decimalHours = Calculation.getDecimalHours(dateTime.getHour(), 
+                dateTime.getMinute(), dateTime.getSecond());
         
         // Adjust for hour of day
         if (decimalHours >= 12)
@@ -125,6 +124,13 @@ public class Calculation
         }
         
         return longitude;
+    }
+    
+    public static double getDecimalHours(int hour, int minute, int second)
+    {
+        double decimalHours = hour + (minute / 60.0) + (second / (60.0 * 60));
+        
+        return decimalHours;
     }
     
 //    private static Duration getDurationFromDecimalHours(double hours) throws Exception

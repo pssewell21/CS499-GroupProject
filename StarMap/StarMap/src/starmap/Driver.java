@@ -518,8 +518,8 @@ public class Driver extends javax.swing.JFrame {
                     localHour, 
                     minute);
             
-            double printJD = Calculation.getJulianDate(dateTime);      
-            System.out.println("Julian Date: " + printJD);
+            double julianDate = Calculation.getJulianDate(dateTime);      
+            System.out.println("Julian Date: " + julianDate);
             
             int latitudeDegrees = Integer.parseInt(latDegreeTextField.getText());
             int latitudeMinutes = Integer.parseInt(minLatTextField.getText());
@@ -570,7 +570,7 @@ public class Driver extends javax.swing.JFrame {
             
             for (Planet planet : planetList)
             {
-                planet.getIntermediateValues();
+                planet.getIntermediateValues(julianDate);
                 planet.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             

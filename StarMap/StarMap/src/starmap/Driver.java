@@ -602,14 +602,15 @@ public class Driver extends javax.swing.JFrame {
 
             for (Planet planet : planetList)
             {
-                // Do stuff with planets
+                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
+                + planet.azimuth + "°, " + planet.elevation + "°");
             }
             
-            for (Messier messier : messierList)
-            {
-                System.out.println("Current Azimuth/Elevation of " + messier.name + ": "
-                + messier.azimuth + "°, " + messier.elevation + "°");
-            }
+//            for (Messier messier : messierList)
+//            {
+//                System.out.println("Current Azimuth/Elevation of " + messier.name + ": "
+//                + messier.azimuth + "°, " + messier.elevation + "°");
+//            }
 //            // Polaris
 //            String objectName = "Polaris";
 //            double rightAscention = 2.133333333;

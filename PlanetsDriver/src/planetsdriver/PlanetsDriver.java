@@ -20,6 +20,7 @@ public class PlanetsDriver {
         //Planet object consists of Name, Lscal, Lprop, Ascal, Aprop, Escal,
         //                          Eprop, Iscal, Wscal, Wprop, Osca, Oprop
         
+        //Step 1,2: Calculate the elements of the planetary orbit of the planet and Earth:
         Planet mercury = new Planet("Mercury", 252.25084, 538101628.3, 0.38709893,
                                     0.00000066, 0.20563069, 0.00002527, 7.00487,
                                     23.51, 77.45645, 573.57, 48.33167, 446.3);
@@ -67,7 +68,68 @@ public class PlanetsDriver {
                                     0.00076912, 0.24880766, 0.00006465, 17.14175,
                                     11.07, 224.06676, 132.25, 110.30347, 37.33);
         pluto.calculate(9);
+        double mLongitude = 738.167166583533;
+        double perihelion = 2.1878065633754016;
+        double M = mLongitude - perihelion;
+        double ecc = 0.014149703597535935;
+        double e = Math.toRadians(0.8107182974998867);
+       
+       System.out.println("");
+       System.out.println("mLongitude value = " + mLongitude + " degrees is " + Math.toRadians(mLongitude) + " radians.");
+       System.out.println("Perihelion value = " + perihelion + " degrees is " + Math.toRadians(perihelion) + " radians.");
+       System.out.println("M = mLongitude - Perihelion = " + M + " degrees is " 
+                          + Math.toRadians(mLongitude - perihelion) + " radians.");
+       //System.out.println("Eccentricity value in degrees = " + Math.toDegrees(ecc));
+       System.out.println("Eccentricity value from degrees to radians = " + Math.toRadians(0.8107182974998867));
+       System.out.println("Eccentricity value in radians = " + Math.toRadians(ecc));
+       System.out.println();
+       
+        // M = 12.845263059072469, e = 0.014149703597535935
+        System.out.println("e = " + e);
         
+        double E, E1;
+        E = M + e * Math.sin(M) * (1.0 + e * Math.cos(M)); //735.9900587001409
+        System.out.println("E = " + E);
+        
+//        E1 = E; //735.9900587001409
+//        System.out.println("E1 = " + E1);
+//        
+//        E = E1 - (E1 - e * Math.sin(E1) - M) / (1 - e * Math.cos(E1)); //735.9900590259884
+//        System.out.println("E updated = " + E);
+//        System.out.println("E1 = " + E1); 
+//        
+//        
+//        double absOfE_E1 = Math.abs(E - E1);
+//        System.out.println("E - E1 = " + absOfE_E1);
+//        
+//        double oneE12 = 1.0 * e - 12;
+//        System.out.println("1.0 * e - 12 = " + oneE12);
+         
+        //Should only do this calculation once:
+//        do {
+//            E1 = E; //735.9900587001409
+//            System.out.println("E1 = " + E1);
+//            E = E1 - (E1 - e * Math.sin(E1) - M) / (1 - e * Math.cos(E1)); //735.9900590259884
+//            System.out.println("E updated = " + E);
+//            double condition1 = E - E1;
+//            double condition2 = 1.0 * e - 12;
+//            System.out.println("E - E1 = " + condition1);
+//            System.out.println("1.0 * e - 12 = " + condition2);
+//        } while(Math.abs(E - E1) > (1.0 * e - 12)); //3.2584750897513004E-7 > -11.985850296402464
+        
+        System.out.println("SUCCESS");
+
+        //double misc = Math.abs(E - E1) > (1.0 * ecc - 12);
+        //double E1, V;
+        
+//        do{
+//            E1 = E;
+//            E = E1 - (E1 - ecc * Math.sin(E1) - M) / (1 - ecc * Math.cos(E1));
+//        } while(Math.abs(E - E1) > (1.0 * ecc - 12));
+//        
+//        V = 2 * Math.atan(Math.sqrt((1 + ecc) / (1 - ecc)) * Math.tan(0.5 * E));
+//        
+//        if(V < 0) V = V + (2* Math.PI);
     }
     
 }

@@ -54,7 +54,37 @@ public class Planet {
         Oprop = new_oprop;
         
     }
+    /* 
+    *  NAME: true_anomoly()
+    *
+    *  DESCRIPTION:
+    *
+    */
+    public double true_anomoly(double M, double e)
+    {   // M = 12.845263059072469, e = 0.014149703597535935
+        //
+        double E = M + e * Math.sin(M) * (1.0 + e * Math.cos(M));
+        double E1, V;
+        
+        do{
+            E1 = E;
+            E = E1 - (E1 - e * Math.sin(E1) - M) / (1 - e * Math.cos(E1));
+        } while(Math.abs(E - E1) > (1.0 * e - 12));
+        
+        V = 2 * Math.atan(Math.sqrt((1 + e) / (1 - e)) * Math.tan(0.5 * E));
+        
+        if(V < 0) V = V + (2* Math.PI);
+        
+        return V;
+        
+    } // End True_Anomoly()
     
+    /* 
+    *  NAME: calculate()
+    *
+    *  DESCRIPTION:
+    *
+    */
     public void calculate(int new_value)
     {
         double meanLongitude;
@@ -83,7 +113,7 @@ public class Planet {
         System.out.println("JD = " + JD);
         System.out.println("cy = " + cy);
         System.out.println("RADS = " + RADS);
-                ;
+                
         switch(new_value)
        {
             /* Mercury */
@@ -139,6 +169,20 @@ public class Planet {
                          "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
                          "\nArgument of Perihelion:   " + perihelion + " °\n");
                 System.out.println(output);
+                
+                /* Calculate Right Ascension: 
+                * 
+                *  Step 3: Calculate the position of the Earth in its orbit:
+                *
+                */
+                double mEarth, vEarth, rEarth;
+        
+                mEarth = Math.toRadians(meanLongitude - perihelion); //12.845263059072469
+                //vEarth = true_anomoly(mEarth, eccentricityOfOrbit); //e = 0.014149703597535935
+                //rEarth = semiMajorAxis * (1 - (eccentricityOfOrbit * eccentricityOfOrbit)) / 1 + eccentricityOfOrbit * Math.cos(vEarth);
+                
+                System.out.println("mEarth = " + mEarth);
+                //System.out.println("vEarth = " + vEarth);
                 break;
         /* Mars */
             case 4:
@@ -252,8 +296,26 @@ public class Planet {
                 break;
         }
         
-    } // End of Calculate()
+    } // End of calculate()
     
+    public double calculateRightAscension()
+    {
+        
+        //Step 3: Calculate the position of the Earth in its orbit:
+        
+        //Step 4: Calculate the helicentric rectangular coordinates of Earth:
+        
+        //Step 5: Calculate the position of the planet in its' orbit:
+        
+        //Step 6: Calculate the helicentric rectangular coordinates of the planet:
+        
+        //Step 7: Convert to geocentric rectangular coordinates
+        
+        //Step 8: Rotate around X axis from ecliptic to equatorial coordinates:
+        
+        //Step 9: Calculate right ascension and declination from the rectangular equatorial coordinates:
+        return 0;
+    }
     public void displayPlanetInfo()
     {
         System.out.println("Name: " + name);

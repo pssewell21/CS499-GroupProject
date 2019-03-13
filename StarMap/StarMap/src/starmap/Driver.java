@@ -22,6 +22,7 @@ import starmap.DataReaders.PlanetDataReader;
 import starmap.DataReaders.StarDataReader;
 import starmap.Objects.Constellation;
 import starmap.Objects.Messier;
+import starmap.Objects.Moon;
 import starmap.Objects.Planet;
 import starmap.Objects.Star;
 
@@ -35,6 +36,7 @@ public class Driver extends javax.swing.JFrame {
     ArrayList<Constellation> constellationList;
     ArrayList<Planet> planetList;
     ArrayList<Messier> messierList;
+    Moon moon;
     
     // <editor-fold defaultstate="collapsed" desc="Constructor"> 
 
@@ -579,6 +581,9 @@ public class Driver extends javax.swing.JFrame {
                 messier.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             
+            moon.getIntermediateValues(julianDate);
+            moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+                        
             // Output positions of objects
 //            for (Star star : starList)
 //            {
@@ -1016,7 +1021,10 @@ public class Driver extends javax.swing.JFrame {
         
         messierList = messierDataReader.readData();
         
+        moon = new Moon();
+        
         this.setCursor(Cursor.getDefaultCursor());
+        
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Members">

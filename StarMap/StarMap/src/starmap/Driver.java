@@ -590,32 +590,40 @@ public class Driver extends javax.swing.JFrame {
 //                if (star.name.trim().isEmpty())
 //                {
 //                    System.out.println("Current Azimuth/Elevation of **NO NAME**: "
-//                    + star.azimuth + "°, " +star.elevation + "°");
+//                      + star.azimuth + "°, " +star.elevation + "°");
 //                }
 //                else
 //                {
 //                    System.out.println("Current Azimuth/Elevation of " + star.name + ": "
-//                    + star.azimuth + "°, " +star.elevation + "°");
+//                      + star.azimuth + "°, " +star.elevation + "°");
 //                }
 //            }
   
 //            for (Constellation constellation : constellationList)
 //            {
 //                System.out.println("Current Azimuth/Elevation of " + constellation.name + ": "
-//                + constellation.azimuth + "°, " +constellation.elevation + "°");
+//                  + constellation.azimuth + "°, " +constellation.elevation + "°");
 //            }
 
-            for (Planet planet : planetList)
-            {
-                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
-                + planet.azimuth + "°, " + planet.elevation + "°");
-            }
+//            for (Planet planet : planetList)
+//            {
+//                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
+//                    + planet.azimuth + "°, " + planet.elevation + "°");
+//            }
             
 //            for (Messier messier : messierList)
 //            {
 //                System.out.println("Current Azimuth/Elevation of " + messier.name + ": "
-//                + messier.azimuth + "°, " + messier.elevation + "°");
+//                  + messier.azimuth + "°, " + messier.elevation + "°");
 //            }
+
+            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
+                + moon.azimuth + "°, " + moon.elevation + "°");
+
+
+
+
+
 //            // Polaris
 //            String objectName = "Polaris";
 //            double rightAscention = 2.133333333;

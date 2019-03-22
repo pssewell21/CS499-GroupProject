@@ -18,6 +18,8 @@ import java.text.DecimalFormat;
  */
 public class Planet {
     
+    public final static double RADS = Math.PI / 180.0;
+    public final static double DEGS = 180 / Math.PI;
     private String name;
     private double Lscal;
     private double Lprop;
@@ -31,6 +33,7 @@ public class Planet {
     private double Wprop;
     private double Oscal;
     private double Oprop;
+    
     
     /* Constructor */
     public Planet(String new_name, double new_lscal, double new_lprop, 
@@ -56,14 +59,14 @@ public class Planet {
         Oprop = new_oprop;
         
     }
-    /************************************************************************** 
-    *  NAME: true_anomaly()
-    *
-    *  DESCRIPTION: calculates the true anomaly from the mean anomaly
-    *  @param M this is the Planet's position value
-    *  @param e this is the Eccentricity for a given planet 
-    *  @return calculated true anomaly
-    * 
+    /**************************************************************************
+     * 
+     * METHOD: true_anomaly()
+     * 
+     * DESCRIPTION: calculates the true anomaly from the mean anomaly
+     * @param e this is the Eccentricity for a given planet
+     * @return calculated true anomaly
+     * 
     ***************************************************************************/
     public double true_anomaly(double M, double e)
     {   
@@ -84,15 +87,16 @@ public class Planet {
         
     } // End True_Anomoly()
     
-    /************************************************************************** 
-    *  NAME: mod2Pi()
-    *
-    *  DESCRIPTION: Takes an angle over 360 degrees and converts it to an 
-    *               equivalent angle on the interval [0,360]
-    *               example: 450 degrees is 90 degrees on the interval [0,360]
-    *  
-    *  @param X Angle that will be converted to a new value.
-    *  @return an angle in radians
+    /**************************************************************************
+     * 
+     * METHOD: mod2Pi()
+     * 
+     * DESCRIPTION: Takes an angle over 360 degrees and converts it to an
+     *              equivalent angle on the interval [0,360]
+     *              example: 450 degrees is 90 degrees on the interval [0,360]
+     * 
+     * @param X Angle that will be converted to a new value.
+     * @return an angle in radians
     ***************************************************************************/
     public double mod2Pi(double X)
     {
@@ -108,19 +112,17 @@ public class Planet {
         
     } // End mod2Pi()
     
-    /*************************************************************************** 
-    *  NAME: calculate()
-    *
-    *  DESCRIPTION: calculates all of the Planets orbital elements
-    *  @param new_value
-    *
+    /***************************************************************************
+     * METHOD: calculate()
+     * 
+     * DESCRIPTION: calculates all of the Planets orbital elements
+     * @param new_value
+     * 
     ***************************************************************************/
     public void calculate(int new_value)
     {
         double JD = 2458540; //2458534.5; //Julian Day
         double cy = JD/36525;
-        double RADS = Math.PI / 180.0;
-        double DEGS = 180 / Math.PI;
         
         /* Planet orbital elements */
         double meanLongitude;
@@ -442,17 +444,17 @@ public class Planet {
         
     } // End convertRightAscensionToDegMinSec()
     
-    /*************************************************************************** 
-    *  NAME: calculateAltitudeAzimuthOfPlanet()
-    *
-    *  DESCRIPTION: calculates Altitude and Azimuth of a Planet.
-    * 
-    *  @param lat Given latitude
-    *  @param lon Given longitude
-    *  @param RA  Given Right Ascension
-    *  @param Dec Given Declination
-    *
-    ***************************************************************************/
+    /***************************************************************************
+     * METHOD: calculateAltitudeAzimuthOfPlanet()
+     * 
+     * DESCRIPTION: calculates Altitude and Azimuth of a Planet.
+     * 
+     * @param lat Given latitude
+     * @param lon Given longitude
+     * @param RA  Given Right Ascension
+     * @param Dec Given Declination
+     * 
+     ***************************************************************************/
     public double calculateAltitudeAzimuthOfPlanet(double lat, double lon, double RA, double Dec)
     {
         int hourAngle;
@@ -496,25 +498,4 @@ public class Planet {
         return az;
         
     } // End of calculateAltitudeAzimuthOfPlanet()
-    
-    public void displayPlanetInfo()
-    {
-        System.out.println("Name: " + name);
-        System.out.println("Lscal: "+ Lscal);
-        System.out.println("Lprop: "+ Lprop);
-        System.out.println("Ascal: "+ Ascal);
-        System.out.println("Aconst: "+ Aprop);
-        System.out.println("Escal: "+ Escal);
-        System.out.println("Eprop: "+ Eprop);
-        System.out.println("Iscal: "+ Iscal);
-        System.out.println("Iprop: "+ Iprop);
-        System.out.println("Wscal: "+ Wscal);
-        System.out.println("Oscal: "+ Oscal);
-        System.out.println("Oprop: "+ Oprop);
-        
-
-
-    }
-    
-
 }

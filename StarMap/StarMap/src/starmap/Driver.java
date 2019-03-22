@@ -22,6 +22,7 @@ import starmap.DataReaders.PlanetDataReader;
 import starmap.DataReaders.StarDataReader;
 import starmap.Objects.Constellation;
 import starmap.Objects.Messier;
+import starmap.Objects.Moon;
 import starmap.Objects.Planet;
 import starmap.Objects.Star;
 
@@ -35,6 +36,7 @@ public class Driver extends javax.swing.JFrame {
     ArrayList<Constellation> constellationList;
     ArrayList<Planet> planetList;
     ArrayList<Messier> messierList;
+    Moon moon;
     
     // <editor-fold defaultstate="collapsed" desc="Constructor"> 
 
@@ -579,38 +581,49 @@ public class Driver extends javax.swing.JFrame {
                 messier.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             
+            moon.getIntermediateValues(julianDate);
+            moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+                        
             // Output positions of objects
 //            for (Star star : starList)
 //            {
 //                if (star.name.trim().isEmpty())
 //                {
 //                    System.out.println("Current Azimuth/Elevation of **NO NAME**: "
-//                    + star.azimuth + "°, " +star.elevation + "°");
+//                      + star.azimuth + "°, " +star.elevation + "°");
 //                }
 //                else
 //                {
 //                    System.out.println("Current Azimuth/Elevation of " + star.name + ": "
-//                    + star.azimuth + "°, " +star.elevation + "°");
+//                      + star.azimuth + "°, " +star.elevation + "°");
 //                }
 //            }
   
 //            for (Constellation constellation : constellationList)
 //            {
 //                System.out.println("Current Azimuth/Elevation of " + constellation.name + ": "
-//                + constellation.azimuth + "°, " +constellation.elevation + "°");
+//                  + constellation.azimuth + "°, " +constellation.elevation + "°");
 //            }
 
-            for (Planet planet : planetList)
-            {
-                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
-                + planet.azimuth + "°, " + planet.elevation + "°");
-            }
+//            for (Planet planet : planetList)
+//            {
+//                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
+//                    + planet.azimuth + "°, " + planet.elevation + "°");
+//            }
             
 //            for (Messier messier : messierList)
 //            {
 //                System.out.println("Current Azimuth/Elevation of " + messier.name + ": "
-//                + messier.azimuth + "°, " + messier.elevation + "°");
+//                  + messier.azimuth + "°, " + messier.elevation + "°");
 //            }
+
+            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
+                + moon.azimuth + "°, " + moon.elevation + "°");
+
+
+
+
+
 //            // Polaris
 //            String objectName = "Polaris";
 //            double rightAscention = 2.133333333;
@@ -1016,7 +1029,10 @@ public class Driver extends javax.swing.JFrame {
         
         messierList = messierDataReader.readData();
         
+        moon = new Moon();
+        
         this.setCursor(Cursor.getDefaultCursor());
+        
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Members">

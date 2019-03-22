@@ -1,6 +1,11 @@
-/Hello World/dist/
-/Hello World/build/
-/Hello World/nbproject/private/
-/StarMap/StarMap/nbproject/private/
-/StarMap/StarMap/build/
-/StarMap/StarMap/dist/
+Hello World/dist/
+Hello World/build/
+Hello World/nbproject/private/
+StarMap/StarMap/nbproject/private/
+StarMap/StarMap/build/
+StarMap/StarMap/dist/
+Hello World/nbproject/private/private.xml
+PlanetsDriver/nbproject/private/
+PlanetsDriver/build/
+PlanetsDriver/nbproject/private/private.xml
+Hello World/nbproject/private/private.xml

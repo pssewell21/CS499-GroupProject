@@ -133,6 +133,16 @@ public class Calculation
         return decimalHours;
     }
     
+    public static double getRadiansFromDegrees(double degrees)
+    {
+        return Math.toRadians(degrees);
+    }
+    
+    public static double getDegreesFromRadians(double radians)
+    {
+        return Math.toDegrees(radians);
+    }
+    
 //    private static Duration getDurationFromDecimalHours(double hours) throws Exception
 //    {
 //        // Time offset can be + or - 12 hours

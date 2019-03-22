@@ -78,13 +78,13 @@ public class Planet extends CelestialObject
         perihelion = (wscal + wprop * cy / 3600) * rads;
         longitudeAscNode = (oscal - oprop * cy / 3600) * rads;
 
-        System.out.println(String.format("Planet name:              " + name +
-                 "\nMean Longitude:           " + meanLongitude + "°" +
-                 "\nSemi-major Axis:          " + semiMajorAxis + " AU" +
-                 "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
-                 "\nInclination:              " + inclination + "°" +
-                 "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
-                 "\nArgument of Perihelion:   " + perihelion));
+//        System.out.println(String.format("Planet name:              " + name +
+//                 "\nMean Longitude:           " + meanLongitude + "°" +
+//                 "\nSemi-major Axis:          " + semiMajorAxis + " AU" +
+//                 "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
+//                 "\nInclination:              " + inclination + "°" +
+//                 "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
+//                 "\nArgument of Perihelion:   " + perihelion));
     }
     
     @Override

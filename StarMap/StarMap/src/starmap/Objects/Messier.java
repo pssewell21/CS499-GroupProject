@@ -6,6 +6,7 @@
 package starmap.Objects;
 
 import java.time.LocalTime;
+import starmap.Calculation;
 
 /**
  *
@@ -44,19 +45,20 @@ public class Messier extends CelestialObject
         
 //        System.out.println("hourAngleDegrees = " + hourAngleDegrees);
         
-        double hourAngleRadians = hourAngleDegrees * Math.PI / 180;
-        double declinationRadians = declination * Math.PI / 180;
-        double latitudeRadians = latitude * Math.PI / 180;
+        double hourAngleRadians = Calculation.getRadiansFromDegrees(hourAngleDegrees);
+        double declinationRadians = Calculation.getRadiansFromDegrees(declination);
+        double latitudeRadians = Calculation.getRadiansFromDegrees(latitude);
         
-        double elevationRadisns = Math.asin(
+        double elevationRadians = Math.asin(
                 (Math.cos(hourAngleRadians) * Math.cos(declinationRadians) * Math.cos(latitudeRadians))
                 + (Math.sin(declinationRadians) * Math.sin(latitudeRadians)));
         double azimuthRadians = Math.atan2(
                 -1 * Math.sin(hourAngleRadians),
                 (Math.tan(declinationRadians) * Math.cos(latitudeRadians))
                         - (Math.sin(latitudeRadians) * Math.cos(hourAngleRadians)));  
-        double azimuthDegrees = azimuthRadians * (180 / Math.PI);
-        double elevationDegrees = elevationRadisns * (180 / Math.PI); 
+        
+        double azimuthDegrees = Calculation.getDegreesFromRadians(azimuthRadians);
+        double elevationDegrees = Calculation.getDegreesFromRadians(elevationRadians);
         
 //        System.out.println("azimuthDegrees = " + azimuthDegrees);
 //        System.out.println("elevationDegrees = " + elevationDegrees);  

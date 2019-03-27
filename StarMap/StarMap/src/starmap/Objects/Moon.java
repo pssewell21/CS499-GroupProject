@@ -111,12 +111,12 @@ public class Moon extends CelestialObject
     {
         if (rightAscension < 0 || rightAscension > 24)
         {
-            throw new Exception("Invalid value of " + rightAscension + " for rightAscension passed into Star.calculateHorizonCoordinates");
+            throw new Exception("Invalid value of " + rightAscension + " for rightAscension passed into Moon.calculateHorizonCoordinates");
         }
         
         if (declination < -90 || declination > 90)
         {
-            throw new Exception("Invalid value of " + declination + " for declination passed into Star.calculateHorizonCoordinates");
+            throw new Exception("Invalid value of " + declination + " for declination passed into Moon.calculateHorizonCoordinates");
         }
         
         double decimalHours = greenwichSiderealTime.getHour() + (greenwichSiderealTime.getMinute() / 60.0) + (greenwichSiderealTime.getSecond() / (60.0 * 60));

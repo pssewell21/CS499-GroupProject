@@ -581,8 +581,8 @@ public class Driver extends javax.swing.JFrame {
                 messier.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             
-            moon.getIntermediateValues(julianDate);
-            moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+//            moon.getIntermediateValues(julianDate);
+//            moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
                         
             // Output positions of objects
 //            for (Star star : starList)
@@ -605,11 +605,11 @@ public class Driver extends javax.swing.JFrame {
 //                  + constellation.azimuth + "°, " +constellation.elevation + "°");
 //            }
 
-//            for (Planet planet : planetList)
-//            {
-//                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
-//                    + planet.azimuth + "°, " + planet.elevation + "°");
-//            }
+            for (Planet planet : planetList)
+            {
+                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
+                    + planet.azimuth + "°, " + planet.elevation + "°");
+            }
             
 //            for (Messier messier : messierList)
 //            {
@@ -617,8 +617,8 @@ public class Driver extends javax.swing.JFrame {
 //                  + messier.azimuth + "°, " + messier.elevation + "°");
 //            }
 
-            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
-                + moon.azimuth + "°, " + moon.elevation + "°");
+//            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
+//                + moon.azimuth + "°, " + moon.elevation + "°");
 
 
 

@@ -5,11 +5,6 @@
  */
 package starmap.Objects;
 
-import java.io.*;
-import java.lang.Math;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-
 import java.time.LocalTime;
 
 /**
@@ -252,21 +247,71 @@ public class Planet extends CelestialObject
         double jd = 2458540; //2458534.5; //Julian Day        
         double cy = jd/36525;
         
-        // TODO: Put in logic to + or - as needed per planet for each value calculation
         meanLongitude = mod2Pi((lscal + lprop * cy / 3600) * RADS); // In Radians = 1.7429177410226784
-        semiMajorAxis = ascal - aprop * cy;       //not in Radians
-        eccentricityOfOrbit = escal - eprop * cy; //not in radians
-        inclination = ( iscal - iprop * cy / 3600) * RADS;
-        longitudeAscNode = (oscal - oprop * cy / 3600) * RADS;
-        perihelion = (wscal + wprop * cy / 3600) * RADS;
+        
+        if (name.equalsIgnoreCase("Mercury") 
+                || name.equalsIgnoreCase("Venus")
+                || name.equalsIgnoreCase("Jupiter")
+                || name.equalsIgnoreCase("Uranus"))
+        {
+            semiMajorAxis = ascal + aprop * cy;       //not in Radians            
+        }
+        else
+        {
+            semiMajorAxis = ascal - aprop * cy;       //not in Radians 
+        }
+        
+        if (name.equalsIgnoreCase("Mercury") 
+                || name.equalsIgnoreCase("Mars")
+                || name.equalsIgnoreCase("Neptune")
+                || name.equalsIgnoreCase("Pluto"))
+        {
+            eccentricityOfOrbit = escal + eprop * cy; //not in radians         
+        }
+        else
+        {
+            eccentricityOfOrbit = escal - eprop * cy; //not in radians
+        }
+        
+        if (name.equalsIgnoreCase("Saturn") 
+                || name.equalsIgnoreCase("Pluto"))
+        {
+            inclination = ( iscal + iprop * cy / 3600) * RADS;        
+        }
+        else
+        {
+            inclination = ( iscal - iprop * cy / 3600) * RADS;
+        }
+        
+        if (name.equalsIgnoreCase("Mercury") 
+                || name.equalsIgnoreCase("Earth")
+                || name.equalsIgnoreCase("Mars")
+                || name.equalsIgnoreCase("Jupiter")
+                || name.equalsIgnoreCase("Uranus"))
+        {
+            longitudeAscNode = (oscal + oprop * cy / 3600) * RADS;       
+        }
+        else
+        {
+            longitudeAscNode = (oscal - oprop * cy / 3600) * RADS;
+        }
+        
+        if (name.equalsIgnoreCase("Jupiter"))
+        {
+            perihelion = (wscal + wprop * cy / 3600) * RADS;     
+        }
+        else
+        {
+            perihelion = (wscal - wprop * cy / 3600) * RADS;
+        }   
 
-//        System.out.println(String.format("Planet name:              " + name +
-//                 "\nMean Longitude:           " + meanLongitude + "°" +
-//                 "\nSemi-major Axis:          " + semiMajorAxis + " AU" +
-//                 "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
-//                 "\nInclination:              " + inclination + "°" +
-//                 "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
-//                 "\nArgument of Perihelion:   " + perihelion));
+        System.out.println(String.format("Planet name:              " + name +
+                 "\nMean Longitude:           " + meanLongitude + "°" +
+                 "\nSemi-major Axis:          " + semiMajorAxis + " AU" +
+                 "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
+                 "\nInclination:              " + inclination + "°" +
+                 "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
+                 "\nArgument of Perihelion:   " + perihelion));
     }
     
     @Override

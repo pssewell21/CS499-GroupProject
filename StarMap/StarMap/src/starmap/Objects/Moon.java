@@ -57,7 +57,7 @@ public class Moon extends CelestialObject
         double sunMeanAnomalyRadians = Calculation.getRadiansFromDegrees(sunMeanAnomaly);
         // M'
         double moonMeanAnomalyRadians = Calculation.getRadiansFromDegrees(moonMeanAnomaly);
-        // D
+        // D - angular distance east of the Sun at any time.
         double moonMeanElongationRadians = Calculation.getRadiansFromDegrees(moonMeanElongation);
         // F
         double moonMeanDistanceRadians = Calculation.getRadiansFromDegrees(moonMeanDistance);

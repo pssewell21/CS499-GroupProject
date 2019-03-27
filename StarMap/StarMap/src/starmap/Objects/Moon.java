@@ -25,18 +25,40 @@ public class Moon extends CelestialObject
     public double eccentricity;
     
     public String phase;
-        
+    
+     /**************************************************************************
+     *
+     * DESCRIPTION: Constructor for class Moon
+     * 
+    ***************************************************************************/
     public Moon()
     {
         name = "Moon";
-    }
+    } // End Moon()
     
+     /**************************************************************************
+     * 
+     * METHOD: getIntermediateValues()
+     * 
+     * DESCRIPTION: gets the calculated values for each planet
+     * @param julianDate 
+     * //@return calculated values
+     * 
+    ***************************************************************************/
     public void getIntermediateValues(double julianDate)
     {
-        double t = (julianDate - 2415020.0) / 36525;
+        // Lunar phases calculation data goes here:
+        //??
         
+        
+        //Lunar Location calculation:
+        double t = (julianDate - 2415020.0) / 36525; //43549.4361111
+        System.out.print("******************************");
+        System.out.println("\nLunar Location calculations:");
+        System.out.println("******************************");
         System.out.println("t = " + t);        
         
+        //Angles:
         moonMeanLongitude = 270.434164 + (481267.8831 * t);
         sunMeanAnomaly = 358.475833 + (35999.0498 * t);
         moonMeanAnomaly = 296.104608 + (477198.8491 * t);
@@ -44,13 +66,14 @@ public class Moon extends CelestialObject
         moonMeanDistance = 11.250889 + (483202.0251 * t);
         eccentricity = 1 - (0.002495 * t) - (0.00000752 * t * t);
         
-        System.out.println("moonMeanLongitude = " + moonMeanLongitude);
-        System.out.println("sunMeanAnomaly = " + sunMeanAnomaly);
-        System.out.println("moonMeanAnomaly = " + moonMeanAnomaly);
+        System.out.println("moonMeanLongitude  = " + moonMeanLongitude);
+        System.out.println("sunMeanAnomaly     = " + sunMeanAnomaly);
+        System.out.println("moonMeanAnomaly    = " + moonMeanAnomaly);
         System.out.println("moonMeanElongation = " + moonMeanElongation);
-        System.out.println("moonMeanDistance = " + moonMeanDistance);
-        System.out.println("eccentricity = " + eccentricity);
-                
+        System.out.println("moonMeanDistance   = " + moonMeanDistance);
+        System.out.println("eccentricity       = " + eccentricity);
+        
+        // Angles converted to Radians
         // L'
         double moonMeanLongitudeRadians = Calculation.getRadiansFromDegrees(moonMeanLongitude);
         // M
@@ -62,6 +85,7 @@ public class Moon extends CelestialObject
         // F
         double moonMeanDistanceRadians = Calculation.getRadiansFromDegrees(moonMeanDistance);
         
+        // Calculates the Moon's geocentric latitude and longitude
         double geocentricLongitudeRadians = moonMeanLongitudeRadians 
                 + (6.288750 * Math.sin(moonMeanAnomalyRadians))
                 + (1.274018 * Math.sin((2 * moonMeanElongationRadians) - moonMeanAnomalyRadians))
@@ -88,9 +112,12 @@ public class Moon extends CelestialObject
         double geocentricLongitude = Calculation.getDegreesFromRadians(geocentricLongitudeRadians);
         double geoentricLatitude = Calculation.getDegreesFromRadians(geoentricLatitudeRadians);
         
+        System.out.println("\nGEO LAT and LON:");
         System.out.println("geoentricLatitude = " + geoentricLatitude);
         System.out.println("geocentricLongitude = " + geocentricLongitude);
+        System.out.println("Right Ascension (before): " + rightAscension);
         
+        //Calculte the Right Ascension for Moon
         if (geocentricLongitude < 0)
         {
             rightAscension = (geocentricLongitude + 360) / 15;
@@ -104,20 +131,33 @@ public class Moon extends CelestialObject
         
         System.out.println("rightAscension = " + rightAscension);
         System.out.println("declination = " + declination);
-    }
+    } // End getIntermediate()
     
     @Override
+    /**************************************************************************
+     *
+     * METHOD: calculateHorizonCoordinates()
+     * 
+     * DESCRIPTION: gets the calculated values for each planet
+     * 
+     * @param latitude
+     * @param longitude
+     * @param greenwichSiderealTime
+     * 
+    ***************************************************************************/
     public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) throws Exception
     {
-        if (rightAscension < 0 || rightAscension > 24)
-        {
-            throw new Exception("Invalid value of " + rightAscension + " for rightAscension passed into Star.calculateHorizonCoordinates");
-        }
+//        if (rightAscension < 0 || rightAscension > 24)
+//        {
+//            throw new Exception("Invalid value of " + rightAscension + " for rightAscension passed into Star.calculateHorizonCoordinates");
+//        }
         
-        if (declination < -90 || declination > 90)
-        {
-            throw new Exception("Invalid value of " + declination + " for declination passed into Star.calculateHorizonCoordinates");
-        }
+        System.out.println("HorCords: rightAscension = " + rightAscension); //38297.97343336875
+        System.out.println("HorzCords: Declination = " + declination);
+//        if (declination < -90 || declination > 90)
+//        {
+//            throw new Exception("Invalid value of " + declination + " for declination passed into Star.calculateHorizonCoordinates");
+//        }
         
         double decimalHours = greenwichSiderealTime.getHour() + (greenwichSiderealTime.getMinute() / 60.0) + (greenwichSiderealTime.getSecond() / (60.0 * 60));
         

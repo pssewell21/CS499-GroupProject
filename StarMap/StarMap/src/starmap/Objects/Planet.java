@@ -13,7 +13,9 @@ import java.text.DecimalFormat;
 import java.time.LocalTime;
 
 /**
- *
+ * DESCRIPTION: This object contains the calculated planet elements. The elements
+ *              are then used to determine the position of 9 major planets.
+ * 
  * @author pssewell21 and dinabrown
  */
 public class Planet extends CelestialObject
@@ -35,6 +37,25 @@ public class Planet extends CelestialObject
     public double oscal;
     public double oprop;
     
+     /**************************************************************************
+     * 
+     * DESCRIPTION: Constructor for class Planet
+     * 
+     * @param name the given name of a planet
+     * @param lscal used to calculate the mean longitude of a planet
+     * @param lprop used to calculate the mean longitude of a planet
+     * @param ascal used to calculate the semi-major axis of orbit for a planet
+     * @param aprop used to calculate the semi-major axis of orbit for a planet
+     * @param escal used to calculate the eccentricity of orbit for a planet
+     * @param eprop used to calculate the eccentricity axis of orbit for a planet
+     * @param iscal used to calculate the inclination of a planet
+     * @param iprop used to calculate the inclination of a planet
+     * @param wscal used to calculate the argument of perihelion of a planet
+     * @param wprop used to calculate the argument of perihelion of a planet
+     * @param oscal used to calculate the longitude of ascending node of a planet
+     * @param oprop used to calculate the longitude of ascending node of a planet
+     * 
+    ***************************************************************************/
     public Planet(String name, double lscal, double lprop, double ascal, 
                  double aprop, double escal, double eprop, double iscal,
                  double iprop, double wscal, double wprop, double oscal, 
@@ -83,7 +104,7 @@ public class Planet extends CelestialObject
 
         return V;
         
-    } // End True_Anomoly()
+    } // End true_anomoly()
     
      /**************************************************************************
      * 
@@ -270,7 +291,20 @@ public class Planet extends CelestialObject
     }
     
     @Override
+     /**************************************************************************
+     * 
+     * METHOD: calculateHorizionCoordinates()
+     * 
+     * DESCRIPTION: 
+     * @param latitude
+     * @param longitude
+     * @param greenwhichSiderealTime
+     * 
+    ***************************************************************************/
     public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime)
-    {        
-    }
-}
+    {    
+        //need to implement
+        
+    } // End calculateHorizonCoordinates()
+    
+} // End class Planet

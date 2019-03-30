@@ -5,8 +5,11 @@
  */
 package starmap;
 
+import java.awt.*;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -16,6 +19,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import starmap.DataReaders.ConstellationDataReader;
 import starmap.DataReaders.MessierDataReader;
 import starmap.DataReaders.PlanetDataReader;
@@ -87,13 +94,8 @@ public class Driver extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jProgressBar1 = new javax.swing.JProgressBar();
         latitudeButtonGroup = new javax.swing.ButtonGroup();
         longitudeButtonGroup = new javax.swing.ButtonGroup();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        textArea = new javax.swing.JTextArea();
         generateButton = new javax.swing.JButton();
         coordinatePanel = new javax.swing.JPanel();
         latitudeDegreesLabel = new javax.swing.JLabel();
@@ -120,41 +122,21 @@ public class Driver extends javax.swing.JFrame {
         selectAllButton = new javax.swing.JButton();
         hourTextField = new javax.swing.JTextField();
         minuteTextField = new javax.swing.JTextField();
-        hourOffsetComboBox = new javax.swing.JComboBox<String>();
+        hourOffsetComboBox = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        checkBoxPanel = new javax.swing.JPanel();
         starsCheckBox = new javax.swing.JCheckBox();
         planetsCheckBox = new javax.swing.JCheckBox();
         constellationsCheckBox = new javax.swing.JCheckBox();
         messierCheckBox = new javax.swing.JCheckBox();
         unselectCheckBox = new javax.swing.JCheckBox();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textArea = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("StarMapGenerator");
-        setResizable(false);
-
-        textArea.setColumns(20);
-        textArea.setRows(5);
-        jScrollPane2.setViewportView(textArea);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 971, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(424, 512, Short.MAX_VALUE))
-        );
-
-        jScrollPane1.setViewportView(jPanel1);
 
         generateButton.setBackground(java.awt.Color.green);
         generateButton.setText("Generate Image");
@@ -257,7 +239,7 @@ public class Driver extends javax.swing.JFrame {
             }
         });
 
-        hourOffsetComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-12", "-11", "-10", "-9", "-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "0", "+1", "+2", "+3", "+4", "+5", "+6", "+7", "+8", "+9", "+10", "+11", "+12" }));
+        hourOffsetComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-12", "-11", "-10", "-9", "-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "0", "+1", "+2", "+3", "+4", "+5", "+6", "+7", "+8", "+9", "+10", "+11", "+12" }));
 
         jLabel1.setText("hr");
 
@@ -303,36 +285,32 @@ public class Driver extends javax.swing.JFrame {
                             .addComponent(degreeLabel1)
                             .addComponent(degreeLabel))))
                 .addGap(13, 13, 13)
+                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(minLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(minLatTextField)
+                    .addComponent(hourTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(hourLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 9, Short.MAX_VALUE)
+                        .addComponent(hourLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(coordinatePanelLayout.createSequentialGroup()
+                            .addComponent(secLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(minuteLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coordinatePanelLayout.createSequentialGroup()
+                            .addComponent(secLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(minuteLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(coordinatePanelLayout.createSequentialGroup()
-                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(minLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(minLatTextField)
-                            .addComponent(hourTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(minuteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(hourLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 9, Short.MAX_VALUE)
-                                .addComponent(hourLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(coordinatePanelLayout.createSequentialGroup()
-                                    .addComponent(secLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(minuteLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coordinatePanelLayout.createSequentialGroup()
-                                    .addComponent(secLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(minuteLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(coordinatePanelLayout.createSequentialGroup()
-                                .addComponent(minuteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2))))
-                    .addGroup(coordinatePanelLayout.createSequentialGroup()
-                        .addComponent(hourOffsetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)))
+                        .addComponent(jLabel2))
+                    .addComponent(hourOffsetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37))
         );
 
@@ -390,7 +368,7 @@ public class Driver extends javax.swing.JFrame {
 
         coordinatePanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {latitudeDegreesLabel, latitudeMinLabel});
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Image Selection"));
+        checkBoxPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Image Selection"));
 
         starsCheckBox.setText("Stars");
         starsCheckBox.addActionListener(new java.awt.event.ActionListener() {
@@ -427,23 +405,32 @@ public class Driver extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(unselectCheckBox)
-                    .addComponent(starsCheckBox)
-                    .addComponent(constellationsCheckBox)
-                    .addComponent(messierCheckBox)
-                    .addComponent(planetsCheckBox))
-                .addContainerGap(71, Short.MAX_VALUE))
+        textArea.setColumns(20);
+        textArea.setRows(5);
+        jScrollPane2.setViewportView(textArea);
+
+        javax.swing.GroupLayout checkBoxPanelLayout = new javax.swing.GroupLayout(checkBoxPanel);
+        checkBoxPanel.setLayout(checkBoxPanelLayout);
+        checkBoxPanelLayout.setHorizontalGroup(
+            checkBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(checkBoxPanelLayout.createSequentialGroup()
+                .addGroup(checkBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(checkBoxPanelLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(checkBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(unselectCheckBox)
+                            .addComponent(starsCheckBox)
+                            .addComponent(constellationsCheckBox)
+                            .addComponent(messierCheckBox)
+                            .addComponent(planetsCheckBox)))
+                    .addGroup(checkBoxPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        checkBoxPanelLayout.setVerticalGroup(
+            checkBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(checkBoxPanelLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(starsCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -454,38 +441,40 @@ public class Driver extends javax.swing.JFrame {
                 .addComponent(messierCheckBox)
                 .addGap(6, 6, 6)
                 .addComponent(unselectCheckBox)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        jButton1.setText("Save Image");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(coordinatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addGap(22, 22, 22)
+                .addComponent(coordinatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(checkBoxPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(generateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(generateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(coordinatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addComponent(coordinatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(generateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton1))
+                        .addComponent(checkBoxPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -581,8 +570,8 @@ public class Driver extends javax.swing.JFrame {
                 messier.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             
-            moon.getIntermediateValues(julianDate);
-            moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+//            moon.getIntermediateValues(julianDate);
+//            moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
                         
             // Output positions of objects
 //            for (Star star : starList)
@@ -666,6 +655,31 @@ public class Driver extends javax.swing.JFrame {
 //                    + longitudeDegrees + "° " + longitudeMinutes + "' "
 //                    + longitudeSeconds + "'' " + longitudeDirection + ": "
 //                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°\n");   
+
+            MapPanel mapPanel = new MapPanel(starList);
+            JScrollPane mapPanelScrollPane = new JScrollPane(mapPanel);
+            
+            JPanel mapFramePanel = new JPanel();            
+            mapFramePanel.setLayout(new BorderLayout());
+            mapFramePanel.add(mapPanelScrollPane);
+            
+            JFrame mapFrame = new JFrame("Sky Map");
+            mapFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            mapFrame.add(mapFramePanel);
+            mapFrame.setSize(1000, 1000);
+            mapFrame.setVisible(true);
+            
+            try
+            {
+                BufferedImage image = new BufferedImage(mapPanel.getWidth(), mapPanel.getHeight(), BufferedImage.TYPE_INT_RGB);
+                Graphics2D graphics2D = image.createGraphics();
+                mapPanel.paint(graphics2D);
+                ImageIO.write(image,"jpeg", new File("jmemPractice.jpeg"));
+            }
+            catch(Exception exception)
+            {
+                //code
+            }
         } 
         catch (Exception ex) 
         {
@@ -1038,6 +1052,7 @@ public class Driver extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Members">
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel checkBoxPanel;
     private javax.swing.JCheckBox constellationsCheckBox;
     private javax.swing.JPanel coordinatePanel;
     private javax.swing.JLabel dateLabel;
@@ -1051,12 +1066,9 @@ public class Driver extends javax.swing.JFrame {
     private javax.swing.JLabel hourLabel1;
     private javax.swing.JComboBox<String> hourOffsetComboBox;
     private javax.swing.JTextField hourTextField;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField latDegreeTextField;
     private javax.swing.ButtonGroup latitudeButtonGroup;

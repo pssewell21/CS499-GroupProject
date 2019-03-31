@@ -31,6 +31,7 @@ public class Star extends CelestialObject
         this.absoluteMagnitude = absoluteMagnitude;
     }            
             
+    @Override
     public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) throws Exception
     {
         if (rightAscension < 0 || rightAscension > 24)

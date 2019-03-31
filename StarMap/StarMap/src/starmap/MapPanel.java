@@ -63,11 +63,26 @@ public class MapPanel extends JPanel
         g2d.setColor(starColor);
         
         for (Star star : starList)
-        {    
+        {
             int magnitudeValue = 2;
             
-            g2d.drawOval((int)Math.round(star.azimuth * sizeMultiplier), (int)Math.round(star.elevation * sizeMultiplier), magnitudeValue, magnitudeValue);
-            g2d.fillOval((int)Math.round(star.azimuth * sizeMultiplier), (int)Math.round(star.elevation * sizeMultiplier), magnitudeValue, magnitudeValue);
+            int horizontalPosition;
+            
+            if (star.azimuth < 180)
+            {
+                horizontalPosition = (int)Math.round((star.azimuth + 180) * sizeMultiplier);
+            }
+            else
+            {
+                horizontalPosition = (int)Math.round((star.azimuth - 180) * sizeMultiplier);
+            }
+            
+            int verticalPosition = (int)Math.round((90 + (-1 * star.elevation)) * sizeMultiplier);
+            
+            g2d.drawOval(horizontalPosition, verticalPosition, magnitudeValue, magnitudeValue);
+            g2d.fillOval(horizontalPosition, verticalPosition, magnitudeValue, magnitudeValue);  
+            
+            //System.out.println("Drawing star " + star.name + " at " + star.azimuth + ", " + star.elevation);
         }  
     }
     

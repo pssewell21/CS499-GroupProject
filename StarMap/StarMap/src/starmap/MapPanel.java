@@ -62,8 +62,15 @@ public class MapPanel extends JPanel
     {
         g2d.setColor(starColor);
         
+        int count = 0;
+        
         for (Star star : starList)
         {
+            if (star.absoluteMagnitude > 6.0)
+            {
+                continue;
+            }
+            
             int magnitudeValue = 2;
             
             int horizontalPosition;
@@ -83,7 +90,11 @@ public class MapPanel extends JPanel
             g2d.fillOval(horizontalPosition, verticalPosition, magnitudeValue, magnitudeValue);  
             
             //System.out.println("Drawing star " + star.name + " at " + star.azimuth + ", " + star.elevation);
+            
+            count++;
         }  
+        
+        System.out.println("Count of stars plotted: " + count);
     }
     
     

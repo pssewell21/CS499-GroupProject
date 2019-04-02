@@ -45,7 +45,7 @@ public class Moon extends CelestialObject
      * //@return calculated values
      * 
     ***************************************************************************/
-    public void getIntermediateValues(double julianDate)
+    public void moon_getIntermediateValues(double julianDate)
     {
         // Lunar phases calculation data goes here:
         //??
@@ -138,7 +138,8 @@ public class Moon extends CelestialObject
      *
      * METHOD: calculateHorizonCoordinates()
      * 
-     * DESCRIPTION: gets the calculated values for each planet
+     * DESCRIPTION: gets the coordinates and time information that will be used
+     *              to plot Moon.
      * 
      * @param latitude
      * @param longitude

@@ -5,13 +5,15 @@
  */
 package starmap.Objects;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
  * DESCRIPTION: This object contains the calculated planet elements. The elements
- *              are then used to determine the position of 9 major planets.
+ *              are then used to determine the positions of 9 major planets.
  * 
- * @author pssewell21 and Dina Brown
+ * Date: 02-10-2019
+ * @author  Dina Brown and Patrick Sewell
  */
 public class Planet extends CelestialObject
 {   
@@ -82,17 +84,26 @@ public class Planet extends CelestialObject
      * DESCRIPTION: calculates the mean sidereal time
      * 
      * @param new_longitude longitude value
-     * @param new_time
+     * @param new_time 
+     * @param julianDatea
+     * 
      * @return calculated true anomaly
      * 
     ***************************************************************************/
-    public double planet_meanSiderealTime (double new_longitude, LocalTime new_time)//(int year, int month, int day, int hour, int min, int sec)
+    public double planet_meanSiderealTime (double new_longitude, LocalTime new_time)// LocalDateTime new_date)
     {
         double a, b, c, d, jd, jt, mst;
         int hour, min, sec;
-        int year = 0;
+        
+        int year = 0; // For right now
         int month = 0;
-        int day = 0; //for right now
+        int day = 0;
+        
+//        int year, month, day;
+        
+//        year = new_date.getDayOfYear();
+//        month = new_date.getMonthValue();
+//        day = new_date.getDayOfMonth();
         
         hour = new_time.getHour();
         min = new_time.getMinute();
@@ -420,14 +431,18 @@ public class Planet extends CelestialObject
      * 
      * METHOD: calculateHorizionCoordinates()
      * 
-     * DESCRIPTION: 
+     * DESCRIPTION: gets the coordinates and time information that will be used
+     *              to plot each of the planets.
+     * 
      * @param latitude
      * @param longitude
      * @param greenwhichSiderealTime
      * 
     ***************************************************************************/
-    public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime)
+    public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) //LocalDateTime dateTime)
     {    
+        //need to implement exception statements
+        
         double hourAngle;
         double decRad;
         double latRad;
@@ -438,6 +453,7 @@ public class Planet extends CelestialObject
         double az;
         
         hourAngle = planet_meanSiderealTime(longitude, greenwichSiderealTime) - g_rightAscension;
+        //hourAngle = planet_meanSiderealTime(longitude, greenwichSiderealTime, dateTime) - g_rightAscension;
         
         if(hourAngle < 0) hourAngle += 360;
         

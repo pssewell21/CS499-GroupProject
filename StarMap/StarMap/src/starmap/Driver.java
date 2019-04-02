@@ -561,7 +561,7 @@ public class Driver extends javax.swing.JFrame {
             
             for (Planet planet : planetList)
             {
-                planet.getIntermediateValues(julianDate);
+                planet.planet_getIntermediateValues(julianDate);
                 planet.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             

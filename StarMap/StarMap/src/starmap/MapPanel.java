@@ -34,8 +34,11 @@ public class MapPanel extends JPanel
     private final int verticalGridLabelXOffset = -1 * horizontalGridLabelWidth;
     private final int verticalGridLabelYOffset = 0;    
     
+    private final double minimumStarWidth = 1;
+    private final double maximumStarWidth = 6;
+    
     private final Color backgroundColor = Color.BLACK;
-    private final Color gridLineColor = new Color(0, 80, 225);  
+    private final Color gridLineColor = new Color(0, 255, 80);  
     private final Color starColor = Color.WHITE;
     
     private final ArrayList<Star> starList;
@@ -66,12 +69,36 @@ public class MapPanel extends JPanel
         
         for (Star star : starList)
         {
-            if (star.absoluteMagnitude > 6.0)
+            if (star.magnitude > 6.0)
             {
                 continue;
+            }           
+            
+            // The magnitude of the brightest star (widest in UI)
+            double maxWidthMagnitude = -1.43;
+            // The magnitude of the dimmest star (least wide in UI)
+            double minWidthMagnitude = 6.0;
+            
+            // Transformation to make the brightest magnitude have value of 0 
+            // for calculating percentage of width to use for the given star
+            double transformationValue = -1 * maxWidthMagnitude;
+            
+            // The range of the magnitudes, used for calculating percentage
+            // of width to use for the given star
+            double magnitudeRange = minWidthMagnitude - maxWidthMagnitude;            
+            
+            double magnitudePercentage = (star.magnitude + transformationValue) / magnitudeRange;
+            
+            //System.out.println("Star " + star.name + " with magnitude " + star.magnitude + " percentage is " + magnitudePercentage);   
+            
+            int starDiameter = (int)Math.round((1 - magnitudePercentage) * maximumStarWidth);
+            
+            if (starDiameter < 1)
+            {
+                starDiameter = 1;
             }
             
-            int magnitudeValue = 2;
+            //System.out.println("starDiameter = " + starDiameter);  
             
             int horizontalPosition;
             
@@ -86,8 +113,7 @@ public class MapPanel extends JPanel
             
             int verticalPosition = (int)Math.round((90 + (-1 * star.elevation)) * sizeMultiplier);
             
-            g2d.drawOval(horizontalPosition, verticalPosition, magnitudeValue, magnitudeValue);
-            g2d.fillOval(horizontalPosition, verticalPosition, magnitudeValue, magnitudeValue);  
+            g2d.fillOval(horizontalPosition, verticalPosition, starDiameter, starDiameter);  
             
             //System.out.println("Drawing star " + star.name + " at " + star.azimuth + ", " + star.elevation);
             
@@ -95,8 +121,7 @@ public class MapPanel extends JPanel
         }  
         
         System.out.println("Count of stars plotted: " + count);
-    }
-    
+    }    
     
     private void drawBackground(Graphics2D g2d)
     {

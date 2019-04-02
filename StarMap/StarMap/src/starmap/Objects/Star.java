@@ -20,15 +20,15 @@ public class Star extends CelestialObject
     
     public double distance;
     
-    public double absoluteMagnitude;
+    public double magnitude;
             
-    public Star(String name, double rightAscension, double declination, double distance, double absoluteMagnitude)
+    public Star(String name, double rightAscension, double declination, double distance, double magnitude)
     {
         this.name = name;
         this.rightAscension = rightAscension;
         this.declination = declination;
         this.distance = distance;
-        this.absoluteMagnitude = absoluteMagnitude;
+        this.magnitude = magnitude;
     }            
             
     @Override

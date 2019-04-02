@@ -363,7 +363,7 @@ public class Planet extends CelestialObject
             double vEarth = planet_true_anomaly(mEarth, Math.toRadians(eccentricityOfOrbit));        
             double rEarth = semiMajorAxis * (1 - Math.pow(eccentricityOfOrbit, 2)) / (1 + eccentricityOfOrbit * Math.cos(vEarth));
             
-            System.out.println("\nmEarth (in Radians) = " + mEarth
+            System.out.println("\nSTEP 3:\nmEarth (in Radians) = " + mEarth
                                             + "\nvEarth = " + vEarth
                                             + "\nrEarth = " + rEarth);
             
@@ -371,14 +371,14 @@ public class Planet extends CelestialObject
             double xEarth = rEarth * Math.cos(vEarth + perihelion);
             double yEarth = rEarth * Math.sin(vEarth + perihelion);
             double zEarth = 0.0;
-            System.out.println("\nxEarth = " + xEarth + "\nyEarth = " + yEarth
+            System.out.println("\nSTEP 4:\nxEarth = " + xEarth + "\nyEarth = " + yEarth
                                                     + "\nzEarth = " + zEarth);
             
             /* Step 5: Calculate the position of the planet in its' orbit */
             double mPlanet = planet_mod2Pi(meanLongitude - perihelion);
             double vPlanet = planet_true_anomaly(mPlanet, Math.toRadians(eccentricityOfOrbit));
             double rPlanet = semiMajorAxis * (1 - Math.pow(eccentricityOfOrbit, 2)) / (1 + eccentricityOfOrbit * Math.cos(vPlanet));
-            System.out.println("mPlanet (in Radians) = " + mPlanet
+            System.out.println("\nSTEP 5:\nmPlanet (in Radians) = " + mPlanet
                                           + "\nvPlanet = " + vPlanet
                                           + "\nrPlanet = " + rPlanet);
             
@@ -386,7 +386,7 @@ public class Planet extends CelestialObject
             {
                 /* Step 6: Calcuate the heliocentric rectangular coordinates of the planet */
                 xH = yH = zH = 0.0;
-                System.out.println("\nConverting to HELIO Rec coords:");
+                System.out.println("\nSTEP 6:\nConverting to HELIO Rec coords:");
                 System.out.println("xH = " + xH + "\nyH = " + yH + "\nzH = " + zH);
             }
             else{
@@ -395,7 +395,7 @@ public class Planet extends CelestialObject
                 yH = rPlanet * (Math.sin(longitudeAscNode) * Math.cos(vPlanet + perihelion - longitudeAscNode) - Math.cos(longitudeAscNode) * Math.sin(vPlanet + perihelion - longitudeAscNode) * Math.cos(inclination));;
                 zH = rPlanet * (Math.sin(vPlanet + perihelion - longitudeAscNode) * Math.sin(inclination));            
             
-                System.out.println("\nConverting to HELIO Rec coords:");
+                System.out.println("\nSTEP 6:\nConverting to HELIO Rec coords:");
                 System.out.println("\nxH = " + xH + "\nyH = " + yH + "\nzH = " + zH);
             }
 
@@ -403,7 +403,7 @@ public class Planet extends CelestialObject
             xG = xH - xEarth;
             yG = yH - yEarth;
             zG = zH - zEarth;
-            System.out.println("\nConverting to GEO Rec Coords:");
+            System.out.println("\nSTEP 7:\nConverting to GEO Rec Coords:");
             System.out.println("xG = " + xG + "\nyG = " + yG + "\nzG = " + zG);
             
             /* Step 8: Rotate around X axis from ecliptic to equatorial coordinates */
@@ -412,7 +412,7 @@ public class Planet extends CelestialObject
             xEq = xG;
             yEq = yG * Math.cos(ecl) - zG * Math.sin(ecl);
             zEq = zG;
-            System.out.println("\nRotating X axis from ecliptic to equatorial coordinates:");
+            System.out.println("\nSTEP 8:\nRotating X axis from ecliptic to equatorial coordinates:");
             System.out.println("ecl = " + ecl + "\nxEquatorial = "  + xEq + "\nyEquatorial = " + yEq);
             System.out.println("zEquatorial = " + zEq +"\n");
             
@@ -421,7 +421,7 @@ public class Planet extends CelestialObject
             g_declination = Math.atan(zEq / Math.sqrt(Math.pow(xEq, 2) + Math.pow(yEq, 2))) * DEGS;
             distance = Math.sqrt(Math.pow(xEq, 2) + Math.pow(yEq, 2) + Math.pow(zEq, 2));
             
-            System.out.println("g_RightAsc = " + g_rightAscension);
+            System.out.println("STEP 9:\ng_RightAsc = " + g_rightAscension);
             System.out.println("g_declination = " + g_declination + "\n");
          // End getIntermediateValues()
     }
@@ -450,7 +450,6 @@ public class Planet extends CelestialObject
         double sin_alt;
         double alt;
         double cos_az;
-        double az;
         
         hourAngle = planet_meanSiderealTime(longitude, greenwichSiderealTime) - g_rightAscension;
         //hourAngle = planet_meanSiderealTime(longitude, greenwichSiderealTime, dateTime) - g_rightAscension;
@@ -479,10 +478,20 @@ public class Planet extends CelestialObject
         azimuth = elevation * Math.toDegrees(elevation);
         
         if(Math.sin(hrRad) > 0.0)
-            az = 360.0 - azimuth;
+            azimuth = 360.0 - azimuth;
+        
+        if (elevation < 0)
+        {
+            elevation += 360;
+        }
+        
+        if (azimuth > 360)
+        {
+            azimuth -= 360;
+        }
         
         System.out.println("Azimuth = " + azimuth);
-        System.out.println("Altitude = " + elevation);
+        System.out.println("Altitude = " + elevation + "\n");
         
     } // End calculateHorizonCoordinates()
     

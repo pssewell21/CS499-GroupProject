@@ -122,6 +122,7 @@ public class Planet {
     public void calculate(int new_value)
     {
         double JD = 2458540; //2458534.5; //Julian Day
+        //double JD = 2458574.404861111;
         double cy = JD/36525;
         
         /* Planet orbital elements */
@@ -138,6 +139,10 @@ public class Planet {
         double ecl;
         double xEq, yEq, zEq;
         double rightAsc, declination, distance;
+        
+        double mPlanet;
+        double vPlanet;
+        double rPlanet;
         
         DecimalFormat df = new DecimalFormat("#.####");
         df.setRoundingMode(RoundingMode.CEILING);
@@ -177,6 +182,22 @@ public class Planet {
                          "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
                          "\nArgument of Perihelion:   " + perihelion + " °\n");
                 System.out.println(output);
+                
+                /* Step 5: Calculate the position of the planet in its' orbit */ //all PLANETS except Earth/Sun
+                mPlanet = mod2Pi(meanLongitude - perihelion);
+                //System.out.println("mPlanet (in Radians) = " + mPlanet);
+                vPlanet = true_anomaly(mPlanet, Math.toRadians(eccentricityOfOrbit));
+                //System.out.println("vPlanet = " + vPlanet);
+                rPlanet = semiMajorAxis * (1 - Math.pow(eccentricityOfOrbit, 2)) / (1 + eccentricityOfOrbit * Math.cos(vPlanet));
+                //System.out.println("rPlanet = " + rPlanet);
+                
+                /* Step 6: Calculate the heliocentric rectangular coordinates of the planet */
+                xH = rPlanet * (Math.cos(longitudeAscNode) * Math.cos(vPlanet + perihelion - longitudeAscNode) - Math.sin(longitudeAscNode) * Math.sin(vPlanet + perihelion - longitudeAscNode) * Math.cos(inclination));
+                yH = rPlanet * (Math.sin(longitudeAscNode) * Math.cos(vPlanet + perihelion - longitudeAscNode) - Math.cos(longitudeAscNode) * Math.sin(vPlanet + perihelion - longitudeAscNode) * Math.cos(inclination));;
+                zH = rPlanet * (Math.sin(vPlanet + perihelion - longitudeAscNode) * Math.sin(inclination));
+                
+                System.out.println("\nxH = " + xH + "\nyH = " + yH + "\nzH = " + zH);
+                
                 break;
         /* Venus */
             case 2:
@@ -205,7 +226,7 @@ public class Planet {
                 longitudeAscNode = (Oscal - Oprop * cy / 3600) * RADS;
                 perihelion = (Wscal + Wprop * cy / 3600) * RADS;
                 
-                
+                //1.7429177410226784
                 output = String.format("\nPlanet name:                              " + name +
                          "\n1) Mean Longitude (in Degrees):           " + Math.toDegrees(meanLongitude) + "°" +
                          "\n2) Mean Longitude (in Radians):           " + meanLongitude + "\n" +
@@ -262,8 +283,8 @@ public class Planet {
                 rightAsc = mod2Pi(Math.atan2(yEq, xEq)) * DEGS; // right ascension is in degrees
                 declination = Math.atan(zEq / Math.sqrt(Math.pow(xEq, 2) + Math.pow(yEq, 2))) * DEGS;
                 distance = Math.sqrt(Math.pow(xEq, 2) + Math.pow(yEq, 2) + Math.pow(zEq, 2));
-                
-                System.out.println("Right Ascension = " + rightAsc + "\nDeclination = " + declination + "\nDistance = " + distance);
+//                
+//                System.out.println("Right Ascension = " + rightAsc + "\nDeclination = " + declination + "\nDistance = " + distance);
                 
                 break;
         /* Mars */
@@ -289,11 +310,11 @@ public class Planet {
                 
                 
                 /* Step 5: Calculate the position of the planet in its' orbit */ //all PLANETS except Earth/Sun
-                double mPlanet = mod2Pi(meanLongitude - perihelion);
+                mPlanet = mod2Pi(meanLongitude - perihelion);
                 //System.out.println("mPlanet (in Radians) = " + mPlanet);
-                double vPlanet = true_anomaly(mPlanet, Math.toRadians(eccentricityOfOrbit));
+                vPlanet = true_anomaly(mPlanet, Math.toRadians(eccentricityOfOrbit));
                 //System.out.println("vPlanet = " + vPlanet);
-                double rPlanet = semiMajorAxis * (1 - Math.pow(eccentricityOfOrbit, 2)) / (1 + eccentricityOfOrbit * Math.cos(vPlanet));
+                rPlanet = semiMajorAxis * (1 - Math.pow(eccentricityOfOrbit, 2)) / (1 + eccentricityOfOrbit * Math.cos(vPlanet));
                 //System.out.println("rPlanet = " + rPlanet);
                 
                 /* Step 6: Calculate the heliocentric rectangular coordinates of the planet */
@@ -301,7 +322,8 @@ public class Planet {
                 yH = rPlanet * (Math.sin(longitudeAscNode) * Math.cos(vPlanet + perihelion - longitudeAscNode) - Math.cos(longitudeAscNode) * Math.sin(vPlanet + perihelion - longitudeAscNode) * Math.cos(inclination));;
                 zH = rPlanet * (Math.sin(vPlanet + perihelion - longitudeAscNode) * Math.sin(inclination));
                 
-                
+                rPlanet = semiMajorAxis * (1 - Math.pow(eccentricityOfOrbit, 2)) / (1 + eccentricityOfOrbit * Math.cos(vPlanet));
+
                 
                 break;
         /* Jupiter */

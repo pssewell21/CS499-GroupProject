@@ -77,7 +77,7 @@ public class StarDataReader extends DataReader
                     double rightAscension = Double.parseDouble(lineItems[7]);
                     double declination = Double.parseDouble(lineItems[8]);
                     double distance = Double.parseDouble(lineItems[9]);
-                    double absoluteMagnitude = Double.parseDouble(lineItems[11]);
+                    double magnitude = Double.parseDouble(lineItems[10]);
 
 //                    if (name.equalsIgnoreCase("Polaris")
 //                            || name.equalsIgnoreCase("Diphda")
@@ -86,7 +86,7 @@ public class StarDataReader extends DataReader
 //                            || name.equalsIgnoreCase("Tarazed")
 //                            || name.equalsIgnoreCase("Alnair"))
 //                    {
-                    Star star = new Star(name, rightAscension, declination, distance, absoluteMagnitude);  
+                    Star star = new Star(name, rightAscension, declination, distance, magnitude);  
 
                     list.add(star);                      
 //                    }

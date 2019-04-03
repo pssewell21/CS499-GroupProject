@@ -19,7 +19,7 @@ import starmap.Objects.Star;
  */
 public class MapPanel extends JPanel
 {
-    private final int sizeMultiplier = 6;
+    private final int sizeMultiplier = 10;
     
     public int imageWidth = 360 * sizeMultiplier;
     public int imageHeight = 180 * sizeMultiplier;
@@ -32,11 +32,15 @@ public class MapPanel extends JPanel
     private final int horizontalGridLabelYOffset = -5;
     
     private final int verticalGridLabelXOffset = -1 * horizontalGridLabelWidth;
-    private final int verticalGridLabelYOffset = 0;    
+    private final int verticalGridLabelYOffset = 0;   
+    
+    private final double minimumStarWidth = 1;
+    private final double maximumStarWidth = 6;
     
     private final Color backgroundColor = Color.BLACK;
-    private final Color gridLineColor = new Color(0, 80, 225);  
+    private final Color gridLineColor = new Color(0, 255, 80);  
     private final Color starColor = Color.WHITE;
+    private final Color solColor = Color.YELLOW;
     
     private final ArrayList<Star> starList;
     
@@ -66,12 +70,17 @@ public class MapPanel extends JPanel
         
         for (Star star : starList)
         {
-            if (star.absoluteMagnitude > 6.0)
+            if (star.magnitude > 6.0)
             {
                 continue;
-            }
+            }    
+
+            int starDiameter = (int)Math.round((7.0 - star.magnitude) * (sizeMultiplier * 0.15));
             
-            int magnitudeValue = 2;
+            if (star.name.equalsIgnoreCase("Sol"))
+            {
+                g2d.setColor(solColor);
+            }
             
             int horizontalPosition;
             
@@ -86,17 +95,27 @@ public class MapPanel extends JPanel
             
             int verticalPosition = (int)Math.round((90 + (-1 * star.elevation)) * sizeMultiplier);
             
-            g2d.drawOval(horizontalPosition, verticalPosition, magnitudeValue, magnitudeValue);
-            g2d.fillOval(horizontalPosition, verticalPosition, magnitudeValue, magnitudeValue);  
+            g2d.fillOval(horizontalPosition, verticalPosition, starDiameter, starDiameter);  
+            
+            if (star.name.length() > 0)
+            {
+                g2d.drawString(star.name, 
+                        (int)Math.round(horizontalPosition + starDiameter + 2), 
+                        (int)Math.round(verticalPosition + (starDiameter / 2) + (gridLabelHeight / 2)));                
+            }
             
             //System.out.println("Drawing star " + star.name + " at " + star.azimuth + ", " + star.elevation);
+            
+            if (star.name.equalsIgnoreCase("Sol"))
+            {
+                g2d.setColor(starColor);
+            }
             
             count++;
         }  
         
         System.out.println("Count of stars plotted: " + count);
-    }
-    
+    }    
     
     private void drawBackground(Graphics2D g2d)
     {

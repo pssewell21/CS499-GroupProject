@@ -26,7 +26,7 @@ public class Calculation
         // Reference: https://aa.usno.navy.mil/faq/docs/GAST.php
         Duration duration = Duration.between(baselineDate, dateTime);
         
-        double julianDate = 0;
+        double julianDate;
         
         if (dateTime.getYear() >= 2000)
         {

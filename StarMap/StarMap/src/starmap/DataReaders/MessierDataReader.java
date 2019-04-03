@@ -45,7 +45,6 @@ public class MessierDataReader extends DataReader
             System.out.println(rowCount + " rows found");
             
             reader = new BufferedReader(new FileReader(file));
-            int columnCount = 0;
             
             if ((lineFromFile = reader.readLine()) != null)
             {
@@ -59,7 +58,7 @@ public class MessierDataReader extends DataReader
                     }
                 }
                 
-                columnCount = commas + 1;
+                int columnCount = commas + 1;
                 System.out.println(columnCount + " columns found");
             }
             

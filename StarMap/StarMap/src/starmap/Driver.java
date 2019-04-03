@@ -570,8 +570,8 @@ public class Driver extends javax.swing.JFrame {
                 messier.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             
-//            moon.getIntermediateValues(julianDate);
-//            moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+            moon.moon_getIntermediateValues(julianDate);
+            moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
                         
             // Output positions of objects
 //            for (Star star : starList)

@@ -480,15 +480,17 @@ public class Planet extends CelestialObject
         if(Math.sin(hrRad) > 0.0)
             azimuth = 360.0 - azimuth;
         
-        if (elevation < 0)
-        {
-            elevation += 360;
-        }
-        
+//        if (elevation < 0)
+//        {
+//            elevation += 360;
+//        }
+//        
         if (azimuth > 360)
         {
             azimuth -= 360;
         }
+        if(azimuth < 0)
+            azimuth += 360;
         
         System.out.println("Azimuth = " + azimuth);
         System.out.println("Altitude = " + elevation + "\n");

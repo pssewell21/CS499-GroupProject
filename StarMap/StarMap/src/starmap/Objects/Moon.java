@@ -14,6 +14,7 @@ import starmap.Calculation;
  */
 public class Moon extends CelestialObject
 {
+    public final static double RADS = Math.PI / 180.0;
     public double rightAscension;
     public double declination;            
     
@@ -47,13 +48,39 @@ public class Moon extends CelestialObject
     ***************************************************************************/
     public void moon_getIntermediateValues(double julianDate)
     {
-        // Lunar phases calculation data goes here:
-        //??
-        
+//        // Lunar phases calculation data goes here:
+//        double new_moon, first_quarter, full_moon, last_quarter;
+//        double t_lunar, k_lunar;
+//        
+//        //year = getYear();
+//        double year = 2019.087;
+//        double JD;
+//        
+//        k_lunar = (int) ((year - 1900.0) * 12.3685);
+//        t_lunar = k_lunar / 1236.85;
+//        
+//        //julianDate = (k_lunar + 0.25);
+//        
+//        //Julian Day of a given phase:
+//        JD = 2415020.75933 + (29.53058868 * k_lunar) + (0.0001178 * Math.pow(t_lunar, 2))
+//                + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
+//                - ((0.009173 * RADS) * Math.pow(t_lunar, 2))))); 
+//        
+//        // New moon calculations
+//        new_moon = Math.ceil(JD); //Next new moon
+//        new_moon = Math.floor(JD);
+//        
+//        System.out.print("******************************");
+//        System.out.println("\nLunar Phases calculations:");
+//        System.out.println("******************************");
+//        System.out.println("Julian Date = " + julianDate);
+//        System.out.println("JD (moon) = " + JD);
+//        System.out.println("new moon = " + new_moon);
         
         //Lunar Location calculation:
+        julianDate = 2444214.5;
         double t = (julianDate - 2415020.0) / 36525; //43549.4361111
-        System.out.print("******************************");
+        System.out.print("\n******************************");
         System.out.println("\nLunar Location calculations:");
         System.out.println("******************************");
         System.out.println("t = " + t);        
@@ -66,11 +93,11 @@ public class Moon extends CelestialObject
         moonMeanDistance = 11.250889 + (483202.0251 * t);
         eccentricity = 1 - (0.002495 * t) - (0.00000752 * t * t);
         
-        System.out.println("moonMeanLongitude  = " + moonMeanLongitude);
-        System.out.println("sunMeanAnomaly     = " + sunMeanAnomaly);
-        System.out.println("moonMeanAnomaly    = " + moonMeanAnomaly);
-        System.out.println("moonMeanElongation = " + moonMeanElongation);
-        System.out.println("moonMeanDistance   = " + moonMeanDistance);
+        System.out.println("moonMeanLongitude (L')  = " + moonMeanLongitude);
+        System.out.println("sunMeanAnomaly (M)     = " + sunMeanAnomaly);
+        System.out.println("moonMeanAnomaly (M')    = " + moonMeanAnomaly);
+        System.out.println("moonMeanElongation (D)  = " + moonMeanElongation);
+        System.out.println("moonMeanDistance (F)   = " + moonMeanDistance);
         System.out.println("eccentricity       = " + eccentricity);
         
         // Angles converted to Radians

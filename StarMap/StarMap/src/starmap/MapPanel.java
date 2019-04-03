@@ -67,7 +67,9 @@ public class MapPanel extends JPanel
     private final Color starColor = Color.WHITE;
     private final Color solColor = Color.YELLOW; 
     private final Color constellationColor = Color.CYAN;   
+    private final Color planetColor = Color.RED;   
     private final Color messierColor = Color.MAGENTA;
+    private final Color moonColor = Color.GRAY;
     
     public MapPanel(ArrayList<Star> starList, 
                     ArrayList<Constellation> constellationList, 
@@ -223,7 +225,45 @@ public class MapPanel extends JPanel
 
     private void plotPlanets(Graphics2D g2d)
     {
-        //TODO: Implement this method
+        if (planetVisibilityFlag)
+        {
+            g2d.setColor(planetColor);
+        
+            //int count = 0;
+
+            for (Planet planet : planetList)
+            {
+                int objectDiameter = (int)Math.round(3.0 * sizeMultiplier * objectDiameterMultiplier);
+
+                int horizontalPosition;
+
+                if (planet.azimuth < 180)
+                {
+                    horizontalPosition = (int)Math.round((planet.azimuth + 180) * sizeMultiplier);
+                }
+                else
+                {
+                    horizontalPosition = (int)Math.round((planet.azimuth - 180) * sizeMultiplier);
+                }
+
+                int verticalPosition = (int)Math.round((90 + (-1 * planet.elevation)) * sizeMultiplier);
+
+                g2d.fillOval(horizontalPosition, verticalPosition, objectDiameter, objectDiameter);  
+
+                if (planetLabelVisibilityFlag && planet.name.length() > 0)
+                {
+                    g2d.drawString(planet.name, 
+                            (int)Math.round(horizontalPosition + objectDiameter + 2), 
+                            (int)Math.round(verticalPosition + (objectDiameter / 2) + (gridLabelHeight / 2)));                
+                }
+
+                //System.out.println("Drawing planet " + planet.name + " at " + planet.azimuth + ", " + planet.elevation);
+
+                //count++;
+            }  
+
+            //System.out.println("Count of planets plotted: " + count);
+        }
     }  
 
     private void plotMessierObjects(Graphics2D g2d)
@@ -271,7 +311,37 @@ public class MapPanel extends JPanel
 
     private void plotMoon(Graphics2D g2d)
     {
-        //TODO: Implement this method
+        if (moonVisibilityFlag)
+        {
+            g2d.setColor(moonColor);
+            
+            int objectDiameter = (int)Math.round(3.0 * sizeMultiplier * objectDiameterMultiplier);
+
+            int horizontalPosition;
+
+            if (moon.azimuth < 180)
+            {
+                horizontalPosition = (int)Math.round((moon.azimuth + 180) * sizeMultiplier);
+            }
+            else
+            {
+                horizontalPosition = (int)Math.round((moon.azimuth - 180) * sizeMultiplier);
+            }
+
+            int verticalPosition = (int)Math.round((90 + (-1 * moon.elevation)) * sizeMultiplier);
+
+            g2d.fillOval(horizontalPosition, verticalPosition, objectDiameter, objectDiameter);  
+
+            //TODO: Implement showing moon phase in some way
+//            if (moonPhaseVisibilityFlag && moon.name.length() > 0)
+//            {
+//                g2d.drawString(moon.phase, 
+//                        (int)Math.round(horizontalPosition + objectDiameter + 2), 
+//                        (int)Math.round(verticalPosition + (objectDiameter / 2) + (gridLabelHeight / 2)));                
+//            }
+
+            //System.out.println("Drawing moon " + moon.phase + " at " + moon.azimuth + ", " + moon.elevation);
+        }
     }  
     
     private void drawBackground(Graphics2D g2d)

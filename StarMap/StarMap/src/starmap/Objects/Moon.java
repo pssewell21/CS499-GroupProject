@@ -5,6 +5,8 @@
  */
 package starmap.Objects;
 
+import java.lang.Math;
+import java.text.DecimalFormat;
 import java.time.LocalTime;
 import starmap.Calculation;
 
@@ -18,12 +20,12 @@ public class Moon extends CelestialObject
     public double rightAscension;
     public double declination;            
     
-    public double moonMeanLongitude;
-    public double sunMeanAnomaly;
-    public double moonMeanAnomaly;
-    public double moonMeanElongation;
-    public double moonMeanDistance;
-    public double eccentricity;
+    public double L_angle;
+    public double M_angle;
+    public double Mp_angle;
+    public double D_angle;
+    public double F_angle;
+    public double ecc;
     
     public String phase;
     
@@ -48,23 +50,23 @@ public class Moon extends CelestialObject
     ***************************************************************************/
     public void moon_getIntermediateValues(double julianDate)
     {
-//        // Lunar phases calculation data goes here:
-//        double new_moon, first_quarter, full_moon, last_quarter;
-//        double t_lunar, k_lunar;
-//        
-//        //year = getYear();
-//        double year = 2019.087;
-//        double JD;
-//        
-//        k_lunar = (int) ((year - 1900.0) * 12.3685);
-//        t_lunar = k_lunar / 1236.85;
-//        
-//        //julianDate = (k_lunar + 0.25);
-//        
-//        //Julian Day of a given phase:
-//        JD = 2415020.75933 + (29.53058868 * k_lunar) + (0.0001178 * Math.pow(t_lunar, 2))
-//                + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
-//                - ((0.009173 * RADS) * Math.pow(t_lunar, 2))))); 
+        // Lunar phases calculation data goes here:
+        double new_moon, first_quarter, full_moon, last_quarter;
+        double t_lunar, k_lunar;
+        
+        //year = getYear();
+        double year = 2019.087;
+        double JD;
+        
+        k_lunar = (int) ((year - 1900.0) * 12.3685);
+        t_lunar = k_lunar / 1236.85;
+        
+        //julianDate = (k_lunar + 0.25);
+        
+        //Julian Day of a given phase:
+        JD = 2415020.75933 + (29.53058868 * k_lunar) + (0.0001178 * Math.pow(t_lunar, 2))
+                + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
+                - ((0.009173 * RADS) * Math.pow(t_lunar, 2))))); 
 //        
 //        // New moon calculations
 //        new_moon = Math.ceil(JD); //Next new moon
@@ -78,71 +80,82 @@ public class Moon extends CelestialObject
 //        System.out.println("new moon = " + new_moon);
         
         //Lunar Location calculation:
+        DecimalFormat df = new DecimalFormat("#.######");
+        DecimalFormat df_two = new DecimalFormat("#.##########");
         julianDate = 2444214.5;
         double t = (julianDate - 2415020.0) / 36525; //43549.4361111
+        
         System.out.print("\n******************************");
         System.out.println("\nLunar Location calculations:");
         System.out.println("******************************");
-        System.out.println("t = " + t);        
+        System.out.println("t = " + Math.round(t));  
+        System.out.println("julian day " + julianDate);
         
         //Angles:
-        moonMeanLongitude = 270.434164 + (481267.8831 * t);
-        sunMeanAnomaly = 358.475833 + (35999.0498 * t);
-        moonMeanAnomaly = 296.104608 + (477198.8491 * t);
-        moonMeanElongation = 350.737486 + (445267.1142 * t);
-        moonMeanDistance = 11.250889 + (483202.0251 * t);
-        eccentricity = 1 - (0.002495 * t) - (0.00000752 * t * t);
+        L_angle = 270.434164 + (481267.8831 * t);
+        M_angle = 358.475833 + (35999.0498 * t);
+        Mp_angle = 296.104608 + (477198.8491 * t);
+        D_angle = 350.737486 + (445267.1142 * t);
+        F_angle = 11.250889 + (483202.0251 * t);
+        ecc = 1 - (0.002495 * t) - (0.00000752 * t * t);
         
-        System.out.println("moonMeanLongitude (L')  = " + moonMeanLongitude);
-        System.out.println("sunMeanAnomaly (M)     = " + sunMeanAnomaly);
-        System.out.println("moonMeanAnomaly (M')    = " + moonMeanAnomaly);
-        System.out.println("moonMeanElongation (D)  = " + moonMeanElongation);
-        System.out.println("moonMeanDistance (F)   = " + moonMeanDistance);
-        System.out.println("eccentricity       = " + eccentricity);
+        
+        
+        System.out.println("moonMeanLongitude (L')  = " + L_angle);
+        System.out.println("sunMeanAnomaly (M)     = " + M_angle);
+        System.out.println("moonMeanAnomaly (M')    = " + Mp_angle);
+        System.out.println("moonMeanElongation (D)  = " + D_angle);
+        System.out.println("moonMeanDistance (F)   = " + F_angle);
+        System.out.println("eccentricity       = " + df.format(ecc));
         
         // Angles converted to Radians
-        // L'
-        double moonMeanLongitudeRadians = Calculation.getRadiansFromDegrees(moonMeanLongitude);
-        // M
-        double sunMeanAnomalyRadians = Calculation.getRadiansFromDegrees(sunMeanAnomaly);
-        // M'
-        double moonMeanAnomalyRadians = Calculation.getRadiansFromDegrees(moonMeanAnomaly);
-        // D - angular distance east of the Sun at any time.
-        double moonMeanElongationRadians = Calculation.getRadiansFromDegrees(moonMeanElongation);
-        // F
-        double moonMeanDistanceRadians = Calculation.getRadiansFromDegrees(moonMeanDistance);
+        
+        double L_RADS = Math.toRadians(L_angle); // L'
+        double M_RADS = Math.toRadians(M_angle); // M
+        double Mp_RADS = Math.toRadians(Mp_angle); //M'
+        double D_RADS = Math.toRadians(D_angle); // D - angular distance east of the Sun at any time.
+        double F_RADS = Math.toRadians(F_angle); // F
+        
+        System.out.println("\nLunar Angles after RADS:");
+        System.out.println("L' = " + L_RADS);
+        System.out.println("M = " + M_RADS);
+        System.out.println("M' = " + Mp_RADS);
+        System.out.println("D = " + D_RADS);
+        System.out.println("F = " + F_RADS + "\n");
+        //double geocentricLongitudeRadians = 
         
         // Calculates the Moon's geocentric latitude and longitude
-        double geocentricLongitudeRadians = moonMeanLongitudeRadians 
-                + (6.288750 * Math.sin(moonMeanAnomalyRadians))
-                + (1.274018 * Math.sin((2 * moonMeanElongationRadians) - moonMeanAnomalyRadians))
-                + (0.658309 * Math.sin(2 * moonMeanElongationRadians))
-                + (0.213616 * Math.sin(2 * moonMeanAnomalyRadians))
-                - (0.185596 * Math.sin(sunMeanAnomalyRadians) * eccentricity)
-                - (0.114336 * Math.sin(2 * moonMeanDistanceRadians))
-                + (0.058793 * Math.sin((2 * moonMeanElongationRadians) - (2 * moonMeanAnomalyRadians)))
-                + (0.057212 * Math.sin((2 * moonMeanElongationRadians) - sunMeanAnomalyRadians - moonMeanAnomalyRadians) * eccentricity)
-                + (0.053320 * Math.sin((2 * moonMeanElongationRadians) + moonMeanAnomalyRadians))
-                + (0.045874 * Math.sin((2 * moonMeanElongationRadians) - sunMeanAnomalyRadians) * eccentricity);
+        double geocentricLongitudeRadians = L_angle 
+                + (6.288750 * Math.sin(Mp_angle))
+                + (1.274018 * Math.sin((2 * D_angle) - Mp_angle))
+                + (0.658309 * Math.sin(2 * D_angle))
+                + (0.213616 * Math.sin(2 * Mp_angle))
+                - (0.185596 * Math.sin(M_angle) * ecc)
+                - (0.114336 * Math.sin(2 * F_angle))
+                + (0.058793 * Math.sin((2 * D_angle) - (2 * Mp_angle)))
+                + (0.057212 * Math.sin((2 * F_angle) - M_angle - Mp_angle) * ecc)
+                + (0.053320 * Math.sin((2 * F_angle) + Mp_angle))
+                + (0.045874 * Math.sin((2 * F_angle) - M_angle) * ecc);
         
-        double geoentricLatitudeRadians = (5.128189 * Math.sin(moonMeanDistanceRadians))
-                + (0.280606 * Math.sin(moonMeanAnomalyRadians + moonMeanDistanceRadians))
-                + (0.277693 * Math.sin(moonMeanAnomalyRadians - moonMeanDistanceRadians))
-                + (0.173238 * Math.sin((2 * moonMeanElongationRadians) - moonMeanDistanceRadians))
-                + (0.055413 * Math.sin((2 * moonMeanElongationRadians) + moonMeanDistanceRadians - moonMeanAnomalyRadians))
-                + (0.046272 * Math.sin((2 * moonMeanElongationRadians) - moonMeanDistanceRadians - moonMeanAnomalyRadians))
-                + (0.032573 * Math.sin((2 * moonMeanElongationRadians) + moonMeanDistanceRadians))
-                + (0.017198 * Math.sin((2 * moonMeanAnomalyRadians) + moonMeanDistanceRadians))
-                + (0.009267 * Math.sin((2 * moonMeanElongationRadians) + moonMeanAnomalyRadians - moonMeanDistanceRadians))
-                + (0.008823 * Math.sin((2 * moonMeanAnomalyRadians) - moonMeanDistanceRadians));
+//        double geoentricLatitudeRadians = (5.128189 * Math.sin(moonMeanDistanceRadians))
+//                + (0.280606 * Math.sin(moonMeanAnomalyRadians + moonMeanDistanceRadians))
+//                + (0.277693 * Math.sin(moonMeanAnomalyRadians - moonMeanDistanceRadians))
+//                + (0.173238 * Math.sin((2 * moonMeanElongationRadians) - moonMeanDistanceRadians))
+//                + (0.055413 * Math.sin((2 * moonMeanElongationRadians) + moonMeanDistanceRadians - moonMeanAnomalyRadians))
+//                + (0.046272 * Math.sin((2 * moonMeanElongationRadians) - moonMeanDistanceRadians - moonMeanAnomalyRadians))
+//                + (0.032573 * Math.sin((2 * moonMeanElongationRadians) + moonMeanDistanceRadians))
+//                + (0.017198 * Math.sin((2 * moonMeanAnomalyRadians) + moonMeanDistanceRadians))
+//                + (0.009267 * Math.sin((2 * moonMeanElongationRadians) + moonMeanAnomalyRadians - moonMeanDistanceRadians))
+//                + (0.008823 * Math.sin((2 * moonMeanAnomalyRadians) - moonMeanDistanceRadians));
         
         double geocentricLongitude = Calculation.getDegreesFromRadians(geocentricLongitudeRadians);
-        double geoentricLatitude = Calculation.getDegreesFromRadians(geoentricLatitudeRadians);
+        //double geoentricLatitude = Calculation.getDegreesFromRadians(geoentricLatitudeRadians);
         
         System.out.println("\nGEO LAT and LON:");
-        System.out.println("geoentricLatitude = " + geoentricLatitude);
-        System.out.println("geocentricLongitude = " + geocentricLongitude);
-        System.out.println("Right Ascension (before): " + rightAscension);
+        System.out.println("geocentricLongitude = " + geocentricLongitude + "\n");
+//        System.out.println("geoentricLatitude = " + geoentricLatitude);
+//        System.out.println("geocentricLongitude = " + geocentricLongitude);
+//        System.out.println("Right Ascension (before): " + rightAscension);
         
         //Calculte the Right Ascension for Moon
         if (geocentricLongitude < 0)
@@ -154,7 +167,7 @@ public class Moon extends CelestialObject
             rightAscension = geocentricLongitude / 15;
         }        
         
-        declination = geoentricLatitude;    
+        //declination = geoentricLatitude;    
         
         System.out.println("rightAscension = " + rightAscension);
         System.out.println("declination = " + declination);

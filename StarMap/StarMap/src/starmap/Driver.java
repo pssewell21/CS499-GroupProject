@@ -45,6 +45,19 @@ public class Driver extends javax.swing.JFrame {
     ArrayList<Messier> messierList;
     Moon moon;
     
+    // boolean flags that control which items are visible on the star map
+    boolean starVisibilityFlag = true;
+    boolean constellationVisibilityFlag = true;
+    boolean planetVisibilityFlag = true;
+    boolean moonVisibilityFlag = true;
+    boolean messierVisibilityFlag = true;
+    
+    boolean starLabelVisibilityFlag = true;
+    boolean constellationLabelVisibilityFlag = true;
+    boolean planetLabelVisibilityFlag = true;
+    boolean moonPhaseVisibilityFlag = true;
+    boolean messierLabelVisibilityFlag = true;
+    
     // <editor-fold defaultstate="collapsed" desc="Constructor"> 
 
     /**
@@ -96,7 +109,7 @@ public class Driver extends javax.swing.JFrame {
 
         latitudeButtonGroup = new javax.swing.ButtonGroup();
         longitudeButtonGroup = new javax.swing.ButtonGroup();
-        generateButton = new javax.swing.JButton();
+        generateStarMapButton = new javax.swing.JButton();
         coordinatePanel = new javax.swing.JPanel();
         latitudeDegreesLabel = new javax.swing.JLabel();
         latDegreeTextField = new javax.swing.JTextField();
@@ -118,37 +131,39 @@ public class Driver extends javax.swing.JFrame {
         degreeLabel1 = new javax.swing.JLabel();
         hourLabel1 = new javax.swing.JLabel();
         minuteLabel1 = new javax.swing.JLabel();
-        enterDataButton = new javax.swing.JButton();
-        selectAllButton = new javax.swing.JButton();
         hourTextField = new javax.swing.JTextField();
         minuteTextField = new javax.swing.JTextField();
         hourOffsetComboBox = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        checkBoxPanel = new javax.swing.JPanel();
-        starsCheckBox = new javax.swing.JCheckBox();
-        planetsCheckBox = new javax.swing.JCheckBox();
-        constellationsCheckBox = new javax.swing.JCheckBox();
-        messierCheckBox = new javax.swing.JCheckBox();
-        unselectCheckBox = new javax.swing.JCheckBox();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        textArea = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        objectSelectionPanel = new javax.swing.JPanel();
+        starObjectCheckBox = new javax.swing.JCheckBox();
+        planetObjectCheckBox = new javax.swing.JCheckBox();
+        constellationObjectCheckBox = new javax.swing.JCheckBox();
+        moonObjectCheckBox = new javax.swing.JCheckBox();
+        messierObjectCheckBox = new javax.swing.JCheckBox();
+        saveImageButton = new javax.swing.JButton();
+        labelSelectionPanel = new javax.swing.JPanel();
+        starLabelCheckBox = new javax.swing.JCheckBox();
+        constellationLabelCheckBox = new javax.swing.JCheckBox();
+        planetLabelCheckBox = new javax.swing.JCheckBox();
+        moonPhaseCheckBox = new javax.swing.JCheckBox();
+        messierLabelCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("StarMapGenerator");
+        setTitle("Star Map Generator");
 
-        generateButton.setBackground(java.awt.Color.green);
-        generateButton.setText("Generate Image");
-        generateButton.addActionListener(new java.awt.event.ActionListener() {
+        generateStarMapButton.setBackground(java.awt.Color.green);
+        generateStarMapButton.setText("Generate Star Map");
+        generateStarMapButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                generateButtonActionPerformed(evt);
+                generateStarMapButtonActionPerformed(evt);
             }
         });
 
-        coordinatePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Coordinates"));
+        coordinatePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Coordinates and Time"));
 
-        latitudeDegreesLabel.setText("Latitude");
+        latitudeDegreesLabel.setText("Latitude:");
 
         latDegreeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -156,7 +171,7 @@ public class Driver extends javax.swing.JFrame {
             }
         });
 
-        latitudeMinLabel.setText("Longitude");
+        latitudeMinLabel.setText("Longitude:");
 
         longDegreeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -164,7 +179,7 @@ public class Driver extends javax.swing.JFrame {
             }
         });
 
-        dateLabel.setText("Date/Time");
+        dateLabel.setText("Date/Time:");
 
         minLatTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -213,20 +228,6 @@ public class Driver extends javax.swing.JFrame {
 
         minuteLabel1.setText("\"");
 
-        enterDataButton.setText("Enter Data");
-        enterDataButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                enterDataButtonActionPerformed(evt);
-            }
-        });
-
-        selectAllButton.setText("Select All");
-        selectAllButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectAllButtonActionPerformed(evt);
-            }
-        });
-
         hourTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 hourTextFieldKeyReleased(evt);
@@ -250,71 +251,63 @@ public class Driver extends javax.swing.JFrame {
         coordinatePanelLayout.setHorizontalGroup(
             coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(coordinatePanelLayout.createSequentialGroup()
-                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addContainerGap()
+                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(latitudeMinLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(latitudeDegreesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(coordinatePanelLayout.createSequentialGroup()
-                        .addComponent(enterDataButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(selectAllButton))
-                    .addGroup(coordinatePanelLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(coordinatePanelLayout.createSequentialGroup()
-                                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(coordinatePanelLayout.createSequentialGroup()
-                                        .addComponent(latitudeMinLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(westRadioButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(eastRadioButton))
-                                    .addGroup(coordinatePanelLayout.createSequentialGroup()
-                                        .addComponent(latitudeDegreesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(northRadioButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(southRadioButton)))
-                                .addGap(20, 20, 20)
-                                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(latDegreeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                                    .addComponent(longDegreeTextField)))
-                            .addGroup(coordinatePanelLayout.createSequentialGroup()
-                                .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(longDegreeTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(latDegreeTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(degreeLabel1)
-                            .addComponent(degreeLabel))))
-                .addGap(13, 13, 13)
-                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(minLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(minLatTextField)
-                    .addComponent(hourTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(hourLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 9, Short.MAX_VALUE)
-                        .addComponent(hourLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(coordinatePanelLayout.createSequentialGroup()
-                            .addComponent(secLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(minuteLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coordinatePanelLayout.createSequentialGroup()
-                            .addComponent(secLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(minuteLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(degreeLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(minLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(minLatTextField))
+                        .addGap(5, 5, 5)
+                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(hourLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(hourLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(coordinatePanelLayout.createSequentialGroup()
+                                .addComponent(secLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(minuteLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coordinatePanelLayout.createSequentialGroup()
+                                .addComponent(secLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(minuteLabel1)))
+                        .addGap(18, 27, Short.MAX_VALUE)
+                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(northRadioButton)
+                            .addComponent(westRadioButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(southRadioButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(eastRadioButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(107, 107, 107))
                     .addGroup(coordinatePanelLayout.createSequentialGroup()
+                        .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hourTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(minuteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2))
-                    .addComponent(hourOffsetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(hourOffsetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
-
-        coordinatePanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {enterDataButton, selectAllButton});
 
         coordinatePanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {latitudeDegreesLabel, latitudeMinLabel});
 
@@ -323,164 +316,241 @@ public class Driver extends javax.swing.JFrame {
         coordinatePanelLayout.setVerticalGroup(
             coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(coordinatePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(18, 18, 18)
+                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(coordinatePanelLayout.createSequentialGroup()
+                            .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(northRadioButton)
+                                .addComponent(minLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(hourLabel)
+                                .addComponent(southRadioButton))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(minLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(hourLabel1)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coordinatePanelLayout.createSequentialGroup()
+                            .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(secLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(minuteLabel))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(secLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(minuteLabel1)
+                                .addComponent(westRadioButton)
+                                .addComponent(eastRadioButton))))
                     .addGroup(coordinatePanelLayout.createSequentialGroup()
                         .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(latitudeDegreesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(northRadioButton)
-                            .addComponent(southRadioButton)
                             .addComponent(latDegreeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(degreeLabel)
-                            .addComponent(minLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(hourLabel)
-                            .addComponent(secLatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(minuteLabel))
+                            .addComponent(latitudeDegreesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(westRadioButton)
-                            .addComponent(latitudeMinLabel)
                             .addComponent(longDegreeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(degreeLabel1)
-                            .addComponent(minLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(hourLabel1)
-                            .addComponent(secLongTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(minuteLabel1)
-                            .addComponent(eastRadioButton))
-                        .addGap(18, 18, 18)
-                        .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(latitudeMinLabel))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(dateTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(hourTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(minuteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1)
-                        .addComponent(jLabel2)))
-                .addGap(18, 18, 18)
-                .addGroup(coordinatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(enterDataButton)
-                    .addComponent(selectAllButton)
-                    .addComponent(hourOffsetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(jLabel2)
+                        .addComponent(hourOffsetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         coordinatePanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {latDegreeTextField, longDegreeTextField, minLatTextField, minLongTextField, secLatTextField, secLongTextField});
 
         coordinatePanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {latitudeDegreesLabel, latitudeMinLabel});
 
-        checkBoxPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Image Selection"));
+        objectSelectionPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Object Selection"));
 
-        starsCheckBox.setText("Stars");
-        starsCheckBox.addActionListener(new java.awt.event.ActionListener() {
+        starObjectCheckBox.setSelected(true);
+        starObjectCheckBox.setText("Stars");
+        starObjectCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                starsCheckBoxActionPerformed(evt);
+                starObjectCheckBoxActionPerformed(evt);
             }
         });
 
-        planetsCheckBox.setText("Major Planets");
-        planetsCheckBox.addActionListener(new java.awt.event.ActionListener() {
+        planetObjectCheckBox.setSelected(true);
+        planetObjectCheckBox.setText("Major Planets");
+        planetObjectCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                planetsCheckBoxActionPerformed(evt);
+                planetObjectCheckBoxActionPerformed(evt);
             }
         });
 
-        constellationsCheckBox.setText("Major Constellations");
-        constellationsCheckBox.addActionListener(new java.awt.event.ActionListener() {
+        constellationObjectCheckBox.setSelected(true);
+        constellationObjectCheckBox.setText("Major Constellations");
+        constellationObjectCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                constellationsCheckBoxActionPerformed(evt);
+                constellationObjectCheckBoxActionPerformed(evt);
             }
         });
 
-        messierCheckBox.setText("Messier Objects");
-        messierCheckBox.addActionListener(new java.awt.event.ActionListener() {
+        moonObjectCheckBox.setSelected(true);
+        moonObjectCheckBox.setText("Moon");
+        moonObjectCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                messierCheckBoxActionPerformed(evt);
+                moonObjectCheckBoxActionPerformed(evt);
             }
         });
 
-        unselectCheckBox.setText("Unselect All");
-        unselectCheckBox.addActionListener(new java.awt.event.ActionListener() {
+        messierObjectCheckBox.setSelected(true);
+        messierObjectCheckBox.setText("Messier Objects");
+        messierObjectCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                unselectCheckBoxActionPerformed(evt);
+                messierObjectCheckBoxActionPerformed(evt);
             }
         });
 
-        textArea.setColumns(20);
-        textArea.setRows(5);
-        jScrollPane2.setViewportView(textArea);
-
-        javax.swing.GroupLayout checkBoxPanelLayout = new javax.swing.GroupLayout(checkBoxPanel);
-        checkBoxPanel.setLayout(checkBoxPanelLayout);
-        checkBoxPanelLayout.setHorizontalGroup(
-            checkBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(checkBoxPanelLayout.createSequentialGroup()
-                .addGroup(checkBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(checkBoxPanelLayout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(checkBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(unselectCheckBox)
-                            .addComponent(starsCheckBox)
-                            .addComponent(constellationsCheckBox)
-                            .addComponent(messierCheckBox)
-                            .addComponent(planetsCheckBox)))
-                    .addGroup(checkBoxPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+        javax.swing.GroupLayout objectSelectionPanelLayout = new javax.swing.GroupLayout(objectSelectionPanel);
+        objectSelectionPanel.setLayout(objectSelectionPanelLayout);
+        objectSelectionPanelLayout.setHorizontalGroup(
+            objectSelectionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(objectSelectionPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(objectSelectionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(starObjectCheckBox)
+                    .addComponent(constellationObjectCheckBox)
+                    .addComponent(moonObjectCheckBox)
+                    .addComponent(planetObjectCheckBox)
+                    .addComponent(messierObjectCheckBox))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        checkBoxPanelLayout.setVerticalGroup(
-            checkBoxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(checkBoxPanelLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(starsCheckBox)
+        objectSelectionPanelLayout.setVerticalGroup(
+            objectSelectionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(objectSelectionPanelLayout.createSequentialGroup()
+                .addComponent(starObjectCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(planetsCheckBox)
+                .addComponent(constellationObjectCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(constellationsCheckBox)
+                .addComponent(planetObjectCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(messierCheckBox)
-                .addGap(6, 6, 6)
-                .addComponent(unselectCheckBox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(moonObjectCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(messierObjectCheckBox)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Save Image");
+        saveImageButton.setText("Save Image");
+
+        labelSelectionPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Label Selection"));
+
+        starLabelCheckBox.setSelected(true);
+        starLabelCheckBox.setText("Stars");
+        starLabelCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                starLabelCheckBoxActionPerformed(evt);
+            }
+        });
+
+        constellationLabelCheckBox.setSelected(true);
+        constellationLabelCheckBox.setText("Major Constellations");
+        constellationLabelCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                constellationLabelCheckBoxActionPerformed(evt);
+            }
+        });
+
+        planetLabelCheckBox.setSelected(true);
+        planetLabelCheckBox.setText("Major Planets");
+        planetLabelCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                planetLabelCheckBoxActionPerformed(evt);
+            }
+        });
+
+        moonPhaseCheckBox.setSelected(true);
+        moonPhaseCheckBox.setText("Moon Phase");
+        moonPhaseCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moonPhaseCheckBoxActionPerformed(evt);
+            }
+        });
+
+        messierLabelCheckBox.setSelected(true);
+        messierLabelCheckBox.setText("Messier Objects");
+        messierLabelCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                messierLabelCheckBoxActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout labelSelectionPanelLayout = new javax.swing.GroupLayout(labelSelectionPanel);
+        labelSelectionPanel.setLayout(labelSelectionPanelLayout);
+        labelSelectionPanelLayout.setHorizontalGroup(
+            labelSelectionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(labelSelectionPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(labelSelectionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(starLabelCheckBox)
+                    .addComponent(constellationLabelCheckBox)
+                    .addComponent(moonPhaseCheckBox)
+                    .addComponent(planetLabelCheckBox)
+                    .addComponent(messierLabelCheckBox))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        labelSelectionPanelLayout.setVerticalGroup(
+            labelSelectionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(labelSelectionPanelLayout.createSequentialGroup()
+                .addComponent(starLabelCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(constellationLabelCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(planetLabelCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(moonPhaseCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(messierLabelCheckBox)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap()
                 .addComponent(coordinatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(checkBoxPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(generateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(objectSelectionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelSelectionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(generateStarMapButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveImageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(coordinatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(generateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButton1))
-                        .addComponent(checkBoxPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(generateStarMapButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(saveImageButton))
+                    .addComponent(objectSelectionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(coordinatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelSelectionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        coordinatePanel.getAccessibleContext().setAccessibleName("");
+        objectSelectionPanel.getAccessibleContext().setAccessibleName("");
+        objectSelectionPanel.getAccessibleContext().setAccessibleDescription("");
+        labelSelectionPanel.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
+    private void generateStarMapButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateStarMapButtonActionPerformed
         try 
         {
             Calendar selectedDate = dateTextField.getCalendar();
@@ -545,8 +615,6 @@ public class Driver extends javax.swing.JFrame {
             // Coordinates for UAH are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W   
             double latitude = Calculation.getDecimalCoordinate(latitudeDegrees, latitudeMinutes, latitudeSeconds, latitudeDirection);
             double longitude = Calculation.getDecimalCoordinate(longitudeDegrees, longitudeMinutes, longitudeSeconds, longitudeDirection);
-            textArea.append("Latitude = " + latitude + "\n");
-            textArea.append("Longitude = " + longitude + "\n");
             
             // Calculate azimuth and elevation coordinates from the specified time and location
             for (Star star : starList)
@@ -686,179 +754,50 @@ public class Driver extends javax.swing.JFrame {
             Logger.getLogger(Driver.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-    }//GEN-LAST:event_generateButtonActionPerformed
+    }//GEN-LAST:event_generateStarMapButtonActionPerformed
     /*
     * METHOD: starsCheckBoxActionPerformed()
     *
     * DESCRIPTION: this method prints a message when the stars check box has
     *               been selected.
     */
-    private void starsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_starsCheckBoxActionPerformed
-        String stars = "";
-        if(starsCheckBox.isSelected())
-        {
-            stars = stars + " " + starsCheckBox.getText() + '\n';
-            textArea.setText(stars);
+    private void starObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_starObjectCheckBoxActionPerformed
+        if (starObjectCheckBox.isSelected())
+        {            
+            starVisibilityFlag = true;
         }
         else
-            textArea.setText("");
-    }//GEN-LAST:event_starsCheckBoxActionPerformed
+        {
+            starVisibilityFlag = false;
+        }
+    }//GEN-LAST:event_starObjectCheckBoxActionPerformed
     /*
     * METHOD: planetsCheckBoxActionPerformed
     *
     * DESCRIPTION: this method prints a message when the planets check box has
     *               been selected.
     */
-    private void planetsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planetsCheckBoxActionPerformed
-        String planets = "";
-        if(planetsCheckBox.isSelected())
-        {
-            planets = planets + " " + planetsCheckBox.getText() + '\n';
-            textArea.setText(planets);
-        }
-        else
-            textArea.setText("");
-    }//GEN-LAST:event_planetsCheckBoxActionPerformed
+    private void planetObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planetObjectCheckBoxActionPerformed
+        
+    }//GEN-LAST:event_planetObjectCheckBoxActionPerformed
     /*
     * METHOD: constellationsCheckBoxActionPerformed
     *
     * DESCRIPTION: this method prints a message when the constellations check 
     *               box has been selected.
     */
-    private void constellationsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_constellationsCheckBoxActionPerformed
-        String constellations = "";
-        if(constellationsCheckBox.isSelected())
-        {
-            constellations = constellations + " " + constellationsCheckBox.getText() + '\n';
-            textArea.setText(constellations);
-        }
-        else
-            textArea.setText("");
-    }//GEN-LAST:event_constellationsCheckBoxActionPerformed
+    private void constellationObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_constellationObjectCheckBoxActionPerformed
+        
+    }//GEN-LAST:event_constellationObjectCheckBoxActionPerformed
     /*
     * METHOD: messierCheckBoxActionPerformed
     *
     * DESCRIPTION: this method prints a message when the Messier check box has
     *               been selected.
     */
-    private void messierCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messierCheckBoxActionPerformed
-        String messier = "";
-        if(messierCheckBox.isSelected())
-        {
-            messier = messier + " " + messierCheckBox.getText() + '\n';
-            textArea.setText(messier);
-        }
-        else
-            textArea.setText("");
-    }//GEN-LAST:event_messierCheckBoxActionPerformed
-    /*
-    * METHOD: unselectCheckBoxActionPerformed
-    *
-    * DESCRIPTION: this method prints a message when the unselect check box has
-    *               been selected.
-    */
-    private void unselectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unselectCheckBoxActionPerformed
-        String unselect = "";
-        if(unselectCheckBox.isSelected())
-        {
-            unselect = unselect + " " + unselectCheckBox.getText() + '\n';
-            textArea.setText(unselect);
-        }
-        else
-            textArea.setText("");
-    }//GEN-LAST:event_unselectCheckBoxActionPerformed
-    /*
-    * METHOD: unselectCheckBoxActionPerformed
-    *
-    * DESCRIPTION: this method prints a message when the unselect check box has
-    *               been selected.
-    */
-    private void selectAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectAllButtonActionPerformed
-        String s1 = "";
+    private void moonObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moonObjectCheckBoxActionPerformed
         
-        if(starsCheckBox.isSelected())
-        {
-            //starsCheckBox.setSelected(true);
-            s1 = s1 + " " + starsCheckBox.getText() + '\n';  
-        }
-//        else
-//        {
-//            starsCheckBox.setSelected(false);
-//            s1 = s1 + "not selected";
-//        }
-        
-        if(planetsCheckBox.isSelected())
-        {
-            planetsCheckBox.setSelected(true);
-            s1 = s1 + " " + planetsCheckBox.getText() + '\n';
-        }
-        else
-            planetsCheckBox.setSelected(false);
-        
-        if(constellationsCheckBox.isSelected())
-        {
-            s1 = s1 + " " + constellationsCheckBox.getText() + '\n';
-        }
-        
-        if(messierCheckBox.isSelected())
-        {
-            s1 = s1 + " " + messierCheckBox.getText() + '\n';
-        }
-        
-        if(unselectCheckBox.isSelected())
-        {
-            s1 = s1 + " " + unselectCheckBox.getText() + '\n';
-        }
-        
-        textArea.setText(s1);
-    }//GEN-LAST:event_selectAllButtonActionPerformed
-
-    private void enterDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterDataButtonActionPerformed
-        // Get latitiude in degrees and print to textArea.
-        //String infoMsg = "Please enter a Latitude value between " + "[-90, +90]";
-        float latDegree = Float.parseFloat(latDegreeTextField.getText());
-        textArea.append(latDegree + " degrees\n");
-        
-
-        double latMinute = Double.parseDouble(longDegreeTextField.getText());
-        textArea.append(latMinute + " minutes\n");
-
-
-//        
-//        float lonDegree = Float.parseFloat(lonDegTextField.getText());
-//        textArea.append(lonDegree + " degrees\n");
-//        
-//        double lonMinute = Double.parseDouble(lonMinTextField.getText());
-//        textArea.append(lonMinute + " minutes\n");
-        
-//        if((latDegree < -90) || (latDegree > 90))
-//            JOptionPane.showMessageDialog(null, infoMsg);
-//        else
-//            textArea.append(latDegree + " degrees\n");
-        
-        //Get latitude in minutes and print to textArea.
-        //double latMinute = Double.parseDouble(latMinTextField.getText());
-        //textArea.append(latMinute + " minutes\n");
-        
-        //Get longitude in degrees and print to textArea.
-        //String infoMsg2 = "Please enter a Longitude value between " + "[-180, +180]";
-        //float lonDegree = Float.parseFloat(lonDegTextField.getText());
-        //textArea.append(lonDegree + " degrees\n");
-        
-//        if((lonDegree < -180) || (lonDegree > 180))
-//            JOptionPane.showMessageDialog(null, infoMsg2);
-//        else
-//            textArea.append(lonDegree + " degrees\n");
-        
-        //Get longitude in minutes and print to textArea
-        //double lonMinute = Double.parseDouble(lonMinTextField.getText());
-        //textArea.append(lonMinute + " minutes\n");
-        
-        
-//        dateChooser.getDate();
-//        textArea.setText(dateChooser);
-        
-    }//GEN-LAST:event_enterDataButtonActionPerformed
+    }//GEN-LAST:event_moonObjectCheckBoxActionPerformed
 
     private void latDegreeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_latDegreeTextFieldKeyReleased
         // Gets the Longitude Degree value from user:
@@ -871,7 +810,6 @@ public class Driver extends javax.swing.JFrame {
         else
         {
             latDegreeTextField.setBackground(Color.WHITE);
-            textArea.append(latDegree + "°\n");
         }
     }//GEN-LAST:event_latDegreeTextFieldKeyReleased
 
@@ -886,7 +824,6 @@ public class Driver extends javax.swing.JFrame {
         else
         {
             minLatTextField.setBackground(Color.WHITE);
-            textArea.append(latHours + "'\n");
         }
     }//GEN-LAST:event_minLatTextFieldKeyReleased
 
@@ -900,7 +837,6 @@ public class Driver extends javax.swing.JFrame {
         else
         {
             secLatTextField.setBackground(Color.WHITE);
-            textArea.append(latMinutes + "\"\n");
         }
     }//GEN-LAST:event_secLatTextFieldKeyReleased
 
@@ -915,7 +851,6 @@ public class Driver extends javax.swing.JFrame {
         else
         {
             longDegreeTextField.setBackground(Color.WHITE);
-            textArea.append(longDegree + "°\n");
         }
     }//GEN-LAST:event_longDegreeTextFieldKeyReleased
 
@@ -929,7 +864,6 @@ public class Driver extends javax.swing.JFrame {
         else
         {
             minLongTextField.setBackground(Color.WHITE);
-            textArea.append(longMinutes + "\"\n");
         }
     }//GEN-LAST:event_minLongTextFieldKeyReleased
 
@@ -943,7 +877,6 @@ public class Driver extends javax.swing.JFrame {
         else
         {
             secLongTextField.setBackground(Color.WHITE);
-            textArea.append(latMinutes + "\"\n");
         }
     }//GEN-LAST:event_secLongTextFieldKeyReleased
 
@@ -957,7 +890,6 @@ public class Driver extends javax.swing.JFrame {
         else
         {
             hourTextField.setBackground(Color.WHITE);
-            textArea.append(hour + "\"\n");
         }
     }//GEN-LAST:event_hourTextFieldKeyReleased
 
@@ -971,9 +903,32 @@ public class Driver extends javax.swing.JFrame {
         else
         {
             minuteTextField.setBackground(Color.WHITE);
-            textArea.append(minute + "\"\n");
         }
     }//GEN-LAST:event_minuteTextFieldKeyReleased
+
+    private void messierObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messierObjectCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_messierObjectCheckBoxActionPerformed
+
+    private void starLabelCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_starLabelCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_starLabelCheckBoxActionPerformed
+
+    private void constellationLabelCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_constellationLabelCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_constellationLabelCheckBoxActionPerformed
+
+    private void planetLabelCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planetLabelCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_planetLabelCheckBoxActionPerformed
+
+    private void moonPhaseCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moonPhaseCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_moonPhaseCheckBoxActionPerformed
+
+    private void messierLabelCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messierLabelCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_messierLabelCheckBoxActionPerformed
     
     // </editor-fold>
         
@@ -1052,45 +1007,47 @@ public class Driver extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Members">
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel checkBoxPanel;
-    private javax.swing.JCheckBox constellationsCheckBox;
+    private javax.swing.JCheckBox constellationLabelCheckBox;
+    private javax.swing.JCheckBox constellationObjectCheckBox;
     private javax.swing.JPanel coordinatePanel;
     private javax.swing.JLabel dateLabel;
     private com.toedter.calendar.JDateChooser dateTextField;
     private javax.swing.JLabel degreeLabel;
     private javax.swing.JLabel degreeLabel1;
     private javax.swing.JRadioButton eastRadioButton;
-    private javax.swing.JButton enterDataButton;
-    private javax.swing.JButton generateButton;
+    private javax.swing.JButton generateStarMapButton;
     private javax.swing.JLabel hourLabel;
     private javax.swing.JLabel hourLabel1;
     private javax.swing.JComboBox<String> hourOffsetComboBox;
     private javax.swing.JTextField hourTextField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel labelSelectionPanel;
     private javax.swing.JTextField latDegreeTextField;
     private javax.swing.ButtonGroup latitudeButtonGroup;
     private javax.swing.JLabel latitudeDegreesLabel;
     private javax.swing.JLabel latitudeMinLabel;
     private javax.swing.JTextField longDegreeTextField;
     private javax.swing.ButtonGroup longitudeButtonGroup;
-    private javax.swing.JCheckBox messierCheckBox;
+    private javax.swing.JCheckBox messierLabelCheckBox;
+    private javax.swing.JCheckBox messierObjectCheckBox;
     private javax.swing.JTextField minLatTextField;
     private javax.swing.JTextField minLongTextField;
     private javax.swing.JLabel minuteLabel;
     private javax.swing.JLabel minuteLabel1;
     private javax.swing.JTextField minuteTextField;
+    private javax.swing.JCheckBox moonObjectCheckBox;
+    private javax.swing.JCheckBox moonPhaseCheckBox;
     private javax.swing.JRadioButton northRadioButton;
-    private javax.swing.JCheckBox planetsCheckBox;
+    private javax.swing.JPanel objectSelectionPanel;
+    private javax.swing.JCheckBox planetLabelCheckBox;
+    private javax.swing.JCheckBox planetObjectCheckBox;
+    private javax.swing.JButton saveImageButton;
     private javax.swing.JTextField secLatTextField;
     private javax.swing.JTextField secLongTextField;
-    private javax.swing.JButton selectAllButton;
     private javax.swing.JRadioButton southRadioButton;
-    private javax.swing.JCheckBox starsCheckBox;
-    private javax.swing.JTextArea textArea;
-    private javax.swing.JCheckBox unselectCheckBox;
+    private javax.swing.JCheckBox starLabelCheckBox;
+    private javax.swing.JCheckBox starObjectCheckBox;
     private javax.swing.JRadioButton westRadioButton;
     // End of variables declaration//GEN-END:variables
     //</editor-fold>

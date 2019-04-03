@@ -10,9 +10,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -27,8 +25,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import starmap.DataReaders.ConstellationDataReader;
 import starmap.DataReaders.MessierDataReader;
 import starmap.DataReaders.PlanetDataReader;
@@ -45,24 +41,24 @@ import starmap.Objects.Star;
  */
 public class Driver extends javax.swing.JFrame {
     
-    ArrayList<Star> starList;
-    ArrayList<Constellation> constellationList;
-    ArrayList<Planet> planetList;
-    ArrayList<Messier> messierList;
-    Moon moon;
+    private ArrayList<Star> starList;
+    private ArrayList<Constellation> constellationList;
+    private ArrayList<Planet> planetList;
+    private ArrayList<Messier> messierList;
+    private Moon moon;
     
     // boolean flags that control which items are visible on the star map
-    boolean starVisibilityFlag = true;
-    boolean constellationVisibilityFlag = true;
-    boolean planetVisibilityFlag = true;
-    boolean moonVisibilityFlag = true;
-    boolean messierVisibilityFlag = true;
+    private boolean starVisibilityFlag = true;
+    private boolean constellationVisibilityFlag = true;
+    private boolean planetVisibilityFlag = true;
+    private boolean moonVisibilityFlag = true;
+    private boolean messierVisibilityFlag = true;
     
-    boolean starLabelVisibilityFlag = true;
-    boolean constellationLabelVisibilityFlag = true;
-    boolean planetLabelVisibilityFlag = true;
-    boolean moonPhaseVisibilityFlag = true;
-    boolean messierLabelVisibilityFlag = true;
+    private boolean starLabelVisibilityFlag = true;
+    private boolean constellationLabelVisibilityFlag = true;
+    private boolean planetLabelVisibilityFlag = true;
+    private boolean moonPhaseVisibilityFlag = true;
+    private boolean messierLabelVisibilityFlag = true;
     
     // <editor-fold defaultstate="collapsed" desc="Constructor"> 
 
@@ -575,8 +571,7 @@ public class Driver extends javax.swing.JFrame {
                 localHour -= 24;
             }        
             
-            int minute = Integer.parseInt(minuteTextField.getText());   
-            
+            int minute = Integer.parseInt(minuteTextField.getText());  
             
             LocalDateTime dateTime = LocalDateTime.of(
                     selectedDate.get(Calendar.YEAR), 
@@ -683,54 +678,21 @@ public class Driver extends javax.swing.JFrame {
 //            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
 //                + moon.azimuth + "°, " + moon.elevation + "°");
 
-
-
-
-
-//            // Polaris
-//            String objectName = "Polaris";
-//            double rightAscention = 2.133333333;
-//            double declination = 89.26413805;
-//            
-//            Map<String, Double> map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, longitude, greenwichSiderealTime);
-//            
-//            textArea.append("Current Azimuth/Elevation of " + objectName 
-//                    + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
-//                    + latitudeSeconds + "'' " + latitudeDirection + " " 
-//                    + longitudeDegrees + "° " + longitudeMinutes + "' "
-//                    + longitudeSeconds + "'' " + longitudeDirection + ": "
-//                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°\n");
-//            
-//            
-//            // Alpheratz
-//            objectName = "Alpheratz";
-//            rightAscention = 0.13976888;
-//            declination = 29.09082805;
-//            
-//            map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, longitude, greenwichSiderealTime);
-//            
-//            textArea.append("Current Azimuth/Elevation of " + objectName 
-//                    + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
-//                    + latitudeSeconds + "'' " + latitudeDirection + " " 
-//                    + longitudeDegrees + "° " + longitudeMinutes + "' "
-//                    + longitudeSeconds + "'' " + longitudeDirection + ": "
-//                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°\n");
-//            
-//            // Markab
-//            objectName = "Markab";
-//            rightAscention = 23.07933801;
-//            declination = 15.20536786;
-//            
-//            map = Calculation.getAzimuthAndElevation(rightAscention, declination, latitude, longitude, greenwichSiderealTime);
-//            
-//            textArea.append("Current Azimuth/Elevation of " + objectName 
-//                    + " from " + latitudeDegrees + "° " + latitudeMinutes + "' "
-//                    + latitudeSeconds + "'' " + latitudeDirection + " " 
-//                    + longitudeDegrees + "° " + longitudeMinutes + "' "
-//                    + longitudeSeconds + "'' " + longitudeDirection + ": "
-//                    + map.get("Azimuth") + "°, " + map.get("Elevation") + "°\n");   
-
-            MapPanel mapPanel = new MapPanel(starList);
+            MapPanel mapPanel = new MapPanel(starList, 
+                    constellationList, 
+                    planetList, 
+                    messierList, 
+                    moon, 
+                    starVisibilityFlag, 
+                    starLabelVisibilityFlag, 
+                    constellationVisibilityFlag, 
+                    constellationLabelVisibilityFlag, 
+                    planetVisibilityFlag, 
+                    planetLabelVisibilityFlag, 
+                    messierVisibilityFlag, 
+                    messierLabelVisibilityFlag, 
+                    moonVisibilityFlag, 
+                    moonPhaseVisibilityFlag);
             JScrollPane mapPanelScrollPane = new JScrollPane(mapPanel);
             
             JPanel mapFramePanel = new JPanel();            
@@ -747,15 +709,8 @@ public class Driver extends javax.swing.JFrame {
             {
                 BufferedImage image = new BufferedImage(mapPanel.getWidth(), mapPanel.getHeight(), BufferedImage.TYPE_INT_RGB);
                 
-                // changes the pixel size of image // needs the first BufferedImage to be called OGimage
-                //Image tmp = OGimage.getScaledInstance(2550, 2550, Image.SCALE_DEFAULT);
-                //BufferedImage image = new BufferedImage(2550, 2550, BufferedImage.TYPE_INT_ARGB);
-                
                 Graphics2D graphics2D = image.createGraphics();
-                mapPanel.paint(graphics2D);
-                //ImageIO.write(image,"jpeg", new File("jmemPractice.jpeg"));
-                
-                
+                mapPanel.paint(graphics2D);                
                 
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setCurrentDirectory(new java.io.File("."));
@@ -777,9 +732,9 @@ public class Driver extends javax.swing.JFrame {
                 }
   
             }
-            catch(Exception exception)
+            catch(HeadlessException | IOException e)
             {
-                //code
+                System.out.println(e.toString());
             }
         } 
         catch (Exception ex) 
@@ -795,14 +750,19 @@ public class Driver extends javax.swing.JFrame {
     *               been selected.
     */
     private void starObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_starObjectCheckBoxActionPerformed
-        if (starObjectCheckBox.isSelected())
-        {            
-            starVisibilityFlag = true;
-        }
-        else
+        starVisibilityFlag = starObjectCheckBox.isSelected();
+        
+        // If we are telling the system not to show this object, also don't show the labels
+        if (!starVisibilityFlag)
         {
-            starVisibilityFlag = false;
-        }
+            starLabelCheckBox.setSelected(false);
+            starLabelCheckBox.setEnabled(false);
+            starLabelVisibilityFlag = false;
+        }         
+        else
+        {            
+            starLabelCheckBox.setEnabled(true);
+        } 
     }//GEN-LAST:event_starObjectCheckBoxActionPerformed
     /*
     * METHOD: planetsCheckBoxActionPerformed
@@ -811,7 +771,19 @@ public class Driver extends javax.swing.JFrame {
     *               been selected.
     */
     private void planetObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planetObjectCheckBoxActionPerformed
+        planetVisibilityFlag = planetObjectCheckBox.isSelected();     
         
+        // If we are telling the system not to show this object, also don't show the labels
+        if (!planetVisibilityFlag)
+        {
+            planetLabelCheckBox.setSelected(false);
+            planetLabelCheckBox.setEnabled(false);
+            planetLabelVisibilityFlag = false;
+        }         
+        else
+        {            
+            planetLabelCheckBox.setEnabled(true);
+        } 
     }//GEN-LAST:event_planetObjectCheckBoxActionPerformed
     /*
     * METHOD: constellationsCheckBoxActionPerformed
@@ -820,7 +792,19 @@ public class Driver extends javax.swing.JFrame {
     *               box has been selected.
     */
     private void constellationObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_constellationObjectCheckBoxActionPerformed
+        constellationVisibilityFlag = constellationObjectCheckBox.isSelected();
         
+        // If we are telling the system not to show this object, also don't show the labels
+        if (!constellationVisibilityFlag)
+        {
+            constellationLabelCheckBox.setSelected(false);
+            constellationLabelCheckBox.setEnabled(false);
+            constellationLabelVisibilityFlag = false;
+        }         
+        else
+        {            
+            constellationLabelCheckBox.setEnabled(true);
+        } 
     }//GEN-LAST:event_constellationObjectCheckBoxActionPerformed
     /*
     * METHOD: messierCheckBoxActionPerformed
@@ -829,7 +813,19 @@ public class Driver extends javax.swing.JFrame {
     *               been selected.
     */
     private void moonObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moonObjectCheckBoxActionPerformed
+        moonVisibilityFlag = moonObjectCheckBox.isSelected(); 
         
+        // If we are telling the system not to show this object, also don't show the labels
+        if (!moonVisibilityFlag)
+        {
+            moonPhaseCheckBox.setSelected(false);
+            moonPhaseCheckBox.setEnabled(false);
+            moonPhaseVisibilityFlag = false;
+        }      
+        else
+        {            
+            moonPhaseCheckBox.setEnabled(true);
+        } 
     }//GEN-LAST:event_moonObjectCheckBoxActionPerformed
 
     private void latDegreeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_latDegreeTextFieldKeyReleased
@@ -940,27 +936,39 @@ public class Driver extends javax.swing.JFrame {
     }//GEN-LAST:event_minuteTextFieldKeyReleased
 
     private void messierObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messierObjectCheckBoxActionPerformed
-        // TODO add your handling code here:
+        messierVisibilityFlag = messierObjectCheckBox.isSelected();
+        
+        // If we are telling the system not to show this object, also don't show the labels
+        if (!messierVisibilityFlag)
+        {
+            messierLabelCheckBox.setSelected(false);
+            messierLabelCheckBox.setEnabled(false);
+            messierLabelVisibilityFlag = false;
+        }
+        else
+        {            
+            messierLabelCheckBox.setEnabled(true);
+        }
     }//GEN-LAST:event_messierObjectCheckBoxActionPerformed
 
     private void starLabelCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_starLabelCheckBoxActionPerformed
-        // TODO add your handling code here:
+        starLabelVisibilityFlag = starLabelCheckBox.isSelected();
     }//GEN-LAST:event_starLabelCheckBoxActionPerformed
 
     private void constellationLabelCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_constellationLabelCheckBoxActionPerformed
-        // TODO add your handling code here:
+        constellationLabelVisibilityFlag = constellationLabelCheckBox.isSelected();
     }//GEN-LAST:event_constellationLabelCheckBoxActionPerformed
 
     private void planetLabelCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planetLabelCheckBoxActionPerformed
-        // TODO add your handling code here:
+        planetLabelVisibilityFlag = planetLabelCheckBox.isSelected();
     }//GEN-LAST:event_planetLabelCheckBoxActionPerformed
 
     private void moonPhaseCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moonPhaseCheckBoxActionPerformed
-        // TODO add your handling code here:
+        moonPhaseVisibilityFlag = moonPhaseCheckBox.isSelected();
     }//GEN-LAST:event_moonPhaseCheckBoxActionPerformed
 
     private void messierLabelCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messierLabelCheckBoxActionPerformed
-        // TODO add your handling code here:
+        messierLabelVisibilityFlag = messierLabelCheckBox.isSelected();
     }//GEN-LAST:event_messierLabelCheckBoxActionPerformed
     
     // </editor-fold>
@@ -988,21 +996,17 @@ public class Driver extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Driver().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> 
+        {
+            new Driver().setVisible(true);
         });
     }
     
     private void load()
     {        
-        Runnable r = new Runnable() 
+        Runnable r = () -> 
         {
-            public void run() 
-            {
-                readData();
-            }
+            readData();
         };
         
         ExecutorService executor = Executors.newCachedThreadPool();
@@ -1033,8 +1037,7 @@ public class Driver extends javax.swing.JFrame {
         
         moon = new Moon();
         
-        this.setCursor(Cursor.getDefaultCursor());
-        
+        this.setCursor(Cursor.getDefaultCursor());        
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Members">

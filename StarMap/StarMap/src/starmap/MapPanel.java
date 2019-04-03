@@ -11,6 +11,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+import starmap.Objects.Constellation;
+import starmap.Objects.Messier;
+import starmap.Objects.Moon;
+import starmap.Objects.Planet;
 import starmap.Objects.Star;
 
 /**
@@ -19,6 +23,26 @@ import starmap.Objects.Star;
  */
 public class MapPanel extends JPanel
 {
+    private final ArrayList<Star> starList;
+    private final ArrayList<Constellation> constellationList;
+    private final ArrayList<Planet> planetList;
+    private final ArrayList<Messier> messierList;
+    private final Moon moon;
+    
+    // boolean flags that control which items are visible on the star map
+    private final boolean starVisibilityFlag;
+    private final boolean constellationVisibilityFlag;
+    private final boolean planetVisibilityFlag;
+    private final boolean moonVisibilityFlag;
+    private final boolean messierVisibilityFlag;
+    
+    private final boolean starLabelVisibilityFlag;
+    private final boolean constellationLabelVisibilityFlag;
+    private final boolean planetLabelVisibilityFlag;
+    private final boolean moonPhaseVisibilityFlag;
+    private final boolean messierLabelVisibilityFlag;    
+    
+    // Constants used for defining the behavior of object being drawn
     private final int sizeMultiplier = 10;
     
     public int imageWidth = 360 * sizeMultiplier;
@@ -42,11 +66,37 @@ public class MapPanel extends JPanel
     private final Color starColor = Color.WHITE;
     private final Color solColor = Color.YELLOW;
     
-    private final ArrayList<Star> starList;
-    
-    public MapPanel(ArrayList<Star> starList)
+    public MapPanel(ArrayList<Star> starList, 
+                    ArrayList<Constellation> constellationList, 
+                    ArrayList<Planet> planetList, 
+                    ArrayList<Messier> messierList, 
+                    Moon moon, 
+                    boolean starVisibilityFlag, 
+                    boolean starLabelVisibilityFlag, 
+                    boolean constellationVisibilityFlag, 
+                    boolean constellationLabelVisibilityFlag, 
+                    boolean planetVisibilityFlag, 
+                    boolean planetLabelVisibilityFlag, 
+                    boolean messierVisibilityFlag, 
+                    boolean messierLabelVisibilityFlag, 
+                    boolean moonVisibilityFlag, 
+                    boolean moonPhaseVisibilityFlag)
     {
-        this.starList = starList;
+        this.starList = starList; 
+        this.constellationList = constellationList;
+        this.planetList = planetList;
+        this.messierList = messierList;
+        this.moon = moon;
+        this.starVisibilityFlag = starVisibilityFlag;
+        this.starLabelVisibilityFlag = starLabelVisibilityFlag;
+        this.constellationVisibilityFlag = constellationVisibilityFlag;
+        this.constellationLabelVisibilityFlag = constellationLabelVisibilityFlag;
+        this.planetVisibilityFlag = planetVisibilityFlag;
+        this.planetLabelVisibilityFlag = planetLabelVisibilityFlag;
+        this.messierVisibilityFlag = messierVisibilityFlag;
+        this.messierLabelVisibilityFlag = messierLabelVisibilityFlag;
+        this.moonVisibilityFlag = moonVisibilityFlag;
+        this.moonPhaseVisibilityFlag = moonPhaseVisibilityFlag;
     }
     
     public void paintComponent(Graphics g) 
@@ -64,57 +114,60 @@ public class MapPanel extends JPanel
     
     private void plotStars(Graphics2D g2d)
     {
-        g2d.setColor(starColor);
-        
-        int count = 0;
-        
-        for (Star star : starList)
+        if (starVisibilityFlag)
         {
-            if (star.magnitude > 6.0)
-            {
-                continue;
-            }    
-
-            int starDiameter = (int)Math.round((7.0 - star.magnitude) * (sizeMultiplier * 0.15));
-            
-            if (star.name.equalsIgnoreCase("Sol"))
-            {
-                g2d.setColor(solColor);
-            }
-            
-            int horizontalPosition;
-            
-            if (star.azimuth < 180)
-            {
-                horizontalPosition = (int)Math.round((star.azimuth + 180) * sizeMultiplier);
-            }
-            else
-            {
-                horizontalPosition = (int)Math.round((star.azimuth - 180) * sizeMultiplier);
-            }
-            
-            int verticalPosition = (int)Math.round((90 + (-1 * star.elevation)) * sizeMultiplier);
-            
-            g2d.fillOval(horizontalPosition, verticalPosition, starDiameter, starDiameter);  
-            
-            if (star.name.length() > 0)
-            {
-                g2d.drawString(star.name, 
-                        (int)Math.round(horizontalPosition + starDiameter + 2), 
-                        (int)Math.round(verticalPosition + (starDiameter / 2) + (gridLabelHeight / 2)));                
-            }
-            
-            //System.out.println("Drawing star " + star.name + " at " + star.azimuth + ", " + star.elevation);
-            
-            if (star.name.equalsIgnoreCase("Sol"))
-            {
-                g2d.setColor(starColor);
-            }
-            
-            count++;
-        }  
+            g2d.setColor(starColor);
         
-        System.out.println("Count of stars plotted: " + count);
+            int count = 0;
+
+            for (Star star : starList)
+            {
+                if (star.magnitude > 6.0)
+                {
+                    continue;
+                }    
+
+                int starDiameter = (int)Math.round((7.0 - star.magnitude) * (sizeMultiplier * 0.15));
+
+                if (star.name.equalsIgnoreCase("Sol"))
+                {
+                    g2d.setColor(solColor);
+                }
+
+                int horizontalPosition;
+
+                if (star.azimuth < 180)
+                {
+                    horizontalPosition = (int)Math.round((star.azimuth + 180) * sizeMultiplier);
+                }
+                else
+                {
+                    horizontalPosition = (int)Math.round((star.azimuth - 180) * sizeMultiplier);
+                }
+
+                int verticalPosition = (int)Math.round((90 + (-1 * star.elevation)) * sizeMultiplier);
+
+                g2d.fillOval(horizontalPosition, verticalPosition, starDiameter, starDiameter);  
+
+                if (starLabelVisibilityFlag && star.name.length() > 0)
+                {
+                    g2d.drawString(star.name, 
+                            (int)Math.round(horizontalPosition + starDiameter + 2), 
+                            (int)Math.round(verticalPosition + (starDiameter / 2) + (gridLabelHeight / 2)));                
+                }
+
+                //System.out.println("Drawing star " + star.name + " at " + star.azimuth + ", " + star.elevation);
+
+                if (star.name.equalsIgnoreCase("Sol"))
+                {
+                    g2d.setColor(starColor);
+                }
+
+                count++;
+            }  
+
+            //System.out.println("Count of stars plotted: " + count);
+        }
     }    
     
     private void drawBackground(Graphics2D g2d)

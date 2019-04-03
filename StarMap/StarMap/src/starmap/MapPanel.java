@@ -65,7 +65,8 @@ public class MapPanel extends JPanel
     private final Color backgroundColor = Color.BLACK;
     private final Color gridLineColor = new Color(0, 255, 80);  
     private final Color starColor = Color.WHITE;
-    private final Color solColor = Color.YELLOW;    
+    private final Color solColor = Color.YELLOW; 
+    private final Color constellationColor = Color.CYAN;   
     private final Color messierColor = Color.MAGENTA;
     
     public MapPanel(ArrayList<Star> starList, 
@@ -101,6 +102,7 @@ public class MapPanel extends JPanel
         this.moonPhaseVisibilityFlag = moonPhaseVisibilityFlag;
     }
     
+    @Override
     public void paintComponent(Graphics g) 
     {
         super.paintComponent(g);
@@ -178,7 +180,45 @@ public class MapPanel extends JPanel
 
     private void plotConstellations(Graphics2D g2d)
     {
-        //TODO: Implement this method
+        if (constellationVisibilityFlag)
+        {
+            g2d.setColor(constellationColor);
+        
+            //int count = 0;
+
+            for (Constellation constellation : constellationList)
+            {
+                int objectDiameter = (int)Math.round(3.0 * sizeMultiplier * objectDiameterMultiplier);
+
+                int horizontalPosition;
+
+                if (constellation.azimuth < 180)
+                {
+                    horizontalPosition = (int)Math.round((constellation.azimuth + 180) * sizeMultiplier);
+                }
+                else
+                {
+                    horizontalPosition = (int)Math.round((constellation.azimuth - 180) * sizeMultiplier);
+                }
+
+                int verticalPosition = (int)Math.round((90 + (-1 * constellation.elevation)) * sizeMultiplier);
+
+                g2d.fillOval(horizontalPosition, verticalPosition, objectDiameter, objectDiameter);  
+
+                if (constellationLabelVisibilityFlag && constellation.name.length() > 0)
+                {
+                    g2d.drawString(constellation.name, 
+                            (int)Math.round(horizontalPosition + objectDiameter + 2), 
+                            (int)Math.round(verticalPosition + (objectDiameter / 2) + (gridLabelHeight / 2)));                
+                }
+
+                //System.out.println("Drawing constellation " + constellation.name + " at " + constellation.azimuth + ", " + constellation.elevation);
+
+                //count++;
+            }  
+
+            //System.out.println("Count of stars plotted: " + count);
+        }
     }  
 
     private void plotPlanets(Graphics2D g2d)

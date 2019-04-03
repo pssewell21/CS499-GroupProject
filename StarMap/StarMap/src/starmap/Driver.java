@@ -47,6 +47,8 @@ public class Driver extends javax.swing.JFrame {
     private ArrayList<Messier> messierList;
     private Moon moon;
     
+    MapPanel mapPanel;
+    
     // boolean flags that control which items are visible on the star map
     private boolean starVisibilityFlag = true;
     private boolean constellationVisibilityFlag = true;
@@ -440,6 +442,11 @@ public class Driver extends javax.swing.JFrame {
         );
 
         saveImageButton.setText("Save Image");
+        saveImageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveImageButtonActionPerformed(evt);
+            }
+        });
 
         labelSelectionPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Label Selection"));
 
@@ -678,7 +685,7 @@ public class Driver extends javax.swing.JFrame {
 //            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
 //                + moon.azimuth + "°, " + moon.elevation + "°");
 
-            MapPanel mapPanel = new MapPanel(starList, 
+            mapPanel = new MapPanel(starList, 
                     constellationList, 
                     planetList, 
                     messierList, 
@@ -703,39 +710,7 @@ public class Driver extends javax.swing.JFrame {
             mapFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             mapFrame.add(mapFramePanel);
             mapFrame.setSize(1000, 1000);
-            mapFrame.setVisible(true);
-            
-            try
-            {
-                BufferedImage image = new BufferedImage(mapPanel.getWidth(), mapPanel.getHeight(), BufferedImage.TYPE_INT_RGB);
-                
-                Graphics2D graphics2D = image.createGraphics();
-                mapPanel.paint(graphics2D);                
-                
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setCurrentDirectory(new java.io.File("."));
-                fileChooser.setDialogTitle("File Dialog");
-                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                
-                if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) { 
-                    System.out.println("\n\ngetCurrentDirectory(): " 
-                        +  fileChooser.getCurrentDirectory());
-                    System.out.println("getSelectedFile() : " 
-                        +  fileChooser.getSelectedFile());
-                    
-                    File saveImage = new File(fileChooser.getSelectedFile() + ".jpeg");
-                    ImageIO.write(image, "jpeg", saveImage);
-                    System.out.println("File written Successfully");
-                }
-                else {
-                    System.out.println("No Selection ");
-                }
-  
-            }
-            catch(HeadlessException | IOException e)
-            {
-                System.out.println(e.toString());
-            }
+            mapFrame.setVisible(true);     
         } 
         catch (Exception ex) 
         {
@@ -970,6 +945,39 @@ public class Driver extends javax.swing.JFrame {
     private void messierLabelCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messierLabelCheckBoxActionPerformed
         messierLabelVisibilityFlag = messierLabelCheckBox.isSelected();
     }//GEN-LAST:event_messierLabelCheckBoxActionPerformed
+
+    private void saveImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveImageButtonActionPerformed
+        try
+        {
+            BufferedImage image = new BufferedImage(mapPanel.getWidth(), mapPanel.getHeight(), BufferedImage.TYPE_INT_RGB);
+
+            Graphics2D graphics2D = image.createGraphics();
+            mapPanel.paint(graphics2D);                
+
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new java.io.File("."));
+            fileChooser.setDialogTitle("File Dialog");
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) { 
+                System.out.println("\n\ngetCurrentDirectory(): " 
+                    +  fileChooser.getCurrentDirectory());
+                System.out.println("getSelectedFile() : " 
+                    +  fileChooser.getSelectedFile());
+
+                File saveImage = new File(fileChooser.getSelectedFile() + ".jpeg");
+                ImageIO.write(image, "jpeg", saveImage);
+                System.out.println("File written Successfully");
+            }
+            else {
+                System.out.println("No Selection ");
+            }  
+        }
+        catch(HeadlessException | IOException e)
+        {
+            System.out.println(e.toString());
+        }
+    }//GEN-LAST:event_saveImageButtonActionPerformed
     
     // </editor-fold>
         

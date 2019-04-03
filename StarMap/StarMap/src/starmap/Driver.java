@@ -10,6 +10,9 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -23,6 +26,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import starmap.DataReaders.ConstellationDataReader;
 import starmap.DataReaders.MessierDataReader;
 import starmap.DataReaders.PlanetDataReader;
@@ -672,9 +678,36 @@ public class Driver extends javax.swing.JFrame {
             try
             {
                 BufferedImage image = new BufferedImage(mapPanel.getWidth(), mapPanel.getHeight(), BufferedImage.TYPE_INT_RGB);
+                
+                // changes the pixel size of image // needs the first BufferedImage to be called OGimage
+                //Image tmp = OGimage.getScaledInstance(2550, 2550, Image.SCALE_DEFAULT);
+                //BufferedImage image = new BufferedImage(2550, 2550, BufferedImage.TYPE_INT_ARGB);
+                
                 Graphics2D graphics2D = image.createGraphics();
                 mapPanel.paint(graphics2D);
-                ImageIO.write(image,"jpeg", new File("jmemPractice.jpeg"));
+                //ImageIO.write(image,"jpeg", new File("jmemPractice.jpeg"));
+                
+                
+                
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new java.io.File("."));
+                fileChooser.setDialogTitle("File Dialog");
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                
+                if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) { 
+                    System.out.println("\n\ngetCurrentDirectory(): " 
+                        +  fileChooser.getCurrentDirectory());
+                    System.out.println("getSelectedFile() : " 
+                        +  fileChooser.getSelectedFile());
+                    
+                    File saveImage = new File(fileChooser.getSelectedFile() + ".jpeg");
+                    ImageIO.write(image, "jpeg", saveImage);
+                    System.out.println("File written Successfully");
+                }
+                else {
+                    System.out.println("No Selection ");
+                }
+  
             }
             catch(Exception exception)
             {

@@ -19,7 +19,7 @@ import starmap.Objects.Star;
  */
 public class MapPanel extends JPanel
 {
-    private final int sizeMultiplier = 6;
+    private final int sizeMultiplier = 10;
     
     public int imageWidth = 360 * sizeMultiplier;
     public int imageHeight = 180 * sizeMultiplier;
@@ -40,6 +40,7 @@ public class MapPanel extends JPanel
     private final Color backgroundColor = Color.BLACK;
     private final Color gridLineColor = new Color(0, 255, 80);  
     private final Color starColor = Color.WHITE;
+    private final Color solColor = Color.YELLOW;
     
     private final ArrayList<Star> starList;
     
@@ -72,33 +73,14 @@ public class MapPanel extends JPanel
             if (star.magnitude > 6.0)
             {
                 continue;
-            }           
+            }    
+
+            int starDiameter = (int)Math.round((7.0 - star.magnitude) * (sizeMultiplier * 0.15));
             
-            // The magnitude of the brightest star (widest in UI)
-            double maxWidthMagnitude = -1.43;
-            // The magnitude of the dimmest star (least wide in UI)
-            double minWidthMagnitude = 6.0;
-            
-            // Transformation to make the brightest magnitude have value of 0 
-            // for calculating percentage of width to use for the given star
-            double transformationValue = -1 * maxWidthMagnitude;
-            
-            // The range of the magnitudes, used for calculating percentage
-            // of width to use for the given star
-            double magnitudeRange = minWidthMagnitude - maxWidthMagnitude;            
-            
-            double magnitudePercentage = (star.magnitude + transformationValue) / magnitudeRange;
-            
-            //System.out.println("Star " + star.name + " with magnitude " + star.magnitude + " percentage is " + magnitudePercentage);   
-            
-            int starDiameter = (int)Math.round((1 - magnitudePercentage) * maximumStarWidth);
-            
-            if (starDiameter < 1)
+            if (star.name.equalsIgnoreCase("Sol"))
             {
-                starDiameter = 1;
+                g2d.setColor(solColor);
             }
-            
-            //System.out.println("starDiameter = " + starDiameter);  
             
             int horizontalPosition;
             
@@ -116,6 +98,11 @@ public class MapPanel extends JPanel
             g2d.fillOval(horizontalPosition, verticalPosition, starDiameter, starDiameter);  
             
             //System.out.println("Drawing star " + star.name + " at " + star.azimuth + ", " + star.elevation);
+            
+            if (star.name.equalsIgnoreCase("Sol"))
+            {
+                g2d.setColor(starColor);
+            }
             
             count++;
         }  

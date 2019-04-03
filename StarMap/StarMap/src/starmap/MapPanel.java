@@ -44,6 +44,7 @@ public class MapPanel extends JPanel
     
     // Constants used for defining the behavior of object being drawn
     private final int sizeMultiplier = 10;
+    private final double objectDiameterMultiplier = 0.15;
     
     public int imageWidth = 360 * sizeMultiplier;
     public int imageHeight = 180 * sizeMultiplier;
@@ -64,7 +65,8 @@ public class MapPanel extends JPanel
     private final Color backgroundColor = Color.BLACK;
     private final Color gridLineColor = new Color(0, 255, 80);  
     private final Color starColor = Color.WHITE;
-    private final Color solColor = Color.YELLOW;
+    private final Color solColor = Color.YELLOW;    
+    private final Color messierColor = Color.MAGENTA;
     
     public MapPanel(ArrayList<Star> starList, 
                     ArrayList<Constellation> constellationList, 
@@ -110,6 +112,10 @@ public class MapPanel extends JPanel
         drawGrid(g2d);
         
         plotStars(g2d);
+        plotConstellations(g2d);
+        plotPlanets(g2d);
+        plotMessierObjects(g2d);
+        plotMoon(g2d);
     }
     
     private void plotStars(Graphics2D g2d)
@@ -118,7 +124,7 @@ public class MapPanel extends JPanel
         {
             g2d.setColor(starColor);
         
-            int count = 0;
+            //int count = 0;
 
             for (Star star : starList)
             {
@@ -127,7 +133,7 @@ public class MapPanel extends JPanel
                     continue;
                 }    
 
-                int starDiameter = (int)Math.round((7.0 - star.magnitude) * (sizeMultiplier * 0.15));
+                int starDiameter = (int)Math.round((7.0 - star.magnitude) * (sizeMultiplier * objectDiameterMultiplier));
 
                 if (star.name.equalsIgnoreCase("Sol"))
                 {
@@ -163,12 +169,70 @@ public class MapPanel extends JPanel
                     g2d.setColor(starColor);
                 }
 
-                count++;
+                //count++;
             }  
 
             //System.out.println("Count of stars plotted: " + count);
         }
-    }    
+    }
+
+    private void plotConstellations(Graphics2D g2d)
+    {
+        //TODO: Implement this method
+    }  
+
+    private void plotPlanets(Graphics2D g2d)
+    {
+        //TODO: Implement this method
+    }  
+
+    private void plotMessierObjects(Graphics2D g2d)
+    {
+        if (messierVisibilityFlag)
+        {
+            g2d.setColor(messierColor);
+        
+            //int count = 0;
+
+            for (Messier messier : messierList)
+            {
+                int objectDiameter = (int)Math.round(3.0 * sizeMultiplier * objectDiameterMultiplier);
+
+                int horizontalPosition;
+
+                if (messier.azimuth < 180)
+                {
+                    horizontalPosition = (int)Math.round((messier.azimuth + 180) * sizeMultiplier);
+                }
+                else
+                {
+                    horizontalPosition = (int)Math.round((messier.azimuth - 180) * sizeMultiplier);
+                }
+
+                int verticalPosition = (int)Math.round((90 + (-1 * messier.elevation)) * sizeMultiplier);
+
+                g2d.fillOval(horizontalPosition, verticalPosition, objectDiameter, objectDiameter);  
+
+                if (messierLabelVisibilityFlag && messier.name.length() > 0)
+                {
+                    g2d.drawString(messier.name, 
+                            (int)Math.round(horizontalPosition + objectDiameter + 2), 
+                            (int)Math.round(verticalPosition + (objectDiameter / 2) + (gridLabelHeight / 2)));                
+                }
+
+                //System.out.println("Drawing messier " + messier.name + " at " + messier.azimuth + ", " + messier.elevation);
+
+                //count++;
+            }  
+
+            //System.out.println("Count of messiers plotted: " + count);
+        }
+    }  
+
+    private void plotMoon(Graphics2D g2d)
+    {
+        //TODO: Implement this method
+    }  
     
     private void drawBackground(Graphics2D g2d)
     {

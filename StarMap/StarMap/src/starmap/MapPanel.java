@@ -32,7 +32,7 @@ public class MapPanel extends JPanel
     private final int horizontalGridLabelYOffset = -5;
     
     private final int verticalGridLabelXOffset = -1 * horizontalGridLabelWidth;
-    private final int verticalGridLabelYOffset = 0;    
+    private final int verticalGridLabelYOffset = 0;   
     
     private final double minimumStarWidth = 1;
     private final double maximumStarWidth = 6;
@@ -96,6 +96,13 @@ public class MapPanel extends JPanel
             int verticalPosition = (int)Math.round((90 + (-1 * star.elevation)) * sizeMultiplier);
             
             g2d.fillOval(horizontalPosition, verticalPosition, starDiameter, starDiameter);  
+            
+            if (star.name.length() > 0)
+            {
+                g2d.drawString(star.name, 
+                        (int)Math.round(horizontalPosition + starDiameter + 2), 
+                        (int)Math.round(verticalPosition + (starDiameter / 2) + (gridLabelHeight / 2)));                
+            }
             
             //System.out.println("Drawing star " + star.name + " at " + star.azimuth + ", " + star.elevation);
             

@@ -637,7 +637,7 @@ public class Driver extends javax.swing.JFrame {
             
             for (Planet planet : planetList)
             {
-                planet.planet_getIntermediateValues(julianDate);
+                planet.planet_getIntermediateValues(julianDate, dateTime);
                 planet.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             
@@ -645,10 +645,10 @@ public class Driver extends javax.swing.JFrame {
             {
                 messier.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
-            
-            moon.moon_getIntermediateValues(julianDate);
+            // Moon calculations:
+            moon.moon_getIntermediateValues(julianDate, dateTime);
             moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
-                        
+            System.out.println("\nPhase " + moon.phase);
             // Output positions of objects
 //            for (Star star : starList)
 //            {

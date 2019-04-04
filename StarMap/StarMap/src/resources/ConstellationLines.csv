@@ -1,0 +1,97 @@
+Constellation,RA Hours,RA Minutes,Declination,Star
+Aries,5,37.6,23.28,
+Aries,1,54.7,20.48,
+Taurus,5,37.6,21.08,
+Taurus,4,35.9,16.3,Aldeberan
+Taurus,4,28.6,15.52,
+Taurus,4,28.7,19.1,
+Taurus,5,26.4,28.36,Alnath
+Gemini,6,45.3,12.53,Alzirr
+Gemini,7,20.1,21.59,Wasat
+Gemini,7,45.4,28.02,Pollux?
+Gemini,7,34.6,31.54,Castor
+Gemini,6,44,25.08,Mebsuta
+Gemini,6,22.9,22.31,
+Gemini,6,14.8,22.31,Propus
+Leo,9,45.9,23.46,
+Leo,10,16.7,23.25,Adhafera
+Leo,10,7.4,16.46,
+Leo,10,8.4,11.58,Regulus
+Leo,11,14.2,15.26,Chort
+Leo,11,49.1,14.35,Denebola
+Leo,11,14.2,20.32,Zosma
+Leo,10,20,19.51,Algieba
+Virgo1,13,34.8,-0.36,Heze
+Virgo1,13,25.2,-11.09,Spica
+Virgo2,13,34.8,-0.36,Heze
+Virgo2,13,2.3,10.58,
+Virgo3,13,25.2,11.09,Spica
+Virgo3,12,41.6,-1.27,Parrima
+Virgo4,12,41.6,-1.27,Parrima
+Libra1,15,17,-9.23,
+Libra1,14,50.9,-16.02,Zuben Elgenubi
+Libra1,15,3.9,-25.16,Brachium
+Libra2,15,17,-9.23,
+Libra2,15,3.9,-25.16,Brachium
+Scorpius1,17,30.8,-37.17,
+Scorpius1,17,33.6,-37.06,Shaula
+Scorpius1,17,42.5,-39.02,
+Scorpius1,17,47.6,-40.07,
+Scorpius1,17,37.3,-43,Sargas
+Scorpius1,17,12.1,-43.15,
+Scorpius1,16,51.9,-38.03,
+Scorpius1,16,50.2,-34.17,
+Scorpius1,16,35.9,-28.13,
+Scorpius1,16,29.5,-26.26,Antares
+Scorpius1,16,21.1,-25.35,
+Scorpius1,16,0.3,-22.38,
+Scorpius1,16,5.4,-19.48,
+Scorpius2,16,0.3,-22.38,
+Sagittarius1,19,7,-27.4,
+Sagittarius1,18,55.3,-26.18,Nunki
+Sagittarius1,19,2.6,-29.53,Ascella
+Sagittarius2,18,28,-2526,
+Sagittarius2,18,21,-29.5,
+Sagittarius2,18,24.2,-34.23,
+Sagittarius2,19,2.6,-29.53,Ascella
+Sagittarius3,18,21,-29.5,
+Sagittarius3,18,5.8,-30.25,
+Sagittarius3,18,24.2,-34.23,
+Capricornus,20,21,-14.47,Dabih
+Capricornus,20,21,-14.47,Dabih
+Aquarius1,21,31.6,-5.35,Sadalsuud
+Aquarius1,22,5.8,-0.2,Sadalmelik
+Aquarius2,22,5.8,-0.2,Sadalmelik
+Ursa Minor,2,31.1,89.15,Polaris
+Ursa Minor,14,50.7,74.1,Kakab
+Ursa Minor,15,20.7,71.5,Pherkad
+Ursa Major,13,47.5,49.19,Alkaid
+Ursa Major,13,23.9,54.58,Mizor
+Ursa Major,12,54.1,55.58,Alioth
+Ursa Major,11,53.9,53.42,Phad
+Ursa Major,11,1.8,56.23,Merak
+Ursa Major,12,15.5,57.02,Megrez
+Draco,17,8.8,65.43,Aldhibah
+Draco,19,12.6,67.4,
+Draco,17,30.4,52.19,Restaban
+Draco,17,56.6,51.29,Etamin
+Cassiopeia,0,9.2,59.09,Caph
+Cassiopeia,0,40.5,56.32,Schedar
+Cassiopeia,0,56.7,60.43,
+Cassiopeia,1,25.8,60.14,Ruchbah
+Cassiopeia,1,54.4,63.4,Segin
+Andromeda,0,8.4,29.05,Alpheratz
+Andromeda,0,39.5,30.51,
+Andromeda,1,9.7,35.37,Mirach
+Andromeda,2,4,42.2,Almaak
+Pegasus,0,8.4,29.05,
+Pegasus,0,13.3,15.11,Algenib
+Pegasus,0,8.4,29.05,
+Perseus1,3,4.7,53.3,
+Perseus1,3,24.3,49.51,Mirplak
+Perseus1,3,42.9,47.47,
+Perseus2,3,24.3,49.51,Mirplak
+Perseus2,3,8.2,40.57,Algol
+Perseus2,3,5.2,38.5,
+Triangulum,1,53.1,29.35,
+Triangulum,2,9.5,34.59,

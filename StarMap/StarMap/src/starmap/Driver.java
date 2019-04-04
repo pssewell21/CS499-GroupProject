@@ -442,6 +442,7 @@ public class Driver extends javax.swing.JFrame {
         );
 
         saveImageButton.setText("Save Image");
+        saveImageButton.setEnabled(false);
         saveImageButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveImageButtonActionPerformed(evt);
@@ -710,7 +711,9 @@ public class Driver extends javax.swing.JFrame {
             mapFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             mapFrame.add(mapFramePanel);
             mapFrame.setSize(1000, 1000);
-            mapFrame.setVisible(true);     
+            mapFrame.setVisible(true);
+            
+            saveImageButton.setEnabled(true);
         } 
         catch (Exception ex) 
         {

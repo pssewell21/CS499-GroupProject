@@ -11,23 +11,23 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import starmap.Objects.ConstellationLine;
+import starmap.Objects.ConstellationPoint;
 
 /**
  *
  * @author pssewell21
  */
-public class ConstellationLineDataReader extends DataReader
+public class ConstellationPointDataReader extends DataReader
 {
     @Override
-    public ArrayList<ConstellationLine> readData()
+    public ArrayList<ConstellationPoint> readData()
     {
         String filePath = "./src/resources/ConstellationLines.csv";
         
         File file = new File(filePath);
         System.out.println(filePath);        
         
-        ArrayList<ConstellationLine> list = new ArrayList<>();
+        ArrayList<ConstellationPoint> list = new ArrayList<>();
         
         try
         {
@@ -74,11 +74,22 @@ public class ConstellationLineDataReader extends DataReader
                     int rightAscensionHours = Integer.parseInt(lineItems[1]);
                     double rightAscensionMinutes = Double.parseDouble(lineItems[2]);
                     double declination = Double.parseDouble(lineItems[3]);                    
-                    String starName = lineItems[4];
+                    String starName;
+                    
+                    if (lineItems.length == 5)
+                    {
+                        starName = lineItems[4];
+                    }
+                    else
+                    {
+                        starName = "";
+                    }
+                    
+                    double rightAscention = rightAscensionHours + (rightAscensionMinutes / 60.0);
 
-                    ConstellationLine constellationLine = new ConstellationLine(name, rightAscensionHours, rightAscensionMinutes, declination, starName);
+                    ConstellationPoint constellationPoint = new ConstellationPoint(name, rightAscention, declination, starName);
                 
-                    list.add(constellationLine);
+                    list.add(constellationPoint);
                 }
                 
                 i++;

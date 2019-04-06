@@ -9,24 +9,15 @@ package starmap.Objects;
  *
  * @author pssewell21
  */
-public class ConstellationLine
+public class ConstellationLine 
 {
-    public String name;
+    public ConstellationPoint pointA;
     
-    public int rightAscensionHours ;
+    public ConstellationPoint pointB;
     
-    public double rightAscensionMinutes ;
-    
-    public double declination;
-    
-    public String starName;
-            
-    public ConstellationLine(String name, int rightAscensionHours, double rightAscensionMinutes, double declination, String starName)
+    public ConstellationLine(ConstellationPoint pointA, ConstellationPoint pointB)
     {
-        this.name = name;
-        this.rightAscensionHours = rightAscensionHours;
-        this.rightAscensionMinutes = rightAscensionMinutes;
-        this.declination = declination;
-        this.starName = starName;
+        this.pointA = pointA;
+        this.pointB = pointB;
     }
 }

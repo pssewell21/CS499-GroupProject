@@ -26,12 +26,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JFileChooser;
 import starmap.DataReaders.ConstellationDataReader;
-import starmap.DataReaders.ConstellationLineDataReader;
+import starmap.DataReaders.ConstellationLineCreator;
+import starmap.DataReaders.ConstellationPointDataReader;
 import starmap.DataReaders.MessierDataReader;
 import starmap.DataReaders.PlanetDataReader;
 import starmap.DataReaders.StarDataReader;
 import starmap.Objects.Constellation;
 import starmap.Objects.ConstellationLine;
+import starmap.Objects.ConstellationPoint;
 import starmap.Objects.Messier;
 import starmap.Objects.Moon;
 import starmap.Objects.Planet;
@@ -45,6 +47,7 @@ public class Driver extends javax.swing.JFrame {
     
     private ArrayList<Star> starList;
     private ArrayList<Constellation> constellationList;
+    private ArrayList<ConstellationPoint> constellationPointList;
     private ArrayList<ConstellationLine> constellationLineList;
     private ArrayList<Planet> planetList;
     private ArrayList<Messier> messierList;
@@ -639,6 +642,15 @@ public class Driver extends javax.swing.JFrame {
                 constellation.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             
+            for (ConstellationPoint constellationPoint : constellationPointList)
+            {
+                constellationPoint.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+            }   
+        
+            ConstellationLineCreator constellationLineCreator = new ConstellationLineCreator();
+        
+            constellationLineList = constellationLineCreator.GetConstellationLineList(constellationPointList);
+            
             for (Planet planet : planetList)
             {
                 planet.planet_getIntermediateValues(julianDate, dateTime);
@@ -1041,9 +1053,9 @@ public class Driver extends javax.swing.JFrame {
         
         constellationList = constellationDataReader.readData();
         
-        ConstellationLineDataReader constellationLineDataReader = new ConstellationLineDataReader();
+        ConstellationPointDataReader constellationPointDataReader = new ConstellationPointDataReader();
         
-        constellationLineList = constellationLineDataReader.readData();
+        constellationPointList = constellationPointDataReader.readData();
         
         PlanetDataReader planetDataReader = new PlanetDataReader();
         

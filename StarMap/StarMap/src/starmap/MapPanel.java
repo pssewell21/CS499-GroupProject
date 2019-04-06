@@ -12,6 +12,8 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import starmap.Objects.Constellation;
+import starmap.Objects.ConstellationLine;
+import starmap.Objects.ConstellationPoint;
 import starmap.Objects.Messier;
 import starmap.Objects.Moon;
 import starmap.Objects.Planet;
@@ -25,6 +27,7 @@ public class MapPanel extends JPanel
 {
     private final ArrayList<Star> starList;
     private final ArrayList<Constellation> constellationList;
+    private final ArrayList<ConstellationLine> constellationLineList;
     private final ArrayList<Planet> planetList;
     private final ArrayList<Messier> messierList;
     private final Moon moon;
@@ -73,6 +76,7 @@ public class MapPanel extends JPanel
     
     public MapPanel(ArrayList<Star> starList, 
                     ArrayList<Constellation> constellationList, 
+                    ArrayList<ConstellationLine> constellationLineList, 
                     ArrayList<Planet> planetList, 
                     ArrayList<Messier> messierList, 
                     Moon moon, 
@@ -89,6 +93,7 @@ public class MapPanel extends JPanel
     {
         this.starList = starList; 
         this.constellationList = constellationList;
+        this.constellationLineList = constellationLineList;
         this.planetList = planetList;
         this.messierList = messierList;
         this.moon = moon;
@@ -218,6 +223,40 @@ public class MapPanel extends JPanel
 
                 //count++;
             }  
+            
+            for (ConstellationLine constellationLine : constellationLineList)
+            {
+                ConstellationPoint pointA = constellationLine.pointA;
+                ConstellationPoint pointB = constellationLine.pointB;
+                
+                int pointAHorizontalPosition;
+
+                if (pointA.azimuth < 180)
+                {
+                    pointAHorizontalPosition = (int)Math.round((pointA.azimuth + 180) * sizeMultiplier);
+                }
+                else
+                {
+                    pointAHorizontalPosition = (int)Math.round((pointA.azimuth - 180) * sizeMultiplier);
+                }
+
+                int pointAVerticalPosition = (int)Math.round((90 + (-1 * pointA.elevation)) * sizeMultiplier);
+                
+                int pointBHorizontalPosition;
+
+                if (pointB.azimuth < 180)
+                {
+                    pointBHorizontalPosition = (int)Math.round((pointB.azimuth + 180) * sizeMultiplier);
+                }
+                else
+                {
+                    pointBHorizontalPosition = (int)Math.round((pointB.azimuth - 180) * sizeMultiplier);
+                }
+
+                int pointBVerticalPosition = (int)Math.round((90 + (-1 * pointB.elevation)) * sizeMultiplier);
+                
+                g2d.drawLine(pointAHorizontalPosition, pointAVerticalPosition, pointBHorizontalPosition, pointBVerticalPosition);
+            }
 
             //System.out.println("Count of stars plotted: " + count);
         }

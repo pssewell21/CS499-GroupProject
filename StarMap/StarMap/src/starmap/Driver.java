@@ -703,6 +703,7 @@ public class Driver extends javax.swing.JFrame {
 
             mapPanel = new MapPanel(starList, 
                     constellationList, 
+                    constellationLineList,
                     planetList, 
                     messierList, 
                     moon, 

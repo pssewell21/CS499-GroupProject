@@ -22,7 +22,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane; //Delete - Dina
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JTextArea;
+import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JFileChooser;
 import starmap.DataReaders.ConstellationDataReader;
@@ -39,6 +46,7 @@ import starmap.Objects.Moon;
 import starmap.Objects.Planet;
 import starmap.Objects.Star;
 
+
 /**
  *
  * @author pssew
@@ -54,6 +62,7 @@ public class Driver extends javax.swing.JFrame {
     private Moon moon;
     
     MapPanel mapPanel;
+    
     
     // boolean flags that control which items are visible on the star map
     private boolean starVisibilityFlag = true;
@@ -143,7 +152,7 @@ public class Driver extends javax.swing.JFrame {
         minuteLabel1 = new javax.swing.JLabel();
         hourTextField = new javax.swing.JTextField();
         minuteTextField = new javax.swing.JTextField();
-        hourOffsetComboBox = new javax.swing.JComboBox<>();
+        hourOffsetComboBox = new javax.swing.JComboBox<String>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         objectSelectionPanel = new javax.swing.JPanel();
@@ -183,6 +192,11 @@ public class Driver extends javax.swing.JFrame {
 
         latitudeMinLabel.setText("Longitude:");
 
+        longDegreeTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                longDegreeTextFieldActionPerformed(evt);
+            }
+        });
         longDegreeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 longDegreeTextFieldKeyReleased(evt);
@@ -212,6 +226,11 @@ public class Driver extends javax.swing.JFrame {
             }
         });
 
+        minLongTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                minLongTextFieldActionPerformed(evt);
+            }
+        });
         minLongTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 minLongTextFieldKeyReleased(evt);
@@ -250,7 +269,7 @@ public class Driver extends javax.swing.JFrame {
             }
         });
 
-        hourOffsetComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-12", "-11", "-10", "-9", "-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "0", "+1", "+2", "+3", "+4", "+5", "+6", "+7", "+8", "+9", "+10", "+11", "+12" }));
+        hourOffsetComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-12", "-11", "-10", "-9", "-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "0", "+1", "+2", "+3", "+4", "+5", "+6", "+7", "+8", "+9", "+10", "+11", "+12" }));
 
         jLabel1.setText("hr");
 
@@ -718,16 +737,39 @@ public class Driver extends javax.swing.JFrame {
                     moonVisibilityFlag, 
                     moonPhaseVisibilityFlag);
             JScrollPane mapPanelScrollPane = new JScrollPane(mapPanel);
+            //JLayeredPane moon_pane = new JLayeredPane(); //Delete
+            //JButton moon_btn = new JButton("Print moonphase"); = Delete
+            //JMenuBar moon_menu = new JMenuBar(); - Delete
+            JLabel moon_label = new JLabel(moon.phase);
+            //JTextArea phase_output = new JTextArea(moon.phase);
             
             JPanel mapFramePanel = new JPanel();            
             mapFramePanel.setLayout(new BorderLayout());
             mapFramePanel.add(mapPanelScrollPane);
             
+            //Add moon_phase button:
+            //mapFramePanel.add(moon_btn);
+            //moon_btn.setBounds(23, 23, 75, 75);
+            //moon_btn.setSize(50, 50);
+            
+            // Moon Phase Status Window:
+            JFrame moon_frame = new JFrame("Moon Phase Status");
+            moon_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            moon_frame.setSize(250, 150);
+            moon_frame.setVisible(true);
+            
+            //moon_frame.add(phase_output);
+            moon_frame.add(moon_label);
+            
+            // Generated Sky Map Image
             JFrame mapFrame = new JFrame("Sky Map");
             mapFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             mapFrame.add(mapFramePanel);
+            //mapFrame.add(moon_label);
             mapFrame.setSize(1000, 1000);
+            
             mapFrame.setVisible(true);
+            
             
             saveImageButton.setEnabled(true);
         } 
@@ -735,6 +777,8 @@ public class Driver extends javax.swing.JFrame {
         {
             Logger.getLogger(Driver.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
         
     }//GEN-LAST:event_generateStarMapButtonActionPerformed
     /*
@@ -997,6 +1041,14 @@ public class Driver extends javax.swing.JFrame {
             System.out.println(e.toString());
         }
     }//GEN-LAST:event_saveImageButtonActionPerformed
+
+    private void longDegreeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_longDegreeTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_longDegreeTextFieldActionPerformed
+
+    private void minLongTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minLongTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_minLongTextFieldActionPerformed
     
     // </editor-fold>
         

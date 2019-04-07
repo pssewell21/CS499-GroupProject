@@ -72,7 +72,6 @@ public class Moon extends CelestialObject
     public void moon_convertJulianDateToCalanderDate(double julianDate)
     {
         double A, B, C, D, E, F, Z, alpha;
-        double l_year, l_month, l_day;
         double JD;
         
         //Step 1:
@@ -125,19 +124,7 @@ public class Moon extends CelestialObject
     ***************************************************************************/
     public void moon_getIntermediateValues(double julianDate, LocalDateTime dateTime)
     {
-        //NEED TO CONVERT THE CALCULATED Julian Date (below) to Calendar Date for
-        //each phase in order to determine when a certain moon phase can be 
-        //selected and shown.
-        //Only then can I process each moon phase and display:
-        // if(phase.equalsIgnoreCase("new moon") ...display, etc.
-       
-        //System.out.println("" + l_day + "/" + l_month + "/" + l_year + "\n");
-        
-        // Lunar phases calculation data goes here:
-
-        //double new_moon, first_quarter, full_moon, last_quarter;
-        
-        double k_first_quarter, k_full_moon, k_last_quarter;
+        double k_new_moon, k_first_quarter, k_full_moon, k_last_quarter;
         double t_lunar, k_lunar;
         double JD; //2458489.000000
         g_year = dateTime.getYear();
@@ -166,233 +153,235 @@ public class Moon extends CelestialObject
         
         
         System.out.println("\nCurrent year = " + updated_year);
-//        System.out.println("\nPast Moon Phase Calculations:");
-//        
-//        //=====================================================================
-//        // 1) Julian Day of a PAST NEW MOON:
-//        //=====================================================================
-//        JD = 2415020.75933 + (29.53058868 * k_lunar) + (0.0001178 * Math.pow(t_lunar, 2))
-//            + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
-//            - ((0.009173 * RADS) * Math.pow(t_lunar, 2))))); 
-//            
-//        g_JD = Math.floor(JD); //Calculated Julian Date
-//        System.out.println("New moon (Julian Day) = " + g_JD); //new_moon
-//        
-//        // Converts JD to Calendar Date:
-//        moon_convertJulianDateToCalanderDate(g_JD);
-//        double past_new_moon = g_JD;
-//        
-//        System.out.println("\nCalander Date:");
-//        System.out.println("Day = " + g_calander_day);
-//        System.out.println("Month = " + g_calander_month);
-//        System.out.println("Year = " + g_calander_year + "\n");
-//
-//        // Gets the current DAY generated in Star Map:
-//        int day_str_dateTime = dateTime.getDayOfMonth();
-//        System.out.println("day_str_dateTime = " + day_str_dateTime);
-//        
-//        // Gets the current MONTH generated in Star Map:
-//        int mon_str_dateTime = dateTime.getMonthValue();
-//        System.out.println("mon_str_dateTime = " + mon_str_dateTime);
-//        
-//        // Gets the current YEAR generated in Star Map:
-//        int year_str_dateTime = dateTime.getYear();
-//        System.out.println("year_str_dateTime = " + year_str_dateTime);
-//                
-//        // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
-//        dateDay_str = String.valueOf(day_str_dateTime);
-//        dateMon_str = String.valueOf(mon_str_dateTime);
-//        dateYear_str = String.valueOf(year_str_dateTime);
-//        
-//        // Converts the CALANDER DATE to a string:
-//        day_str = String.valueOf(df_two.format(g_calander_day));
-//        month_str = String.valueOf(df_two.format(g_calander_month));
-//        year_str = String.valueOf(df_two.format(g_calander_year));
-//        
-//        System.out.println("\nconvert Day to string = " + day_str);
-//        System.out.println("convert Month to string = " + month_str);
-//        System.out.println("convert Year to string = " + year_str + "\n");
-//        
-//        // Compares the Calander Date the LocalDateTime
-//        if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
-//                year_str.equals(dateYear_str))
-//        {
-//            phase = "The moon phase is a NEW MOON";
-//            
-//        }
-//        else
-//            phase = "Not available!";
-//   
-//        //=====================================================================
-//        // 2) Julian Day of a PAST FIRST QUARTER:
-//        //=====================================================================
-//        k_first_quarter = k_lunar + 0.25;
-//        JD = 2415020.75933 + (29.53058868 * k_first_quarter) + (0.0001178 * Math.pow(t_lunar, 2))
-//                + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
-//                - ((0.009173 * RADS) * Math.pow(t_lunar, 2)))));
-//            
-//        g_JD = Math.floor(JD); //Calculated Julian Date
-//        System.out.println("first quarter = " + g_JD); //first_quarter
-//        
-//        
-//        // Converts JD to Calendar Date:
-//        moon_convertJulianDateToCalanderDate(g_JD);
-//        double past_first_quarter = g_JD;
-//        
-//        System.out.println("\nCalander Date:");
-//        System.out.println("Day = " + g_calander_day);
-//        System.out.println("Month = " + g_calander_month);
-//        System.out.println("Year = " + g_calander_year + "\n");
-//
-//        // Gets the current DAY generated in Star Map:
-//        day_str_dateTime = dateTime.getDayOfMonth();
-//        System.out.println("day_str_dateTime = " + day_str_dateTime);
-//        
-//        // Gets the current MONTH generated in Star Map:
-//        mon_str_dateTime = dateTime.getMonthValue();
-//        System.out.println("mon_str_dateTime = " + mon_str_dateTime);
-//        
-//        // Gets the current YEAR generated in Star Map:
-//        year_str_dateTime = dateTime.getYear();
-//        System.out.println("year_str_dateTime = " + year_str_dateTime);
-//                
-//        // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
-//        dateDay_str = String.valueOf(day_str_dateTime);
-//        dateMon_str = String.valueOf(mon_str_dateTime);
-//        dateYear_str = String.valueOf(year_str_dateTime);
-//        
-//        // Converts the CALANDER DATE to a string:
-//        day_str = String.valueOf(df_two.format(g_calander_day));
-//        month_str = String.valueOf(df_two.format(g_calander_month));
-//        year_str = String.valueOf(df_two.format(g_calander_year));
-//        
-//        System.out.println("\nconvert Day to string = " + day_str);
-//        System.out.println("convert Month to string = " + month_str);
-//        System.out.println("convert Year to string = " + year_str + "\n");
-//        
-//        // Compares the Calander Date the LocalDateTime
-//        if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
-//                year_str.equals(dateYear_str))
-//        {
-//            phase = "The moon phase is FIRST QUARTER";
-//            
-//        }
-//        else
-//            phase = "Not available!";
-//        
-//        //=====================================================================
-//        // 3) Julian Day of a PAST FULL MOON:
-//        //=====================================================================
-//        k_full_moon = k_lunar + .50;
-//        JD = 2415020.75933 + (29.53058868 * k_full_moon) + (0.0001178 * Math.pow(t_lunar, 2))
-//            + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
-//            - ((0.009173 * RADS) * Math.pow(t_lunar, 2)))));
-//        
-//        g_JD = Math.floor(JD); // Calculated Julian Date
-//        System.out.println("full_moon = " + g_JD); //full_moon
-//        
-//        
-//        // Converts JD to Calendar Date:
-//        moon_convertJulianDateToCalanderDate(g_JD);
-//        double past_full_moon = g_JD;
-//        
-//        System.out.println("\nCalander Date:");
-//        System.out.println("Day = " + g_calander_day);
-//        System.out.println("Month = " + g_calander_month);
-//        System.out.println("Year = " + g_calander_year + "\n");
-//
-//        // Gets the current DAY generated in Star Map:
-//        day_str_dateTime = dateTime.getDayOfMonth();
-//        System.out.println("day_str_dateTime = " + day_str_dateTime);
-//        
-//        // Gets the current MONTH generated in Star Map:
-//        mon_str_dateTime = dateTime.getMonthValue();
-//        System.out.println("mon_str_dateTime = " + mon_str_dateTime);
-//        
-//        // Gets the current YEAR generated in Star Map:
-//        year_str_dateTime = dateTime.getYear();
-//        System.out.println("year_str_dateTime = " + year_str_dateTime);
-//                
-//        // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
-//        dateDay_str = String.valueOf(day_str_dateTime);
-//        dateMon_str = String.valueOf(mon_str_dateTime);
-//        dateYear_str = String.valueOf(year_str_dateTime);
-//        
-//        // Converts the CALANDER DATE to a string:
-//        day_str = String.valueOf(df_two.format(g_calander_day));
-//        month_str = String.valueOf(df_two.format(g_calander_month));
-//        year_str = String.valueOf(df_two.format(g_calander_year));
-//        
-//        System.out.println("\nconvert Day to string = " + day_str);
-//        System.out.println("convert Month to string = " + month_str);
-//        System.out.println("convert Year to string = " + year_str + "\n");
-//        
-//        // Compares the Calander Date the LocalDateTime
-//        if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
-//                year_str.equals(dateYear_str))
-//        {
-//            phase = "The moon phase is FULL MOON";
-//            
-//        }
-//        else
-//            phase = "Not available!";
-//        
-//        //=====================================================================
-//        // 4) Julian Day of a PAST LAST QUARTER MOON:
-//        //=====================================================================
-//        k_last_quarter = k_lunar + .75;
-//        JD = 2415020.75933 + (29.53058868 * k_last_quarter) + (0.0001178 * Math.pow(t_lunar, 2))
-//            + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
-//            - ((0.009173 * RADS) * Math.pow(t_lunar, 2)))));
-//            
-//        g_JD = Math.floor(JD); // Calculated Julian Date
-//        System.out.println("last_quarter = " + g_JD); //last_quarter
-//        
-//        
-//        // Converts JD to Calendar Date:
-//        moon_convertJulianDateToCalanderDate(g_JD);
-//        double past_last_quarter = g_JD;
-//        
-//        System.out.println("\nCalander Date:");
-//        System.out.println("Day = " + g_calander_day);
-//        System.out.println("Month = " + g_calander_month);
-//        System.out.println("Year = " + g_calander_year + "\n");
-//
-//        // Gets the current DAY generated in Star Map:
-//        day_str_dateTime = dateTime.getDayOfMonth();
-//        System.out.println("day_str_dateTime = " + day_str_dateTime);
-//        
-//        // Gets the current MONTH generated in Star Map:
-//        mon_str_dateTime = dateTime.getMonthValue();
-//        System.out.println("mon_str_dateTime = " + mon_str_dateTime);
-//        
-//        // Gets the current YEAR generated in Star Map:
-//        year_str_dateTime = dateTime.getYear();
-//        System.out.println("year_str_dateTime = " + year_str_dateTime);
-//                
-//        // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
-//        dateDay_str = String.valueOf(day_str_dateTime);
-//        dateMon_str = String.valueOf(mon_str_dateTime);
-//        dateYear_str = String.valueOf(year_str_dateTime);
-//        
-//        // Converts the CALANDER DATE to a string:
-//        day_str = String.valueOf(df_two.format(g_calander_day));
-//        month_str = String.valueOf(df_two.format(g_calander_month));
-//        year_str = String.valueOf(df_two.format(g_calander_year));
-//        
-//        System.out.println("\nconvert Day to string = " + day_str);
-//        System.out.println("convert Month to string = " + month_str);
-//        System.out.println("convert Year to string = " + year_str + "\n");
-//        
-//        // Compares the Calander Date the LocalDateTime
-//        if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
-//                year_str.equals(dateYear_str))
-//        {
-//            phase = "The moon phase is LAST QUARTER";
-//            
-//        }
-//        else
-//            phase = "Not available!";
+        System.out.println("\nPast Moon Phase Calculations:");
+        
+        //=====================================================================
+        // 1) Julian Day of a PAST NEW MOON:
+        //=====================================================================
+        JD = 2415020.75933 + (29.53058868 * k_lunar) + (0.0001178 * Math.pow(t_lunar, 2))
+            + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
+            - ((0.009173 * RADS) * Math.pow(t_lunar, 2))))); 
+            
+        g_JD = Math.floor(JD); //Calculated Julian Date
+        System.out.println("New moon (Julian Day) = " + g_JD); //new_moon
+        
+        // Converts JD to Calendar Date:
+        moon_convertJulianDateToCalanderDate(g_JD);
+        System.out.println("JD = " + JD);
+        //double past_new_moon = g_JD;
+        
+        System.out.println("\nCalander Date:");
+        System.out.println("Day = " + g_calander_day);
+        System.out.println("Month = " + g_calander_month);
+        System.out.println("Year = " + g_calander_year + "\n");
+        
+
+        // Gets the current DAY generated in Star Map:
+        day_str_dateTime = dateTime.getDayOfMonth();
+        System.out.println("day_str_dateTime = " + day_str_dateTime);
+        
+        // Gets the current MONTH generated in Star Map:
+        mon_str_dateTime = dateTime.getMonthValue();
+        System.out.println("mon_str_dateTime = " + mon_str_dateTime);
+        
+        // Gets the current YEAR generated in Star Map:
+        year_str_dateTime = dateTime.getYear();
+        System.out.println("year_str_dateTime = " + year_str_dateTime);
+                
+        // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
+        dateDay_str = String.valueOf(day_str_dateTime);
+        dateMon_str = String.valueOf(mon_str_dateTime);
+        dateYear_str = String.valueOf(year_str_dateTime);
+        
+        // Converts the CALANDER DATE to a string:
+        day_str = String.valueOf(df_two.format(g_calander_day));
+        month_str = String.valueOf(df_two.format(g_calander_month));
+        year_str = String.valueOf(df_two.format(g_calander_year));
+        
+        System.out.println("\nconvert Day to string = " + day_str);
+        System.out.println("convert Month to string = " + month_str);
+        System.out.println("convert Year to string = " + year_str + "\n");
+        
+        // Compares the Calander Date the LocalDateTime
+        if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
+                year_str.equals(dateYear_str))
+        {
+            phase = "The moon phase is a NEW MOON";
+            
+        }
+        else
+            phase = "Not available!";
+   
+        //=====================================================================
+        // 2) Julian Day of a PAST FIRST QUARTER:
+        //=====================================================================
+        k_first_quarter = k_lunar + 0.25;
+        JD = 2415020.75933 + (29.53058868 * k_first_quarter) + (0.0001178 * Math.pow(t_lunar, 2))
+                + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
+                - ((0.009173 * RADS) * Math.pow(t_lunar, 2)))));
+            
+        g_JD = Math.floor(JD); //Calculated Julian Date
+        System.out.println("first quarter = " + g_JD); //first_quarter
+        
+        
+        // Converts JD to Calendar Date:
+        moon_convertJulianDateToCalanderDate(g_JD);
+        double past_first_quarter = g_JD;
+        
+        System.out.println("\nCalander Date:");
+        System.out.println("Day = " + g_calander_day);
+        System.out.println("Month = " + g_calander_month);
+        System.out.println("Year = " + g_calander_year + "\n");
+
+        // Gets the current DAY generated in Star Map:
+        day_str_dateTime = dateTime.getDayOfMonth();
+        System.out.println("day_str_dateTime = " + day_str_dateTime);
+        
+        // Gets the current MONTH generated in Star Map:
+        mon_str_dateTime = dateTime.getMonthValue();
+        System.out.println("mon_str_dateTime = " + mon_str_dateTime);
+        
+        // Gets the current YEAR generated in Star Map:
+        year_str_dateTime = dateTime.getYear();
+        System.out.println("year_str_dateTime = " + year_str_dateTime);
+                
+        // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
+        dateDay_str = String.valueOf(day_str_dateTime);
+        dateMon_str = String.valueOf(mon_str_dateTime);
+        dateYear_str = String.valueOf(year_str_dateTime);
+        
+        // Converts the CALANDER DATE to a string:
+        day_str = String.valueOf(df_two.format(g_calander_day));
+        month_str = String.valueOf(df_two.format(g_calander_month));
+        year_str = String.valueOf(df_two.format(g_calander_year));
+        
+        System.out.println("\nconvert Day to string = " + day_str);
+        System.out.println("convert Month to string = " + month_str);
+        System.out.println("convert Year to string = " + year_str + "\n");
+        
+        // Compares the Calander Date the LocalDateTime
+        if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
+                year_str.equals(dateYear_str))
+        {
+            phase = "The moon phase is FIRST QUARTER";
+            
+        }
+        else
+            phase = "Not available!";
+        
+        //=====================================================================
+        // 3) Julian Day of a PAST FULL MOON:
+        //=====================================================================
+        k_full_moon = k_lunar + .50;
+        JD = 2415020.75933 + (29.53058868 * k_full_moon) + (0.0001178 * Math.pow(t_lunar, 2))
+            + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
+            - ((0.009173 * RADS) * Math.pow(t_lunar, 2)))));
+        
+        g_JD = Math.floor(JD); // Calculated Julian Date
+        System.out.println("full_moon = " + g_JD); //full_moon
+        
+        
+        // Converts JD to Calendar Date:
+        moon_convertJulianDateToCalanderDate(g_JD);
+        double past_full_moon = g_JD;
+        
+        System.out.println("\nCalander Date:");
+        System.out.println("Day = " + g_calander_day);
+        System.out.println("Month = " + g_calander_month);
+        System.out.println("Year = " + g_calander_year + "\n");
+
+        // Gets the current DAY generated in Star Map:
+        day_str_dateTime = dateTime.getDayOfMonth();
+        System.out.println("day_str_dateTime = " + day_str_dateTime);
+        
+        // Gets the current MONTH generated in Star Map:
+        mon_str_dateTime = dateTime.getMonthValue();
+        System.out.println("mon_str_dateTime = " + mon_str_dateTime);
+        
+        // Gets the current YEAR generated in Star Map:
+        year_str_dateTime = dateTime.getYear();
+        System.out.println("year_str_dateTime = " + year_str_dateTime);
+                
+        // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
+        dateDay_str = String.valueOf(day_str_dateTime);
+        dateMon_str = String.valueOf(mon_str_dateTime);
+        dateYear_str = String.valueOf(year_str_dateTime);
+        
+        // Converts the CALANDER DATE to a string:
+        day_str = String.valueOf(df_two.format(g_calander_day));
+        month_str = String.valueOf(df_two.format(g_calander_month));
+        year_str = String.valueOf(df_two.format(g_calander_year));
+        
+        System.out.println("\nconvert Day to string = " + day_str);
+        System.out.println("convert Month to string = " + month_str);
+        System.out.println("convert Year to string = " + year_str + "\n");
+        
+        // Compares the Calander Date the LocalDateTime
+        if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
+                year_str.equals(dateYear_str))
+        {
+            phase = "The moon phase is FULL MOON";
+            
+        }
+        else
+            phase = "Not available!";
+        
+        //=====================================================================
+        // 4) Julian Day of a PAST LAST QUARTER MOON:
+        //=====================================================================
+        k_last_quarter = k_lunar + .75;
+        JD = 2415020.75933 + (29.53058868 * k_last_quarter) + (0.0001178 * Math.pow(t_lunar, 2))
+            + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
+            - ((0.009173 * RADS) * Math.pow(t_lunar, 2)))));
+            
+        g_JD = Math.floor(JD); // Calculated Julian Date
+        System.out.println("last_quarter = " + g_JD); //last_quarter
+        
+        
+        // Converts JD to Calendar Date:
+        moon_convertJulianDateToCalanderDate(g_JD);
+        double past_last_quarter = g_JD;
+        
+        System.out.println("\nCalander Date:");
+        System.out.println("Day = " + g_calander_day);
+        System.out.println("Month = " + g_calander_month);
+        System.out.println("Year = " + g_calander_year + "\n");
+
+        // Gets the current DAY generated in Star Map:
+        day_str_dateTime = dateTime.getDayOfMonth();
+        System.out.println("day_str_dateTime = " + day_str_dateTime);
+        
+        // Gets the current MONTH generated in Star Map:
+        mon_str_dateTime = dateTime.getMonthValue();
+        System.out.println("mon_str_dateTime = " + mon_str_dateTime);
+        
+        // Gets the current YEAR generated in Star Map:
+        year_str_dateTime = dateTime.getYear();
+        System.out.println("year_str_dateTime = " + year_str_dateTime);
+                
+        // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
+        dateDay_str = String.valueOf(day_str_dateTime);
+        dateMon_str = String.valueOf(mon_str_dateTime);
+        dateYear_str = String.valueOf(year_str_dateTime);
+        
+        // Converts the CALANDER DATE to a string:
+        day_str = String.valueOf(df_two.format(g_calander_day));
+        month_str = String.valueOf(df_two.format(g_calander_month));
+        year_str = String.valueOf(df_two.format(g_calander_year));
+        
+        System.out.println("\nconvert Day to string = " + day_str);
+        System.out.println("convert Month to string = " + month_str);
+        System.out.println("convert Year to string = " + year_str + "\n");
+        
+        // Compares the Calander Date the LocalDateTime
+        if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
+                year_str.equals(dateYear_str))
+        {
+            phase = "The moon phase is LAST QUARTER";
+            
+        }
+        else
+            phase = "Not available!";
         
         
         System.out.println("\nFuture Moon Phase Calculations:");
@@ -452,181 +441,177 @@ public class Moon extends CelestialObject
         else
             phase = "Not available!";
         
-//        //=====================================================================
-//        // 6) Julian Day of a FUTURE FIRST QUARTER MOON:
-//        //=====================================================================
-//        k_first_quarter = k_lunar + 0.25;
-//        JD = 2415020.75933 + (29.53058868 * k_first_quarter) + (0.0001178 * Math.pow(t_lunar, 2))
-//            + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
-//            - ((0.009173 * RADS) * Math.pow(t_lunar, 2)))));
-//            
-//        g_JD = Math.ceil(JD); // Calculated Julian Date
-//        System.out.println("first quarter = " + g_JD); //first_quarter
-//        
-//        // Converts JD to Calendar Date:
-//        moon_convertJulianDateToCalanderDate(g_JD);
-//        double future_first_quarter = g_JD;
-//        
-//        System.out.println("\nCalander Date:");
-//        System.out.println("Day = " + g_calander_day);
-//        System.out.println("Month = " + g_calander_month);
-//        System.out.println("Year = " + g_calander_year + "\n");
-//
-//        // Gets the current DAY generated in Star Map:
-//        day_str_dateTime = dateTime.getDayOfMonth();
-//        System.out.println("day_str_dateTime = " + day_str_dateTime);
-//        
-//        // Gets the current MONTH generated in Star Map:
-//        mon_str_dateTime = dateTime.getMonthValue();
-//        System.out.println("mon_str_dateTime = " + mon_str_dateTime);
-//        
-//        // Gets the current YEAR generated in Star Map:
-//        year_str_dateTime = dateTime.getYear();
-//        System.out.println("year_str_dateTime = " + year_str_dateTime);
-//                
-//        // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
-//        dateDay_str = String.valueOf(day_str_dateTime);
-//        dateMon_str = String.valueOf(mon_str_dateTime);
-//        dateYear_str = String.valueOf(year_str_dateTime);
-//        
-//        // Converts the CALANDER DATE to a string:
-//        day_str = String.valueOf(df_two.format(g_calander_day));
-//        month_str = String.valueOf(df_two.format(g_calander_month));
-//        year_str = String.valueOf(df_two.format(g_calander_year));
-//        
-//        System.out.println("\nconvert Day to string = " + day_str);
-//        System.out.println("convert Month to string = " + month_str);
-//        System.out.println("convert Year to string = " + year_str + "\n");
-//        
-//        // Compares the Calander Date the LocalDateTime
-//        if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
-//                year_str.equals(dateYear_str))
-//        {
-//            phase = "The moon phase is FIRST QUARTER";
-//            
-//        }
-//        else
-//            phase = "Not available!";
-//        //=====================================================================
-//        // 7) Julian Day of a FUTURE FULL MOON:
-//        //=====================================================================
-//        k_full_moon = k_lunar + .50;
-//        JD = 2415020.75933 + (29.53058868 * k_full_moon) + (0.0001178 * Math.pow(t_lunar, 2))
-//            + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
-//            - ((0.009173 * RADS) * Math.pow(t_lunar, 2)))));
-//            
-//        g_JD = Math.ceil(JD); // Calculated Julian Date
-//        System.out.println("full_moon = " + g_JD); //full_moon
-//        
-//        // Converts JD to Calendar Date:
-//        moon_convertJulianDateToCalanderDate(g_JD);
-//        double future_full_moon = g_JD;
-//        
-//        System.out.println("\nCalander Date:");
-//        System.out.println("Day = " + g_calander_day);
-//        System.out.println("Month = " + g_calander_month);
-//        System.out.println("Year = " + g_calander_year + "\n");
-//
-//        // Gets the current DAY generated in Star Map:
-//        day_str_dateTime = dateTime.getDayOfMonth();
-//        System.out.println("day_str_dateTime = " + day_str_dateTime);
-//        
-//        // Gets the current MONTH generated in Star Map:
-//        mon_str_dateTime = dateTime.getMonthValue();
-//        System.out.println("mon_str_dateTime = " + mon_str_dateTime);
-//        
-//        // Gets the current YEAR generated in Star Map:
-//        year_str_dateTime = dateTime.getYear();
-//        System.out.println("year_str_dateTime = " + year_str_dateTime);
-//                
-//        // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
-//        dateDay_str = String.valueOf(day_str_dateTime);
-//        dateMon_str = String.valueOf(mon_str_dateTime);
-//        dateYear_str = String.valueOf(year_str_dateTime);
-//        
-//        // Converts the CALANDER DATE to a string:
-//        day_str = String.valueOf(df_two.format(g_calander_day));
-//        month_str = String.valueOf(df_two.format(g_calander_month));
-//        year_str = String.valueOf(df_two.format(g_calander_year));
-//        
-//        System.out.println("\nconvert Day to string = " + day_str);
-//        System.out.println("convert Month to string = " + month_str);
-//        System.out.println("convert Year to string = " + year_str + "\n");
-//        
-//        // Compares the Calander Date the LocalDateTime
-//        if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
-//                year_str.equals(dateYear_str))
-//        {
-//            phase = "The moon phase is FULL MOON";
-//            
-//        }
-//        else
-//            phase = "Not available!";
-//        
-//        //=====================================================================
-//        // 8) Julian Day of a FUTURE LAST QUARTER MOON:
-//        //=====================================================================
-//        k_last_quarter = k_lunar + .75;
-//        JD = 2415020.75933 + (29.53058868 * k_last_quarter) + (0.0001178 * Math.pow(t_lunar, 2))
-//            + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
-//            - ((0.009173 * RADS) * Math.pow(t_lunar, 2)))));
-//            
-//        g_JD = Math.ceil(JD); // Calculated Julian Date
-//        System.out.println("last_quarter = " + g_JD); //last_quarter
-//        
-//        // Converts JD to Calendar Date:
-//        moon_convertJulianDateToCalanderDate(g_JD);
-//        double future_last_quarter = g_JD;
-//        
-//        System.out.println("\nCalander Date:");
-//        System.out.println("Day = " + g_calander_day);
-//        System.out.println("Month = " + g_calander_month);
-//        System.out.println("Year = " + g_calander_year + "\n");
-//
-//        // Gets the current DAY generated in Star Map:
-//        day_str_dateTime = dateTime.getDayOfMonth();
-//        System.out.println("day_str_dateTime = " + day_str_dateTime);
-//        
-//        // Gets the current MONTH generated in Star Map:
-//        mon_str_dateTime = dateTime.getMonthValue();
-//        System.out.println("mon_str_dateTime = " + mon_str_dateTime);
-//        
-//        // Gets the current YEAR generated in Star Map:
-//        year_str_dateTime = dateTime.getYear();
-//        System.out.println("year_str_dateTime = " + year_str_dateTime);
-//                
-//        // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
-//        dateDay_str = String.valueOf(day_str_dateTime);
-//        dateMon_str = String.valueOf(mon_str_dateTime);
-//        dateYear_str = String.valueOf(year_str_dateTime);
-//        
-//        // Converts the CALANDER DATE to a string:
-//        day_str = String.valueOf(df_two.format(g_calander_day));
-//        month_str = String.valueOf(df_two.format(g_calander_month));
-//        year_str = String.valueOf(df_two.format(g_calander_year));
-//        
-//        System.out.println("\nconvert Day to string = " + day_str);
-//        System.out.println("convert Month to string = " + month_str);
-//        System.out.println("convert Year to string = " + year_str + "\n");
-//        
-//        // Compares the Calander Date the LocalDateTime
-//        if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
-//                year_str.equals(dateYear_str))
-//        {
-//            phase = "The moon phase is LAST QUARTER";
-//            
-//        }
-//        else
-//            phase = "Not available!";
+        //=====================================================================
+        // 6) Julian Day of a FUTURE FIRST QUARTER MOON:
+        //=====================================================================
+        k_first_quarter = k_lunar + 0.25;
+        JD = 2415020.75933 + (29.53058868 * k_first_quarter) + (0.0001178 * Math.pow(t_lunar, 2))
+            + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
+            - ((0.009173 * RADS) * Math.pow(t_lunar, 2)))));
+            
+        g_JD = Math.ceil(JD); // Calculated Julian Date
+        System.out.println("first quarter = " + g_JD); //first_quarter
+        
+        // Converts JD to Calendar Date:
+        moon_convertJulianDateToCalanderDate(g_JD);
+        double future_first_quarter = g_JD;
+        
+        System.out.println("\nCalander Date:");
+        System.out.println("Day = " + g_calander_day);
+        System.out.println("Month = " + g_calander_month);
+        System.out.println("Year = " + g_calander_year + "\n");
+
+        // Gets the current DAY generated in Star Map:
+        day_str_dateTime = dateTime.getDayOfMonth();
+        System.out.println("day_str_dateTime = " + day_str_dateTime);
+        
+        // Gets the current MONTH generated in Star Map:
+        mon_str_dateTime = dateTime.getMonthValue();
+        System.out.println("mon_str_dateTime = " + mon_str_dateTime);
+        
+        // Gets the current YEAR generated in Star Map:
+        year_str_dateTime = dateTime.getYear();
+        System.out.println("year_str_dateTime = " + year_str_dateTime);
+                
+        // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
+        dateDay_str = String.valueOf(day_str_dateTime);
+        dateMon_str = String.valueOf(mon_str_dateTime);
+        dateYear_str = String.valueOf(year_str_dateTime);
+        
+        // Converts the CALANDER DATE to a string:
+        day_str = String.valueOf(df_two.format(g_calander_day));
+        month_str = String.valueOf(df_two.format(g_calander_month));
+        year_str = String.valueOf(df_two.format(g_calander_year));
+        
+        System.out.println("\nconvert Day to string = " + day_str);
+        System.out.println("convert Month to string = " + month_str);
+        System.out.println("convert Year to string = " + year_str + "\n");
+        
+        // Compares the Calander Date the LocalDateTime
+        if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
+                year_str.equals(dateYear_str))
+        {
+            phase = "The moon phase is FIRST QUARTER";
+            
+        }
+        else
+            phase = "Not available!";
+        //=====================================================================
+        // 7) Julian Day of a FUTURE FULL MOON:
+        //=====================================================================
+        k_full_moon = k_lunar + .50;
+        JD = 2415020.75933 + (29.53058868 * k_full_moon) + (0.0001178 * Math.pow(t_lunar, 2))
+            + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
+            - ((0.009173 * RADS) * Math.pow(t_lunar, 2)))));
+            
+        g_JD = Math.ceil(JD); // Calculated Julian Date
+        System.out.println("full_moon = " + g_JD); //full_moon
+        
+        // Converts JD to Calendar Date:
+        moon_convertJulianDateToCalanderDate(g_JD);
+        double future_full_moon = g_JD;
+        
+        System.out.println("\nCalander Date:");
+        System.out.println("Day = " + g_calander_day);
+        System.out.println("Month = " + g_calander_month);
+        System.out.println("Year = " + g_calander_year + "\n");
+
+        // Gets the current DAY generated in Star Map:
+        day_str_dateTime = dateTime.getDayOfMonth();
+        System.out.println("day_str_dateTime = " + day_str_dateTime);
+        
+        // Gets the current MONTH generated in Star Map:
+        mon_str_dateTime = dateTime.getMonthValue();
+        System.out.println("mon_str_dateTime = " + mon_str_dateTime);
+        
+        // Gets the current YEAR generated in Star Map:
+        year_str_dateTime = dateTime.getYear();
+        System.out.println("year_str_dateTime = " + year_str_dateTime);
+                
+        // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
+        dateDay_str = String.valueOf(day_str_dateTime);
+        dateMon_str = String.valueOf(mon_str_dateTime);
+        dateYear_str = String.valueOf(year_str_dateTime);
+        
+        // Converts the CALANDER DATE to a string:
+        day_str = String.valueOf(df_two.format(g_calander_day));
+        month_str = String.valueOf(df_two.format(g_calander_month));
+        year_str = String.valueOf(df_two.format(g_calander_year));
+        
+        System.out.println("\nconvert Day to string = " + day_str);
+        System.out.println("convert Month to string = " + month_str);
+        System.out.println("convert Year to string = " + year_str + "\n");
+        
+        // Compares the Calander Date the LocalDateTime
+        if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
+                year_str.equals(dateYear_str))
+        {
+            phase = "The moon phase is FULL MOON";
+            
+        }
+        else
+            phase = "Not available!";
+        
+        //=====================================================================
+        // 8) Julian Day of a FUTURE LAST QUARTER MOON:
+        //=====================================================================
+        k_last_quarter = k_lunar + .75;
+        JD = 2415020.75933 + (29.53058868 * k_last_quarter) + (0.0001178 * Math.pow(t_lunar, 2))
+            + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
+            - ((0.009173 * RADS) * Math.pow(t_lunar, 2)))));
+            
+        g_JD = Math.ceil(JD); // Calculated Julian Date
+        System.out.println("last_quarter = " + g_JD); //last_quarter
+        
+        // Converts JD to Calendar Date:
+        moon_convertJulianDateToCalanderDate(g_JD);
+        double future_last_quarter = g_JD;
+        
+        System.out.println("\nCalander Date:");
+        System.out.println("Day = " + g_calander_day);
+        System.out.println("Month = " + g_calander_month);
+        System.out.println("Year = " + g_calander_year + "\n");
+
+        // Gets the current DAY generated in Star Map:
+        day_str_dateTime = dateTime.getDayOfMonth();
+        System.out.println("day_str_dateTime = " + day_str_dateTime);
+        
+        // Gets the current MONTH generated in Star Map:
+        mon_str_dateTime = dateTime.getMonthValue();
+        System.out.println("mon_str_dateTime = " + mon_str_dateTime);
+        
+        // Gets the current YEAR generated in Star Map:
+        year_str_dateTime = dateTime.getYear();
+        System.out.println("year_str_dateTime = " + year_str_dateTime);
+                
+        // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
+        dateDay_str = String.valueOf(day_str_dateTime);
+        dateMon_str = String.valueOf(mon_str_dateTime);
+        dateYear_str = String.valueOf(year_str_dateTime);
+        
+        // Converts the CALANDER DATE to a string:
+        day_str = String.valueOf(df_two.format(g_calander_day));
+        month_str = String.valueOf(df_two.format(g_calander_month));
+        year_str = String.valueOf(df_two.format(g_calander_year));
+        
+        System.out.println("\nconvert Day to string = " + day_str);
+        System.out.println("convert Month to string = " + month_str);
+        System.out.println("convert Year to string = " + year_str + "\n");
+        
+        // Compares the Calander Date the LocalDateTime
+        if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
+                year_str.equals(dateYear_str))
+        {
+            phase = "The moon phase is LAST QUARTER";
+            
+        }
+        else
+            phase = "Not available!";
         
         //Moon_Phases ph, new_val;
 
         //for(Moon_Phases phases: Moon_Phases.values())
            
-        
-
-        //String pattern = "yyyy-MM-dd";
-        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern); 
         
         //Lunar Location calculation:
         DecimalFormat df = new DecimalFormat("#.######");

@@ -61,8 +61,6 @@ public class StarDataReader extends DataReader
                 System.out.println(columnCount + " columns found");
             }
             
-            //starMapData = new String[rowCount][columnCount];
-            
             reader = new BufferedReader(new FileReader(file));
             int i = 0;
             

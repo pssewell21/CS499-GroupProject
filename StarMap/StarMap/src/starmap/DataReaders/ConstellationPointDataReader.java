@@ -11,24 +11,23 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import starmap.Calculation;
-import starmap.Objects.Messier;
+import starmap.Objects.ConstellationPoint;
 
 /**
  *
  * @author pssewell21
  */
-public class MessierDataReader extends DataReader
+public class ConstellationPointDataReader extends DataReader
 {
     @Override
-    public ArrayList<Messier> readData()
+    public ArrayList<ConstellationPoint> readData()
     {
-        String filePath = "./src/resources/MessierObjects.csv";
+        String filePath = "./src/resources/ConstellationLines.csv";
         
         File file = new File(filePath);
         System.out.println(filePath);        
         
-        ArrayList<Messier> list = new ArrayList<>();
+        ArrayList<ConstellationPoint> list = new ArrayList<>();
         
         try
         {
@@ -70,37 +69,27 @@ public class MessierDataReader extends DataReader
                 if (i > 0)
                 {
                     String[] lineItems = lineFromFile.split(",");
-                    
-                    int raHours = Integer.parseInt(lineItems[2]);
-                    int raMinutes = Integer.parseInt(lineItems[3]);
-                    int raSeconds = Integer.parseInt(lineItems[4]);
-                    
-                    int declinationDegrees = Integer.parseInt(lineItems[8]);
-                    int declinationMinutes = Integer.parseInt(lineItems[9]);
-                    int declinationSeconds = Integer.parseInt(lineItems[10]);
-                    String declinationDirection = lineItems[11];
-                    
-                    if (declinationDirection.equalsIgnoreCase("N"))
-                    {
-                        declinationDirection = "North";
-                    }
-                    else if (declinationDirection.equalsIgnoreCase("S"))
-                    {
-                        declinationDirection = "South";
-                    }
-                    
-                    double rightAscension = Calculation.getDecimalHours(raHours, 
-                            raMinutes, raSeconds);
-                    
-                    double declination = Calculation.getDecimalCoordinate(
-                            declinationDegrees, declinationMinutes, 
-                            declinationSeconds, declinationDirection);
                 
-                    String name = lineItems[12];
+                    String name = lineItems[0];
+                    int rightAscensionHours = Integer.parseInt(lineItems[1]);
+                    double rightAscensionMinutes = Double.parseDouble(lineItems[2]);
+                    double declination = Double.parseDouble(lineItems[3]);                    
+                    String starName;
+                    
+                    if (lineItems.length == 5)
+                    {
+                        starName = lineItems[4];
+                    }
+                    else
+                    {
+                        starName = "";
+                    }
+                    
+                    double rightAscention = rightAscensionHours + (rightAscensionMinutes / 60.0);
 
-                    Messier messier = new Messier(rightAscension, declination, name);
+                    ConstellationPoint constellationPoint = new ConstellationPoint(name, rightAscention, declination, starName);
                 
-                    list.add(messier);
+                    list.add(constellationPoint);
                 }
                 
                 i++;
@@ -111,10 +100,6 @@ public class MessierDataReader extends DataReader
             System.out.println("File not found at: " + filePath + "\n" + e.toString());
         }
         catch (IOException e)
-        {
-            System.out.println(e.toString());
-        }
-        catch (Exception e)
         {
             System.out.println(e.toString());
         }

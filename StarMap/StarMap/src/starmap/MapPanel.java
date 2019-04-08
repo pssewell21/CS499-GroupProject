@@ -379,7 +379,7 @@ public class MapPanel extends JPanel
                         (int)Math.round(verticalPosition + (objectDiameter / 2) + (gridLabelHeight / 2)));                
             }
 
-            System.out.println("Drawing moon " + moon.phase + " at " + moon.azimuth + ", " + moon.elevation);
+            //System.out.println("Drawing moon " + moon.phase + " at " + moon.azimuth + ", " + moon.elevation);
         }
     }  
     

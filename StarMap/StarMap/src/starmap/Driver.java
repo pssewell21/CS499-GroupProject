@@ -685,38 +685,13 @@ public class Driver extends javax.swing.JFrame {
             moon.moon_getIntermediateValues(julianDate, dateTime);
             moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             System.out.println("\n" + moon.phase);
+            
             // Output positions of objects
-//            for (Star star : starList)
-//            {
-//                if (star.name.trim().isEmpty())
-//                {
-//                    System.out.println("Current Azimuth/Elevation of **NO NAME**: "
-//                      + star.azimuth + "°, " +star.elevation + "°");
-//                }
-//                else
-//                {
-//                    System.out.println("Current Azimuth/Elevation of " + star.name + ": "
-//                      + star.azimuth + "°, " +star.elevation + "°");
-//                }
-//            }
-  
-//            for (Constellation constellation : constellationList)
-//            {
-//                System.out.println("Current Azimuth/Elevation of " + constellation.name + ": "
-//                  + constellation.azimuth + "°, " +constellation.elevation + "°");
-//            }
-
             for (Planet planet : planetList)
             {
                 System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
                     + planet.azimuth + "°, " + planet.elevation + "°");
             }
-            
-//            for (Messier messier : messierList)
-//            {
-//                System.out.println("Current Azimuth/Elevation of " + messier.name + ": "
-//                  + messier.azimuth + "°, " + messier.elevation + "°");
-//            }
 
 //            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
 //                + moon.azimuth + "°, " + moon.elevation + "°");
@@ -738,29 +713,10 @@ public class Driver extends javax.swing.JFrame {
                     moonVisibilityFlag, 
                     moonPhaseVisibilityFlag);
             JScrollPane mapPanelScrollPane = new JScrollPane(mapPanel);
-            //JLayeredPane moon_pane = new JLayeredPane(); //Delete
-            //JButton moon_btn = new JButton("Print moonphase"); = Delete
-            //JMenuBar moon_menu = new JMenuBar(); - Delete
-            JLabel moon_label = new JLabel(moon.phase);
-            //JTextArea phase_output = new JTextArea(moon.phase);
             
             JPanel mapFramePanel = new JPanel();            
             mapFramePanel.setLayout(new BorderLayout());
             mapFramePanel.add(mapPanelScrollPane);
-            
-            //Add moon_phase button:
-            //mapFramePanel.add(moon_btn);
-            //moon_btn.setBounds(23, 23, 75, 75);
-            //moon_btn.setSize(50, 50);
-            
-            // Moon Phase Status Window:
-            JFrame moon_frame = new JFrame("Moon Phase Status");
-            moon_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            moon_frame.setSize(250, 150);
-            moon_frame.setVisible(true);
-            
-            //moon_frame.add(phase_output);
-            moon_frame.add(moon_label);
             
             // Generated Sky Map Image
             JFrame mapFrame = new JFrame("Sky Map");
@@ -769,8 +725,7 @@ public class Driver extends javax.swing.JFrame {
             //mapFrame.add(moon_label);
             mapFrame.setSize(1000, 1000);
             
-            mapFrame.setVisible(true);
-            
+            mapFrame.setVisible(true);            
             
             saveImageButton.setEnabled(true);
         } 

@@ -72,7 +72,7 @@ public class MapPanel extends JPanel
     private final Color constellationColor = Color.CYAN;   
     private final Color planetColor = Color.RED;   
     private final Color messierColor = Color.MAGENTA;
-    private final Color moonColor = Color.GRAY;
+    private final Color moonColor = Color.LIGHT_GRAY;
     
     public MapPanel(ArrayList<Star> starList, 
                     ArrayList<Constellation> constellationList, 
@@ -354,7 +354,7 @@ public class MapPanel extends JPanel
         {
             g2d.setColor(moonColor);
             
-            int objectDiameter = (int)Math.round(3.0 * sizeMultiplier * objectDiameterMultiplier);
+            int objectDiameter = (int)Math.round(13.0 * sizeMultiplier * objectDiameterMultiplier);
 
             int horizontalPosition;
 

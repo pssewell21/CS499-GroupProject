@@ -372,14 +372,14 @@ public class MapPanel extends JPanel
             g2d.fillOval(horizontalPosition, verticalPosition, objectDiameter, objectDiameter);  
 
             //TODO: Implement showing moon phase in some way
-//            if (moonPhaseVisibilityFlag && moon.name.length() > 0)
-//            {
-//                g2d.drawString(moon.phase, 
-//                        (int)Math.round(horizontalPosition + objectDiameter + 2), 
-//                        (int)Math.round(verticalPosition + (objectDiameter / 2) + (gridLabelHeight / 2)));                
-//            }
+            if (moonPhaseVisibilityFlag && moon.name.length() > 0)
+            {
+                g2d.drawString(moon.phase, 
+                        (int)Math.round(horizontalPosition + objectDiameter + 2), 
+                        (int)Math.round(verticalPosition + (objectDiameter / 2) + (gridLabelHeight / 2)));                
+            }
 
-            //System.out.println("Drawing moon " + moon.phase + " at " + moon.azimuth + ", " + moon.elevation);
+            System.out.println("Drawing moon " + moon.phase + " at " + moon.azimuth + ", " + moon.elevation);
         }
     }  
     

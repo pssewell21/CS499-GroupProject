@@ -128,6 +128,7 @@ public class Driver extends javax.swing.JFrame {
 
         latitudeButtonGroup = new javax.swing.ButtonGroup();
         longitudeButtonGroup = new javax.swing.ButtonGroup();
+        jScrollPane1 = new javax.swing.JScrollPane();
         generateStarMapButton = new javax.swing.JButton();
         coordinatePanel = new javax.swing.JPanel();
         latitudeDegreesLabel = new javax.swing.JLabel();
@@ -683,7 +684,7 @@ public class Driver extends javax.swing.JFrame {
             // Moon calculations:
             moon.moon_getIntermediateValues(julianDate, dateTime);
             moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
-            System.out.println("\nPhase " + moon.phase);
+            System.out.println("\n" + moon.phase);
             // Output positions of objects
 //            for (Star star : starList)
 //            {
@@ -1141,6 +1142,7 @@ public class Driver extends javax.swing.JFrame {
     private javax.swing.JTextField hourTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel labelSelectionPanel;
     private javax.swing.JTextField latDegreeTextField;
     private javax.swing.ButtonGroup latitudeButtonGroup;

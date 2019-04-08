@@ -43,7 +43,12 @@ public class Moon extends CelestialObject
     
     public String phase;
     
-    
+    public enum Moon_Phases{
+        g_new_moon, 
+        g_first_quarter, 
+        g_full_moon, 
+        g_last_quarter
+    }
 //    enum Moon_Phases{
 //        g_p_new_moon, g_p_first_quarter, g_p_full_moon, g_p_last_quarter,
 //        g_f_new_moon, g_f_first_quarter, g_f_full_moon, g_f_last_quarter,
@@ -110,7 +115,10 @@ public class Moon extends CelestialObject
         
     } //moon_convertJulianDateToCalanderDate
     
-    
+    public void moon_calculateMoonPhases(double julianDate, LocalDateTime dateTime)
+    {
+        
+    }
     
      /**************************************************************************
      * 
@@ -125,6 +133,9 @@ public class Moon extends CelestialObject
     public void moon_getIntermediateValues(double julianDate, LocalDateTime dateTime)
     {
         double k_new_moon, k_first_quarter, k_full_moon, k_last_quarter;
+        DecimalFormat df_two = new DecimalFormat("##");
+        
+        
         double t_lunar, k_lunar;
         double JD; //2458489.000000
         g_year = dateTime.getYear();
@@ -133,6 +144,10 @@ public class Moon extends CelestialObject
         k_lunar = (int) ((updated_year - 1900.0) * 12.3685);
         t_lunar = k_lunar / 1236.85;
         int local_fail = 0;
+        
+//        k_first_quarter = k_lunar + 0.25;
+//        k_full_moon = k_lunar + .50;
+//        k_last_quarter = k_lunar + .75;
         
         // Initializes new String objects to be used:
         //Year str_year = dateTime.getYear();
@@ -148,12 +163,79 @@ public class Moon extends CelestialObject
         int mon_str_dateTime;
         int year_str_dateTime;
         
-                
-        DecimalFormat df_two = new DecimalFormat("##");
-        
-        
-        System.out.println("\nCurrent year = " + updated_year);
-        System.out.println("\nPast Moon Phase Calculations:");
+//        double moon_phases[] = { 
+//            k_lunar,
+//            k_first_quarter,
+//            k_full_moon,
+//            k_last_quarter
+//        };
+//        
+//        String phase_msgs[] = {
+//            "The moon phase is a NEW MOON",
+//            "The moon phase is a FIRST QUARTER MOON",
+//            "The moon phase is a FULL MOON",
+//            "The moon phase is a LAST QUARTER MOON"
+//        };
+//        
+//        System.out.println("\nCurrent year = " + updated_year);
+//        System.out.println("\nPast Moon Phase Calculations:");
+//        
+//        for(int i = 0; i < moon_phases.length; i++)
+//        {
+//            JD = 2415020.75933 + (29.53058868 * moon_phases[i]) + (0.0001178 * Math.pow(t_lunar, 2))
+//            + (0.00033 * Math.sin(((166.56 * RADS) + ((132.87 * RADS) * t_lunar) 
+//            - ((0.009173 * RADS) * Math.pow(t_lunar, 2)))));
+//          
+//            g_JD = Math.floor(JD); //Calculated Julian Date
+//            System.out.println("New moon (Julian Day) = " + g_JD);
+//          
+//            // Converts JD to Calendar Date:
+//            moon_convertJulianDateToCalanderDate(g_JD);
+//            System.out.println("JD = " + JD);
+//          
+//            System.out.println("\nCalander Date:");
+//            System.out.println("Day = " + g_calander_day);
+//            System.out.println("Month = " + g_calander_month);
+//            System.out.println("Year = " + g_calander_year + "\n");
+//        
+//            // Gets the current DAY generated in Star Map:
+//            day_str_dateTime = dateTime.getDayOfMonth();
+//            System.out.println("day_str_dateTime = " + day_str_dateTime);
+//        
+//            // Gets the current MONTH generated in Star Map:
+//            mon_str_dateTime = dateTime.getMonthValue();
+//            System.out.println("mon_str_dateTime = " + mon_str_dateTime);
+//        
+//            // Gets the current YEAR generated in Star Map:
+//            year_str_dateTime = dateTime.getYear();
+//            System.out.println("year_str_dateTime = " + year_str_dateTime);
+//                
+//            // Converts the returned generated DAY, MONTH, YEAR in Star Map to a string:
+//            dateDay_str = String.valueOf(day_str_dateTime);
+//            dateMon_str = String.valueOf(mon_str_dateTime);
+//            dateYear_str = String.valueOf(year_str_dateTime);
+//        
+//            // Converts the CALANDER DATE to a string:
+//            day_str = String.valueOf(df_two.format(g_calander_day));
+//            month_str = String.valueOf(df_two.format(g_calander_month));
+//            year_str = String.valueOf(df_two.format(g_calander_year));
+//        
+//            System.out.println("\nconvert Day to string = " + day_str);
+//            System.out.println("convert Month to string = " + month_str);
+//            System.out.println("convert Year to string = " + year_str + "\n");
+//        
+//            // Compares the Calander Date the LocalDateTime
+//            if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
+//                year_str.equals(dateYear_str))
+//            {
+//                phase = phase_msgs[i];
+//                //phase = "The moon phase is a NEW MOON";
+//            
+//            }
+//            else
+//                phase = "Not available!";
+//            
+//         } // End of FOR-loop
         
         //=====================================================================
         // 1) Julian Day of a PAST NEW MOON:
@@ -565,7 +647,6 @@ public class Moon extends CelestialObject
         
         // Converts JD to Calendar Date:
         moon_convertJulianDateToCalanderDate(g_JD);
-        double future_last_quarter = g_JD;
         
         System.out.println("\nCalander Date:");
         System.out.println("Day = " + g_calander_day);
@@ -602,11 +683,12 @@ public class Moon extends CelestialObject
         if (day_str.equals(dateDay_str) && month_str.equals(dateMon_str) &&
                 year_str.equals(dateYear_str))
         {
-            phase = "The moon phase is LAST QUARTER";
+            phase = " The moon phase is LAST QUARTER";
             
         }
         else
-            phase = "Not available!";
+            phase = " Moon phase not available for " + month_str
+                                 + "/" + day_str + "/" + year_str;
         
         //Moon_Phases ph, new_val;
 
@@ -654,7 +736,6 @@ public class Moon extends CelestialObject
         System.out.println("M' = " + Mp_RADS);
         System.out.println("D = " + D_RADS);
         System.out.println("F = " + F_RADS + "\n");
-        //double geocentricLongitudeRadians = 
         
         // Calculates the Moon's geocentric latitude and longitude
         double geocentricLongitudeRadians = g_L_angle 
@@ -686,7 +767,6 @@ public class Moon extends CelestialObject
         System.out.println("\nGEO LAT and LON:");
         System.out.println("geocentricLongitude = " + geocentricLongitude);
         System.out.println("geoentricLatitude = " + geoentricLatitude + "\n");
-//        System.out.println("Right Ascension (before): " + rightAscension);
         
         //Calculte the Right Ascension for Moon
         if (geocentricLongitude < 0)
@@ -698,7 +778,7 @@ public class Moon extends CelestialObject
             rightAscension = geocentricLongitude / 15;
         }        
         
-        //declination = geoentricLatitude;    
+        declination = geoentricLatitude;    
         
         System.out.println("rightAscension = " + rightAscension);
         System.out.println("declination = " + declination);

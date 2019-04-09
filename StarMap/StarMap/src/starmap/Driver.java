@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,14 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane; //Delete - Dina
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JFileChooser;
 import starmap.DataReaders.ConstellationDataReader;
@@ -62,8 +54,7 @@ public class Driver extends javax.swing.JFrame {
     private ArrayList<Messier> messierList;
     private Moon moon;
     
-    MapPanel mapPanel;
-    
+    MapPanel mapPanel;    
     
     // boolean flags that control which items are visible on the star map
     private boolean starVisibilityFlag = true;
@@ -622,7 +613,7 @@ public class Driver extends javax.swing.JFrame {
                     minute);
             
             double julianDate = Calculation.getJulianDate(dateTime);      
-            System.out.println("Julian Date: " + julianDate);
+            //System.out.println("Julian Date: " + julianDate);
             
             int latitudeDegrees = Integer.parseInt(latDegreeTextField.getText());
             int latitudeMinutes = Integer.parseInt(minLatTextField.getText());
@@ -689,10 +680,9 @@ public class Driver extends javax.swing.JFrame {
                 messier.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             // Moon calculations:
-            //moon.moon_getIntermediateValues(julianDate, dateTime);
-            //moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
-            //moon.moon_calculateMoonPhases(julianDate, dateTime);
-            //System.out.println("\n" + moon.phase);
+            moon.getIntermediateValues(dateTime);
+            moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+            System.out.println("\n" + moon.phase);
             
             // Output positions of objects
 //            for (Planet planet : planetList)
@@ -701,8 +691,8 @@ public class Driver extends javax.swing.JFrame {
 //                    + planet.azimuth + "°, " + planet.elevation + "°");
 //            }
 
-//            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
-//                + moon.azimuth + "°, " + moon.elevation + "°");
+            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
+                + moon.azimuth + "°, " + moon.elevation + "°");
 
             mapPanel = new MapPanel(starList, 
                     constellationList, 

@@ -75,7 +75,7 @@ public class Calculation
         return LocalTime.of(hour, minute, second);
     }
     
-    public static double getDecimalCoordinate(int degrees, int minutes, int seconds, String direction) throws Exception
+    public static double getDecimalCoordinate(int degrees, int minutes, double seconds, String direction) throws Exception
     {   
         // Valudate input
         if (degrees < 0 || degrees > 180)
@@ -88,7 +88,7 @@ public class Calculation
             throw new Exception("Invalid value of " + minutes + " for minutes passed into Calculation.getDecimalCoordinate");
         }
         
-        if (seconds < 0 || seconds > 60)
+        if (seconds < 0 || seconds > 59.999999)
         {
             throw new Exception("Invalid value of " + seconds + " for seconds passed into Calculation.getDecimalCoordinate");
         }

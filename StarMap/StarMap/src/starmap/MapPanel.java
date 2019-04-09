@@ -124,7 +124,7 @@ public class MapPanel extends JPanel
         plotConstellations(g2d);
         plotPlanets(g2d);
         plotMessierObjects(g2d);
-        plotMoon(g2d);
+        //plotMoon(g2d);
     }
     
     private void plotStars(Graphics2D g2d)

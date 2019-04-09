@@ -16,6 +16,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -104,11 +105,14 @@ public class Driver extends javax.swing.JFrame {
         
         // Set DateTime fields to current DateTime
         LocalDateTime currentDateTime = LocalDateTime.now();
+        Calendar calendar = Calendar.getInstance();
+        TimeZone timeZone = calendar.getTimeZone();
+        int offset = ((timeZone.getRawOffset() + timeZone.getDSTSavings()) / (1000 * 60 * 60));
                 
-        dateTextField.setDate(new Date());
-        hourTextField.setText(Integer.toString(currentDateTime.getHour()));
-        hourOffsetComboBox.setSelectedItem("-6");
-        minuteTextField.setText(Integer.toString(currentDateTime.getMinute()));        
+        dateTextField.setCalendar(calendar);
+        hourTextField.setText(Integer.toString(calendar.get(Calendar.HOUR_OF_DAY)));
+        hourOffsetComboBox.setSelectedItem(Integer.toString(offset));
+        minuteTextField.setText(Integer.toString(calendar.get(Calendar.MINUTE)));        
         
         load();
     }
@@ -622,7 +626,7 @@ public class Driver extends javax.swing.JFrame {
             
             int latitudeDegrees = Integer.parseInt(latDegreeTextField.getText());
             int latitudeMinutes = Integer.parseInt(minLatTextField.getText());
-            int latitudeSeconds = Integer.parseInt(secLatTextField.getText());
+            double latitudeSeconds = Double.parseDouble(secLatTextField.getText());
             String latitudeDirection = "";
             
             if (northRadioButton.isSelected())
@@ -636,7 +640,7 @@ public class Driver extends javax.swing.JFrame {
             
             int longitudeDegrees = Integer.parseInt(longDegreeTextField.getText());
             int longitudeMinutes = Integer.parseInt(minLongTextField.getText());
-            int longitudeSeconds = Integer.parseInt(secLongTextField.getText());
+            double longitudeSeconds = Double.parseDouble(secLongTextField.getText());
             String longitudeDirection = "";
             
             if (westRadioButton.isSelected())
@@ -685,17 +689,17 @@ public class Driver extends javax.swing.JFrame {
                 messier.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             // Moon calculations:
-            moon.moon_getIntermediateValues(julianDate, dateTime);
-            moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
-            moon.moon_calculateMoonPhases(julianDate, dateTime);
-            System.out.println("\n" + moon.phase);
+            //moon.moon_getIntermediateValues(julianDate, dateTime);
+            //moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+            //moon.moon_calculateMoonPhases(julianDate, dateTime);
+            //System.out.println("\n" + moon.phase);
             
             // Output positions of objects
-            for (Planet planet : planetList)
-            {
-                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
-                    + planet.azimuth + "°, " + planet.elevation + "°");
-            }
+//            for (Planet planet : planetList)
+//            {
+//                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
+//                    + planet.azimuth + "°, " + planet.elevation + "°");
+//            }
 
 //            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
 //                + moon.azimuth + "°, " + moon.elevation + "°");
@@ -726,7 +730,6 @@ public class Driver extends javax.swing.JFrame {
             JFrame mapFrame = new JFrame("Sky Map");
             mapFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             mapFrame.add(mapFramePanel);
-            //mapFrame.add(moon_label);
             mapFrame.setSize(1000, 1000);
             
             mapFrame.setVisible(true);            
@@ -737,9 +740,6 @@ public class Driver extends javax.swing.JFrame {
         {
             Logger.getLogger(Driver.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
     }//GEN-LAST:event_generateStarMapButtonActionPerformed
     /*
     * METHOD: starsCheckBoxActionPerformed()

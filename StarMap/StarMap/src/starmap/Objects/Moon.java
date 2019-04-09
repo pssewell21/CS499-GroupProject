@@ -123,6 +123,7 @@ public class Moon extends CelestialObject
         // TODO: Remove julian date argument from method signature - PS
         
         // START MOON PHASE CALCULATIONS - PS
+        // Reference: https://www.subsystems.us/uploads/9/8/9/4/98948044/moonphase.pdf
         double newMoonJulianDate = 2451549.5;
         double periodLength = 29.53;
         

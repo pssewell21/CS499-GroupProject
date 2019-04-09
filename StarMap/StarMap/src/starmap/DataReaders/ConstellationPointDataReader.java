@@ -25,7 +25,7 @@ public class ConstellationPointDataReader extends DataReader
         String filePath = "./src/resources/ConstellationLines.csv";
         
         File file = new File(filePath);
-        System.out.println(filePath);        
+        //System.out.println(filePath);        
         
         ArrayList<ConstellationPoint> list = new ArrayList<>();
         
@@ -41,7 +41,7 @@ public class ConstellationPointDataReader extends DataReader
                 rowCount++;
             }
             
-            System.out.println(rowCount + " rows found");
+            //System.out.println(rowCount + " rows found");
             
             reader = new BufferedReader(new FileReader(file));
             
@@ -58,7 +58,7 @@ public class ConstellationPointDataReader extends DataReader
                 }
                 
                 int columnCount = commas + 1;
-                System.out.println(columnCount + " columns found");
+                //System.out.println(columnCount + " columns found");
             }
             
             reader = new BufferedReader(new FileReader(file));

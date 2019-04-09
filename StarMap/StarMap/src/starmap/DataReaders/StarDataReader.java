@@ -25,7 +25,7 @@ public class StarDataReader extends DataReader
         String filePath = "./src/resources/hyg.csv";
         
         File file = new File(filePath);
-        System.out.println(filePath);        
+        //System.out.println(filePath);        
         
         ArrayList<Star> list = new ArrayList<>();
         
@@ -41,7 +41,7 @@ public class StarDataReader extends DataReader
                 rowCount++;
             }
             
-            System.out.println(rowCount + " rows found");
+            //System.out.println(rowCount + " rows found");
             
             reader = new BufferedReader(new FileReader(file));
             
@@ -58,7 +58,7 @@ public class StarDataReader extends DataReader
                 }
                 
                 int columnCount = commas + 1;
-                System.out.println(columnCount + " columns found");
+                //System.out.println(columnCount + " columns found");
             }
             
             reader = new BufferedReader(new FileReader(file));

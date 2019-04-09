@@ -15,21 +15,14 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane; //Delete - Dina
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JFileChooser;
 import starmap.DataReaders.ConstellationDataReader;
@@ -61,8 +54,7 @@ public class Driver extends javax.swing.JFrame {
     private ArrayList<Messier> messierList;
     private Moon moon;
     
-    MapPanel mapPanel;
-    
+    MapPanel mapPanel;    
     
     // boolean flags that control which items are visible on the star map
     private boolean starVisibilityFlag = true;
@@ -104,11 +96,14 @@ public class Driver extends javax.swing.JFrame {
         
         // Set DateTime fields to current DateTime
         LocalDateTime currentDateTime = LocalDateTime.now();
+        Calendar calendar = Calendar.getInstance();
+        TimeZone timeZone = calendar.getTimeZone();
+        int offset = ((timeZone.getRawOffset() + timeZone.getDSTSavings()) / (1000 * 60 * 60));
                 
-        dateTextField.setDate(new Date());
-        hourTextField.setText(Integer.toString(currentDateTime.getHour()));
-        hourOffsetComboBox.setSelectedItem("-6");
-        minuteTextField.setText(Integer.toString(currentDateTime.getMinute()));        
+        dateTextField.setCalendar(calendar);
+        hourTextField.setText(Integer.toString(calendar.get(Calendar.HOUR_OF_DAY)));
+        hourOffsetComboBox.setSelectedItem(Integer.toString(offset));
+        minuteTextField.setText(Integer.toString(calendar.get(Calendar.MINUTE)));        
         
         load();
     }
@@ -592,17 +587,20 @@ public class Driver extends javax.swing.JFrame {
             Calendar selectedDate = dateTextField.getCalendar();
             int hour = Integer.parseInt(hourTextField.getText());
             int hourOffset = Integer.parseInt(hourOffsetComboBox.getSelectedItem().toString());
+                        
+            int greenwichDay = selectedDate.get(Calendar.DAY_OF_MONTH);
+            int greenwichHour = hour - hourOffset;
             
-            int localHour = hour - hourOffset;
-            
-            if (localHour < 0)
+            if (greenwichHour < 0)
             {
-                localHour += 24;
+                greenwichHour += 24;
+                greenwichDay -= 1;
             }
             
-            if (localHour > 23)
+            if (greenwichHour > 23)
             {
-                localHour -= 24;
+                greenwichHour -= 24;
+                greenwichDay += 1;
             }        
             
             int minute = Integer.parseInt(minuteTextField.getText());  
@@ -610,16 +608,16 @@ public class Driver extends javax.swing.JFrame {
             LocalDateTime dateTime = LocalDateTime.of(
                     selectedDate.get(Calendar.YEAR), 
                     selectedDate.get(Calendar.MONTH) + 1, 
-                    selectedDate.get(Calendar.DAY_OF_MONTH), 
-                    localHour, 
+                    greenwichDay, 
+                    greenwichHour, 
                     minute);
             
             double julianDate = Calculation.getJulianDate(dateTime);      
-            System.out.println("Julian Date: " + julianDate);
+            //System.out.println("Julian Date: " + julianDate);
             
             int latitudeDegrees = Integer.parseInt(latDegreeTextField.getText());
             int latitudeMinutes = Integer.parseInt(minLatTextField.getText());
-            int latitudeSeconds = Integer.parseInt(secLatTextField.getText());
+            double latitudeSeconds = Double.parseDouble(secLatTextField.getText());
             String latitudeDirection = "";
             
             if (northRadioButton.isSelected())
@@ -633,7 +631,7 @@ public class Driver extends javax.swing.JFrame {
             
             int longitudeDegrees = Integer.parseInt(longDegreeTextField.getText());
             int longitudeMinutes = Integer.parseInt(minLongTextField.getText());
-            int longitudeSeconds = Integer.parseInt(secLongTextField.getText());
+            double longitudeSeconds = Double.parseDouble(secLongTextField.getText());
             String longitudeDirection = "";
             
             if (westRadioButton.isSelected())
@@ -671,55 +669,30 @@ public class Driver extends javax.swing.JFrame {
         
             constellationLineList = constellationLineCreator.GetConstellationLineList(constellationPointList);
             
-            for (Planet planet : planetList)
-            {
-                planet.planet_getIntermediateValues(julianDate, dateTime);
-                planet.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
-            }
+//            for (Planet planet : planetList)
+//            {
+//                planet.planet_getIntermediateValues(julianDate, dateTime);
+//                planet.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+//            }
             
             for (Messier messier : messierList)
             {
                 messier.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             // Moon calculations:
-            moon.moon_getIntermediateValues(julianDate, dateTime);
+            moon.getIntermediateValues(dateTime);
             moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             System.out.println("\n" + moon.phase);
-            // Output positions of objects
-//            for (Star star : starList)
-//            {
-//                if (star.name.trim().isEmpty())
-//                {
-//                    System.out.println("Current Azimuth/Elevation of **NO NAME**: "
-//                      + star.azimuth + "°, " +star.elevation + "°");
-//                }
-//                else
-//                {
-//                    System.out.println("Current Azimuth/Elevation of " + star.name + ": "
-//                      + star.azimuth + "°, " +star.elevation + "°");
-//                }
-//            }
-  
-//            for (Constellation constellation : constellationList)
-//            {
-//                System.out.println("Current Azimuth/Elevation of " + constellation.name + ": "
-//                  + constellation.azimuth + "°, " +constellation.elevation + "°");
-//            }
-
-            for (Planet planet : planetList)
-            {
-                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
-                    + planet.azimuth + "°, " + planet.elevation + "°");
-            }
             
-//            for (Messier messier : messierList)
+            // Output positions of objects
+//            for (Planet planet : planetList)
 //            {
-//                System.out.println("Current Azimuth/Elevation of " + messier.name + ": "
-//                  + messier.azimuth + "°, " + messier.elevation + "°");
+//                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
+//                    + planet.azimuth + "°, " + planet.elevation + "°");
 //            }
 
-//            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
-//                + moon.azimuth + "°, " + moon.elevation + "°");
+            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
+                + moon.azimuth + "°, " + moon.elevation + "°");
 
             mapPanel = new MapPanel(starList, 
                     constellationList, 
@@ -738,39 +711,18 @@ public class Driver extends javax.swing.JFrame {
                     moonVisibilityFlag, 
                     moonPhaseVisibilityFlag);
             JScrollPane mapPanelScrollPane = new JScrollPane(mapPanel);
-            //JLayeredPane moon_pane = new JLayeredPane(); //Delete
-            //JButton moon_btn = new JButton("Print moonphase"); = Delete
-            //JMenuBar moon_menu = new JMenuBar(); - Delete
-            JLabel moon_label = new JLabel(moon.phase);
-            //JTextArea phase_output = new JTextArea(moon.phase);
             
             JPanel mapFramePanel = new JPanel();            
             mapFramePanel.setLayout(new BorderLayout());
             mapFramePanel.add(mapPanelScrollPane);
             
-            //Add moon_phase button:
-            //mapFramePanel.add(moon_btn);
-            //moon_btn.setBounds(23, 23, 75, 75);
-            //moon_btn.setSize(50, 50);
-            
-            // Moon Phase Status Window:
-            JFrame moon_frame = new JFrame("Moon Phase Status");
-            moon_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            moon_frame.setSize(250, 150);
-            moon_frame.setVisible(true);
-            
-            //moon_frame.add(phase_output);
-            moon_frame.add(moon_label);
-            
             // Generated Sky Map Image
             JFrame mapFrame = new JFrame("Sky Map");
             mapFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             mapFrame.add(mapFramePanel);
-            //mapFrame.add(moon_label);
             mapFrame.setSize(1000, 1000);
             
-            mapFrame.setVisible(true);
-            
+            mapFrame.setVisible(true);            
             
             saveImageButton.setEnabled(true);
         } 
@@ -778,9 +730,6 @@ public class Driver extends javax.swing.JFrame {
         {
             Logger.getLogger(Driver.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
     }//GEN-LAST:event_generateStarMapButtonActionPerformed
     /*
     * METHOD: starsCheckBoxActionPerformed()
@@ -1023,7 +972,8 @@ public class Driver extends javax.swing.JFrame {
             fileChooser.setDialogTitle("File Dialog");
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) { 
+            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) 
+            { 
                 System.out.println("\n\ngetCurrentDirectory(): " 
                     +  fileChooser.getCurrentDirectory());
                 System.out.println("getSelectedFile() : " 
@@ -1033,7 +983,8 @@ public class Driver extends javax.swing.JFrame {
                 ImageIO.write(image, "jpeg", saveImage);
                 System.out.println("File written Successfully");
             }
-            else {
+            else 
+            {
                 System.out.println("No Selection ");
             }  
         }

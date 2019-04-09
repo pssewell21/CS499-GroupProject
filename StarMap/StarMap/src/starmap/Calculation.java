@@ -21,21 +21,12 @@ public class Calculation
     static double baselineJulianDate = 2451545.0;
     static LocalDateTime baselineDate = LocalDateTime.of(2000, 1, 1, 12, 0, 0);
     
-    public static double getJulianDate(LocalDateTime dateTime)            
+    public static double getJulianDate(LocalDateTime dateTime)
     {
         // Reference: https://aa.usno.navy.mil/faq/docs/GAST.php
         Duration duration = Duration.between(baselineDate, dateTime);
         
-        double julianDate;
-        
-        if (dateTime.getYear() >= 2000)
-        {
-            julianDate = baselineJulianDate + duration.toDays();
-        }
-        else
-        {
-            julianDate = baselineJulianDate - duration.toDays();
-        }
+        double julianDate = baselineJulianDate + duration.toDays();
         
 //        System.out.println("julianDate = " + julianDate);
         
@@ -64,6 +55,13 @@ public class Calculation
         double d = julianDate - baselineJulianDate;
         
         double gstHours = (18.697374558 + 24.06570982441908 * d) % 24;
+        
+        // If hours returned is negative, add 24 hours
+        if (gstHours < 0)
+        {
+            gstHours += 24;
+        }
+        
 //        System.out.println("gstHours = " + gstHours);
 
         int hour = (int)Math.floor(gstHours);
@@ -84,7 +82,7 @@ public class Calculation
         return LocalTime.of(hour, minute, second);
     }
     
-    public static double getDecimalCoordinate(int degrees, int minutes, int seconds, String direction) throws Exception
+    public static double getDecimalCoordinate(int degrees, int minutes, double seconds, String direction) throws Exception
     {   
         // Valudate input
         if (degrees < 0 || degrees > 180)
@@ -97,7 +95,7 @@ public class Calculation
             throw new Exception("Invalid value of " + minutes + " for minutes passed into Calculation.getDecimalCoordinate");
         }
         
-        if (seconds < 0 || seconds > 60)
+        if (seconds < 0 || seconds > 59.999999)
         {
             throw new Exception("Invalid value of " + seconds + " for seconds passed into Calculation.getDecimalCoordinate");
         }

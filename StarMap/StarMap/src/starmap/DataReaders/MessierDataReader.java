@@ -26,7 +26,7 @@ public class MessierDataReader extends DataReader
         String filePath = "./src/resources/MessierObjects.csv";
         
         File file = new File(filePath);
-        System.out.println(filePath);        
+        //System.out.println(filePath);        
         
         ArrayList<Messier> list = new ArrayList<>();
         
@@ -42,7 +42,7 @@ public class MessierDataReader extends DataReader
                 rowCount++;
             }
             
-            System.out.println(rowCount + " rows found");
+            //System.out.println(rowCount + " rows found");
             
             reader = new BufferedReader(new FileReader(file));
             
@@ -59,7 +59,7 @@ public class MessierDataReader extends DataReader
                 }
                 
                 int columnCount = commas + 1;
-                System.out.println(columnCount + " columns found");
+                //System.out.println(columnCount + " columns found");
             }
             
             reader = new BufferedReader(new FileReader(file));

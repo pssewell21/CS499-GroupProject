@@ -592,17 +592,20 @@ public class Driver extends javax.swing.JFrame {
             Calendar selectedDate = dateTextField.getCalendar();
             int hour = Integer.parseInt(hourTextField.getText());
             int hourOffset = Integer.parseInt(hourOffsetComboBox.getSelectedItem().toString());
+                        
+            int greenwichDay = selectedDate.get(Calendar.DAY_OF_MONTH);
+            int greenwichHour = hour - hourOffset;
             
-            int localHour = hour - hourOffset;
-            
-            if (localHour < 0)
+            if (greenwichHour < 0)
             {
-                localHour += 24;
+                greenwichHour += 24;
+                greenwichDay -= 1;
             }
             
-            if (localHour > 23)
+            if (greenwichHour > 23)
             {
-                localHour -= 24;
+                greenwichHour -= 24;
+                greenwichDay += 1;
             }        
             
             int minute = Integer.parseInt(minuteTextField.getText());  
@@ -610,8 +613,8 @@ public class Driver extends javax.swing.JFrame {
             LocalDateTime dateTime = LocalDateTime.of(
                     selectedDate.get(Calendar.YEAR), 
                     selectedDate.get(Calendar.MONTH) + 1, 
-                    selectedDate.get(Calendar.DAY_OF_MONTH), 
-                    localHour, 
+                    greenwichDay, 
+                    greenwichHour, 
                     minute);
             
             double julianDate = Calculation.getJulianDate(dateTime);      
@@ -684,6 +687,7 @@ public class Driver extends javax.swing.JFrame {
             // Moon calculations:
             moon.moon_getIntermediateValues(julianDate, dateTime);
             moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+            moon.moon_calculateMoonPhases(julianDate, dateTime);
             System.out.println("\n" + moon.phase);
             
             // Output positions of objects

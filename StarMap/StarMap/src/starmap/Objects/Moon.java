@@ -115,9 +115,22 @@ public class Moon extends CelestialObject
         
     } //moon_convertJulianDateToCalanderDate
     
-    public void moon_calculateMoonPhases(double julianDate, LocalDateTime dateTime)
+    public void moon_calculateMoonPhases(double jd, LocalDateTime dateTime)
     {
+        double newMoonJulianDate = 2451549.5;
+        double periodLength = 29.53;
         
+        double julianDate = Calculation.getJulianDate(dateTime);
+        
+        double dateDifference = julianDate - newMoonJulianDate;
+        
+        double numNewMoons = dateDifference / periodLength;
+        
+        System.out.println("Number of new moons since " + newMoonJulianDate + " = " + numNewMoons);
+        
+        double amountOfCycleElapsed = numNewMoons - (int)Math.floor(numNewMoons);
+        
+        System.out.println("Amount of cycle elapsed " + amountOfCycleElapsed);
     }
     
      /**************************************************************************

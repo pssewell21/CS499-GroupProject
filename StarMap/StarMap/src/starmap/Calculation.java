@@ -21,21 +21,12 @@ public class Calculation
     static double baselineJulianDate = 2451545.0;
     static LocalDateTime baselineDate = LocalDateTime.of(2000, 1, 1, 12, 0, 0);
     
-    public static double getJulianDate(LocalDateTime dateTime)            
+    public static double getJulianDate(LocalDateTime dateTime)
     {
         // Reference: https://aa.usno.navy.mil/faq/docs/GAST.php
         Duration duration = Duration.between(baselineDate, dateTime);
         
-        double julianDate;
-        
-        if (dateTime.getYear() >= 2000)
-        {
-            julianDate = baselineJulianDate + duration.toDays();
-        }
-        else
-        {
-            julianDate = baselineJulianDate - duration.toDays();
-        }
+        double julianDate = baselineJulianDate + duration.toDays();
         
 //        System.out.println("julianDate = " + julianDate);
         

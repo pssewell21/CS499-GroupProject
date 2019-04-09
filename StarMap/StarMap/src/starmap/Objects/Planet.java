@@ -455,8 +455,9 @@ public class Planet extends CelestialObject
         double sin_alt;
         double cos_az;
         
+        System.out.println("lon = " + greenwichSiderealTime + "\n");
         hourAngle = planet_meanSiderealTime(longitude, greenwichSiderealTime, g_year, g_month, g_day) - g_rightAscension;
-        
+        System.out.println("hrAngle = " + hourAngle + "\n");
         if(hourAngle < 0) hourAngle += 360;
         
         // Convert Degrees to Radians

@@ -55,6 +55,13 @@ public class Calculation
         double d = julianDate - baselineJulianDate;
         
         double gstHours = (18.697374558 + 24.06570982441908 * d) % 24;
+        
+        // If hours returned is negative, add 24 hours
+        if (gstHours < 0)
+        {
+            gstHours += 24;
+        }
+        
 //        System.out.println("gstHours = " + gstHours);
 
         int hour = (int)Math.floor(gstHours);

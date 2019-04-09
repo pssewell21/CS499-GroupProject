@@ -59,12 +59,6 @@ public class MapPanel extends JPanel
     private final int horizontalGridLabelXOffset = 5;
     private final int horizontalGridLabelYOffset = -5;
     
-    private final int verticalGridLabelXOffset = -1 * horizontalGridLabelWidth;
-    private final int verticalGridLabelYOffset = 0;   
-    
-    private final double minimumStarWidth = 1;
-    private final double maximumStarWidth = 6;
-    
     private final Color backgroundColor = Color.BLACK;
     private final Color gridLineColor = new Color(0, 255, 80);  
     private final Color starColor = Color.WHITE;
@@ -132,8 +126,6 @@ public class MapPanel extends JPanel
         if (starVisibilityFlag)
         {
             g2d.setColor(starColor);
-        
-            //int count = 0;
 
             for (Star star : starList)
             {
@@ -177,11 +169,7 @@ public class MapPanel extends JPanel
                 {
                     g2d.setColor(starColor);
                 }
-
-                //count++;
-            }  
-
-            //System.out.println("Count of stars plotted: " + count);
+            }
         }
     }
 
@@ -189,10 +177,8 @@ public class MapPanel extends JPanel
     {
         if (constellationVisibilityFlag)
         {
-            g2d.setColor(constellationColor);
-        
-            //int count = 0;
-
+            g2d.setColor(constellationColor);            
+            
             for (Constellation constellation : constellationList)
             {
                 int objectDiameter = (int)Math.round(3.0 * sizeMultiplier * objectDiameterMultiplier);
@@ -218,10 +204,6 @@ public class MapPanel extends JPanel
                             (int)Math.round(horizontalPosition + objectDiameter + 2), 
                             (int)Math.round(verticalPosition + (objectDiameter / 2) + (gridLabelHeight / 2)));                
                 }
-
-                //System.out.println("Drawing constellation " + constellation.name + " at " + constellation.azimuth + ", " + constellation.elevation);
-
-                //count++;
             }  
             
             for (ConstellationLine constellationLine : constellationLineList)
@@ -257,8 +239,6 @@ public class MapPanel extends JPanel
                 
                 g2d.drawLine(pointAHorizontalPosition, pointAVerticalPosition, pointBHorizontalPosition, pointBVerticalPosition);
             }
-
-            //System.out.println("Count of stars plotted: " + count);
         }
     }  
 
@@ -267,8 +247,6 @@ public class MapPanel extends JPanel
         if (planetVisibilityFlag)
         {
             g2d.setColor(planetColor);
-        
-            //int count = 0;
 
             for (Planet planet : planetList)
             {
@@ -295,13 +273,7 @@ public class MapPanel extends JPanel
                             (int)Math.round(horizontalPosition + objectDiameter + 2), 
                             (int)Math.round(verticalPosition + (objectDiameter / 2) + (gridLabelHeight / 2)));                
                 }
-
-                //System.out.println("Drawing planet " + planet.name + " at " + planet.azimuth + ", " + planet.elevation);
-
-                //count++;
             }  
-
-            //System.out.println("Count of planets plotted: " + count);
         }
     }  
 
@@ -310,8 +282,6 @@ public class MapPanel extends JPanel
         if (messierVisibilityFlag)
         {
             g2d.setColor(messierColor);
-        
-            //int count = 0;
 
             for (Messier messier : messierList)
             {
@@ -338,13 +308,7 @@ public class MapPanel extends JPanel
                             (int)Math.round(horizontalPosition + objectDiameter + 2), 
                             (int)Math.round(verticalPosition + (objectDiameter / 2) + (gridLabelHeight / 2)));                
                 }
-
-                //System.out.println("Drawing messier " + messier.name + " at " + messier.azimuth + ", " + messier.elevation);
-
-                //count++;
-            }  
-
-            //System.out.println("Count of messiers plotted: " + count);
+            }
         }
     }  
 

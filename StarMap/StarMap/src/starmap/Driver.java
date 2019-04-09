@@ -678,11 +678,11 @@ public class Driver extends javax.swing.JFrame {
         
             constellationLineList = constellationLineCreator.GetConstellationLineList(constellationPointList);
             
-            for (Planet planet : planetList)
-            {
-                planet.planet_getIntermediateValues(julianDate, dateTime);
-                planet.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
-            }
+//            for (Planet planet : planetList)
+//            {
+//                planet.planet_getIntermediateValues(julianDate, dateTime);
+//                planet.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+//            }
             
             for (Messier messier : messierList)
             {
@@ -982,7 +982,8 @@ public class Driver extends javax.swing.JFrame {
             fileChooser.setDialogTitle("File Dialog");
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) { 
+            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) 
+            { 
                 System.out.println("\n\ngetCurrentDirectory(): " 
                     +  fileChooser.getCurrentDirectory());
                 System.out.println("getSelectedFile() : " 
@@ -992,7 +993,8 @@ public class Driver extends javax.swing.JFrame {
                 ImageIO.write(image, "jpeg", saveImage);
                 System.out.println("File written Successfully");
             }
-            else {
+            else 
+            {
                 System.out.println("No Selection ");
             }  
         }

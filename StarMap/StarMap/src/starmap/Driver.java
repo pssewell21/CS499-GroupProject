@@ -148,7 +148,7 @@ public class Driver extends javax.swing.JFrame {
         minuteLabel1 = new javax.swing.JLabel();
         hourTextField = new javax.swing.JTextField();
         minuteTextField = new javax.swing.JTextField();
-        hourOffsetComboBox = new javax.swing.JComboBox<String>();
+        hourOffsetComboBox = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         objectSelectionPanel = new javax.swing.JPanel();
@@ -265,7 +265,12 @@ public class Driver extends javax.swing.JFrame {
             }
         });
 
-        hourOffsetComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-12", "-11", "-10", "-9", "-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "0", "+1", "+2", "+3", "+4", "+5", "+6", "+7", "+8", "+9", "+10", "+11", "+12" }));
+        hourOffsetComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-12", "-11", "-10", "-9", "-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "0", "+1", "+2", "+3", "+4", "+5", "+6", "+7", "+8", "+9", "+10", "+11", "+12" }));
+        hourOffsetComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hourOffsetComboBoxActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("hr");
 
@@ -669,11 +674,11 @@ public class Driver extends javax.swing.JFrame {
         
             constellationLineList = constellationLineCreator.GetConstellationLineList(constellationPointList);
             
-//            for (Planet planet : planetList)
-//            {
-//                planet.planet_getIntermediateValues(julianDate, dateTime);
-//                planet.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
-//            }
+            for (Planet planet : planetList)
+            {
+                planet.planet_getIntermediateValues(julianDate, dateTime);
+                planet.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
+            }
             
             for (Messier messier : messierList)
             {
@@ -685,11 +690,11 @@ public class Driver extends javax.swing.JFrame {
             System.out.println("\n" + moon.phase);
             
             // Output positions of objects
-//            for (Planet planet : planetList)
-//            {
-//                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
-//                    + planet.azimuth + "°, " + planet.elevation + "°");
-//            }
+            for (Planet planet : planetList)
+            {
+                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
+                    + planet.azimuth + "°, " + planet.elevation + "°");
+            }
 
             System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
                 + moon.azimuth + "°, " + moon.elevation + "°");
@@ -1001,6 +1006,10 @@ public class Driver extends javax.swing.JFrame {
     private void minLongTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minLongTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_minLongTextFieldActionPerformed
+
+    private void hourOffsetComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hourOffsetComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hourOffsetComboBoxActionPerformed
     
     // </editor-fold>
         

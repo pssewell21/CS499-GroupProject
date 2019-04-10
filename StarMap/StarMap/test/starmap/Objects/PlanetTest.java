@@ -125,10 +125,10 @@ public class PlanetTest {
         double RA = 0.0;
         Planet instance = null;
         instance.planet_convertRightAscensionToHrsMinSec(RA);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     } // end test_planet_convertRightAscensionToHrsMinSec()
-//
+    
+    
 //    /**
 //     * Test of planet_convertDeclinationToDegMinSec method, of class Planet.
 //     */

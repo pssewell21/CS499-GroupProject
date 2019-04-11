@@ -69,6 +69,9 @@ public class Driver extends javax.swing.JFrame {
     private boolean moonPhaseVisibilityFlag = true;
     private boolean messierLabelVisibilityFlag = true;
     
+    private final Color errorBackgroundColor = Color.YELLOW;
+    private final Color normalBackgroundColor = Color.WHITE;
+    
     // <editor-fold defaultstate="collapsed" desc="Constructor"> 
 
     /**
@@ -209,6 +212,11 @@ public class Driver extends javax.swing.JFrame {
 
         dateTextField.setMaxSelectableDate(new java.util.Date(4102466399000L));
         dateTextField.setMinSelectableDate(new java.util.Date(-2208967200000L));
+        dateTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                dateTextFieldKeyReleased(evt);
+            }
+        });
 
         secLatTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -823,109 +831,181 @@ public class Driver extends javax.swing.JFrame {
 
     private void latDegreeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_latDegreeTextFieldKeyReleased
         // Gets the Longitude Degree value from user:
-        int latDegree = Integer.parseInt(latDegreeTextField.getText());
+        try
+        {
+            int latDegree = Integer.parseInt(latDegreeTextField.getText());
+
+            if((latDegree < 0) || (latDegree > 90))
+            {
+                latDegreeTextField.setBackground(errorBackgroundColor);
+            }
+            else
+            {
+                latDegreeTextField.setBackground(normalBackgroundColor);
+            }
+        }
+        catch (NumberFormatException e)
+        {
+            latDegreeTextField.setBackground(errorBackgroundColor);
+        }
         
-        if((latDegree < 0) || (latDegree > 90))
-        {
-            latDegreeTextField.setBackground(Color.YELLOW);
-        }
-        else
-        {
-            latDegreeTextField.setBackground(Color.WHITE);
-        }
+        setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_latDegreeTextFieldKeyReleased
 
     private void minLatTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_minLatTextFieldKeyReleased
         // Gets the Latitude Hours value from user:
-        int latHours = Integer.parseInt(minLatTextField.getText());
-        
-        if((latHours < 0) || (latHours > 59))
+        try
         {
-            minLatTextField.setBackground(Color.YELLOW);
-        }          
-        else
-        {
-            minLatTextField.setBackground(Color.WHITE);
+            int latHours = Integer.parseInt(minLatTextField.getText());
+
+            if((latHours < 0) || (latHours > 59))
+            {
+                minLatTextField.setBackground(errorBackgroundColor);
+            }          
+            else
+            {
+                minLatTextField.setBackground(normalBackgroundColor);
+            }
         }
+        catch (NumberFormatException e)
+        {
+            minLatTextField.setBackground(errorBackgroundColor);
+        }
+        
+        setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_minLatTextFieldKeyReleased
 
     private void secLatTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_secLatTextFieldKeyReleased
-        int latMinutes = Integer.parseInt(secLatTextField.getText());
+        try
+        {
+            int latMinutes = Integer.parseInt(secLatTextField.getText());
         
-        if((latMinutes < 0) || (latMinutes > 59))
-        {
-            secLatTextField.setBackground(Color.YELLOW);
-        }          
-        else
-        {
-            secLatTextField.setBackground(Color.WHITE);
+            if((latMinutes < 0) || (latMinutes > 59))
+            {
+                secLatTextField.setBackground(errorBackgroundColor);
+            }          
+            else
+            {
+                secLatTextField.setBackground(normalBackgroundColor);
+            }
         }
+        catch (NumberFormatException e)
+        {
+            secLatTextField.setBackground(errorBackgroundColor);
+        }
+        
+        setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_secLatTextFieldKeyReleased
 
     private void longDegreeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_longDegreeTextFieldKeyReleased
         // Gets the Longitude Degree value from user:
-        int longDegree = Integer.parseInt(longDegreeTextField.getText());
+        try
+        {
+            int longDegree = Integer.parseInt(longDegreeTextField.getText());
         
-        if((longDegree < 0) || (longDegree > 180))
-        {
-            longDegreeTextField.setBackground(Color.YELLOW);
+            if((longDegree < 0) || (longDegree > 180))
+            {
+                longDegreeTextField.setBackground(errorBackgroundColor);
+            }
+            else
+            {
+                longDegreeTextField.setBackground(normalBackgroundColor);
+            }
         }
-        else
+        catch (NumberFormatException e)
         {
-            longDegreeTextField.setBackground(Color.WHITE);
+            longDegreeTextField.setBackground(errorBackgroundColor);
         }
+        
+        setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_longDegreeTextFieldKeyReleased
 
     private void minLongTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_minLongTextFieldKeyReleased
-        int longMinutes = Integer.parseInt(minLongTextField.getText());
+        try
+        { 
+            int longMinutes = Integer.parseInt(minLongTextField.getText());
         
-        if((longMinutes < 0) || (longMinutes > 59))
-        {
-            minLongTextField.setBackground(Color.YELLOW);
-        }          
-        else
-        {
-            minLongTextField.setBackground(Color.WHITE);
+            if((longMinutes < 0) || (longMinutes > 59))
+            {
+                minLongTextField.setBackground(errorBackgroundColor);
+            }          
+            else
+            {
+                minLongTextField.setBackground(normalBackgroundColor);
+            }
         }
+        catch (NumberFormatException e)
+        {
+            minLongTextField.setBackground(errorBackgroundColor);
+        }
+        
+        setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_minLongTextFieldKeyReleased
 
     private void secLongTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_secLongTextFieldKeyReleased
-        int latMinutes = Integer.parseInt(secLongTextField.getText());
+        try
+        {  
+            int latMinutes = Integer.parseInt(secLongTextField.getText());
         
-        if((latMinutes < 0) || (latMinutes > 59))
-        {
-            secLongTextField.setBackground(Color.YELLOW);
-        }          
-        else
-        {
-            secLongTextField.setBackground(Color.WHITE);
+            if((latMinutes < 0) || (latMinutes > 59))
+            {
+                secLongTextField.setBackground(errorBackgroundColor);
+            }          
+            else
+            {
+                secLongTextField.setBackground(normalBackgroundColor);
+            }
         }
+        catch (NumberFormatException e)
+        {
+            secLongTextField.setBackground(errorBackgroundColor);
+        }
+        
+        setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_secLongTextFieldKeyReleased
 
     private void hourTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_hourTextFieldKeyReleased
-        int hour = Integer.parseInt(hourTextField.getText());
+        try
+        {
+            int hour = Integer.parseInt(hourTextField.getText());
         
-        if((hour < 0) || (hour > 23))
-        {
-            hourTextField.setBackground(Color.YELLOW);
-        }          
-        else
-        {
-            hourTextField.setBackground(Color.WHITE);
+            if((hour < 0) || (hour > 23))
+            {
+                hourTextField.setBackground(errorBackgroundColor);
+            }          
+            else
+            {
+                hourTextField.setBackground(normalBackgroundColor);
+            }
         }
+        catch (NumberFormatException e)
+        {
+            hourTextField.setBackground(errorBackgroundColor);
+        }
+        
+        setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_hourTextFieldKeyReleased
 
     private void minuteTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_minuteTextFieldKeyReleased
-        int minute = Integer.parseInt(minuteTextField.getText());
-        
-        if((minute < 0) || (minute > 59))
-        {
-            minuteTextField.setBackground(Color.YELLOW);
-        }          
-        else
-        {
-            minuteTextField.setBackground(Color.WHITE);
+        try
+        {            
+            int minute = Integer.parseInt(minuteTextField.getText());
+
+            if((minute < 0) || (minute > 59))
+            {
+                minuteTextField.setBackground(errorBackgroundColor);
+            }          
+            else
+            {
+                minuteTextField.setBackground(normalBackgroundColor);
+            }
         }
+        catch (NumberFormatException e)
+        {
+            minuteTextField.setBackground(errorBackgroundColor);
+        }
+        
+        setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_minuteTextFieldKeyReleased
 
     private void messierObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messierObjectCheckBoxActionPerformed
@@ -1010,6 +1090,10 @@ public class Driver extends javax.swing.JFrame {
     private void hourOffsetComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hourOffsetComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_hourOffsetComboBoxActionPerformed
+
+    private void dateTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dateTextFieldKeyReleased
+        
+    }//GEN-LAST:event_dateTextFieldKeyReleased
     
     // </editor-fold>
         
@@ -1082,6 +1166,25 @@ public class Driver extends javax.swing.JFrame {
         moon = new Moon();
         
         this.setCursor(Cursor.getDefaultCursor());        
+    }
+    
+    void setGenerateStarMapButtonIsEnabled()
+    {
+        if (latDegreeTextField.getBackground() == errorBackgroundColor
+                || minLatTextField.getBackground() == errorBackgroundColor
+                || secLatTextField.getBackground() == errorBackgroundColor
+                || longDegreeTextField.getBackground() == errorBackgroundColor
+                || minLongTextField.getBackground() == errorBackgroundColor
+                || secLongTextField.getBackground() == errorBackgroundColor
+                || hourTextField.getBackground() == errorBackgroundColor
+                || minuteTextField.getBackground() == errorBackgroundColor)
+        {
+            generateStarMapButton.setEnabled(false);
+        }
+        else
+        {
+            generateStarMapButton.setEnabled(true);
+        }
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Members">

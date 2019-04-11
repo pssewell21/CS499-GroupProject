@@ -685,7 +685,7 @@ public class Driver extends javax.swing.JFrame {
                 messier.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             // Moon calculations:
-            moon.getIntermediateValues(dateTime);
+            moon.getIntermediateValues(latitude, longitude, dateTime);
             moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             System.out.println("\n" + moon.phase);
             

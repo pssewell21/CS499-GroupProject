@@ -8,6 +8,8 @@ package starmap.Objects;
 import starmap.Calculation;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.io.IOException;
+
 
 /**
  * DESCRIPTION: This object contains the calculated planet elements. The elements
@@ -132,7 +134,7 @@ public class Planet extends CelestialObject
         
         // Calculate initial Mean Sidereal Time (mst)
         mst = 280.46061837 + (360.98564736629 * jd) + (0.000387933 * Math.pow(jt, 2)) 
-                                                - (Math.pow(jt, 3) / 38710000) + new_longitude;
+                                    - (Math.pow(jt, 3) / 38710000) + new_longitude;
         
         // Clip mst to range 0.0 to 360.0
         if(mst > 0.0)
@@ -297,8 +299,8 @@ public class Planet extends CelestialObject
         *  a = semimajor axis               --> a = Ascal + Aprop*cy
         *  e = eccentricity                 --> e = Escal + Eprop * cy
         *  i = inclination                  --> i = ( Iscal - Iprop * cy / 3600) * RADS
-        *  ? = argument of perihelion       --> ? = (Wscal + Wprop * cy / 3600) * RADS
-        *  Í = longitude of ascending node  --> Í = (Oscal - Oprop * cy / 3600) * RADS
+        *  w = argument of perihelion       --> w = (Wscal + Wprop * cy / 3600) * RADS
+        *  N = longitude of ascending node  --> N = (Oscal - Oprop * cy / 3600) * RADS
         *  L = mean longitude of the planet --> L=Mod2Pi ((Lscal + Lprop * cy / 3600) * RADS)
         */
         
@@ -380,13 +382,13 @@ public class Planet extends CelestialObject
             perihelion = (g_wscal - g_wprop * cy / 3600) * RADS;
         }   
 
-        System.out.println(String.format("Planet Info:\nPlanet name:              " + name +
-                 "\nMean Longitude:           " + meanLongitude + "°" +
-                 "\nSemi-major Axis:          " + semiMajorAxis + " AU" +
-                 "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
-                 "\nInclination:              " + inclination + "°" +
-                 "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
-                 "\nArgument of Perihelion:   " + perihelion + "\n"));
+//        System.out.println(String.format("Planet Info:\nPlanet name:              " + name +
+//                 "\nMean Longitude:           " + meanLongitude + "°" +
+//                 "\nSemi-major Axis:          " + semiMajorAxis + " AU" +
+//                 "\nEccentricity Of Orbit:    " + eccentricityOfOrbit +
+//                 "\nInclination:              " + inclination + "°" +
+//                 "\nLongitude Ascending Node: " + longitudeAscNode + "°" +
+//                 "\nArgument of Perihelion:   " + perihelion + "\n"));
 
         /* Step 3: Calculate the position of the Earth in its orbit */
         mEarth = planet_mod2Pi(meanLongitude - perihelion);        
@@ -436,8 +438,8 @@ public class Planet extends CelestialObject
         
         System.out.println("(1)g_dec = " + g_declination);
         
-        planet_convertRightAscensionToHrsMinSec(g_rightAscension);
-        planet_convertDeclinationToDegMinSec(g_declination);
+        //planet_convertRightAscensionToHrsMinSec(g_rightAscension);
+        //planet_convertDeclinationToDegMinSec(g_declination);
 
         
     } // End planet_getIntermediateValues()
@@ -483,7 +485,7 @@ public class Planet extends CelestialObject
         try{
             cos_az = (Math.sin(decRad) - Math.sin(elevation) * Math.sin(latRad)) / (Math.cos(elevation) * Math.cos(latRad));
             azimuth = Math.acos(cos_az);
-        }catch (Exception e){
+        }catch (Exception ex){
             azimuth = 0;
         }
         

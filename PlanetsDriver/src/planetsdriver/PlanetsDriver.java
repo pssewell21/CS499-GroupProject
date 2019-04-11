@@ -16,27 +16,27 @@ public class PlanetsDriver {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //mod2Pi():  // 7.85398
-        double lscal = 1001.4;
-        double lprop = 1200.3;
-        double A, B, X;
-        double cy = 2458540 / 36525;
-        double RADS = Math.PI / 180.0;
-        //X = ((lscal + lprop * cy) / 3600) * RADS;
-        
-        //X = 7.85398;
-        X = 450 * RADS;// 20 degrees is 0.349066 RADS
-        System.out.println("X = " + X + "\n");
-        
-        B = X / (2 * Math.PI);
-        System.out.println("B = " + B);
-        System.out.println("B (abs) = " + Math.abs(Math.floor(B)));
-        A = (2 * Math.PI) * (B - Math.abs(Math.floor(B)));
-        System.out.println("A Before = " + A);
-        
-        if(A < 0) A = (2 * Math.PI) + A;
-        
-        System.out.println("A = " + A + "\n");
+//        //mod2Pi():  // 7.85398
+//        double lscal = 1001.4;
+//        double lprop = 1200.3;
+//        double A, B, X;
+//        double cy = 2458540 / 36525;
+//        double RADS = Math.PI / 180.0;
+//        //X = ((lscal + lprop * cy) / 3600) * RADS;
+//        
+//        //X = 7.85398;
+//        X = 450 * RADS;// 20 degrees is 0.349066 RADS
+//        System.out.println("X = " + X + "\n");
+//        
+//        B = X / (2 * Math.PI);
+//        System.out.println("B = " + B);
+//        System.out.println("B (abs) = " + Math.abs(Math.floor(B)));
+//        A = (2 * Math.PI) * (B - Math.abs(Math.floor(B)));
+//        System.out.println("A Before = " + A);
+//        
+//        if(A < 0) A = (2 * Math.PI) + A;
+//        
+//        System.out.println("A = " + A + "\n");
         
 //        //true_anomaly()        
 //        double M = 2.0;

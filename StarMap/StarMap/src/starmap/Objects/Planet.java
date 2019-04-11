@@ -26,6 +26,7 @@ public class Planet extends CelestialObject
     public int g_year;
     public int g_month;
     public int g_day;
+    
     public double g_declination;
     public double g_rightAscension;
     
@@ -233,7 +234,7 @@ public class Planet extends CelestialObject
         g_RA_min = Integer.toString(minutes);
         g_RA_sec = Integer.toString(seconds);
         
-        System.out.println("RA = " + RA);
+        //System.out.println("RA = " + RA);
         System.out.println("RA in Hours = " + hours);
         System.out.println("RA in Minutes = " + minutes);
         System.out.println("RA in Seconds = " + seconds);
@@ -260,7 +261,7 @@ public class Planet extends CelestialObject
         g_DEC_min = Integer.toString(minutes);
         g_DEC_sec = Integer.toString(seconds);
         
-        System.out.println("DEC = " + Dec);
+        //System.out.println("DEC = " + Dec);
         System.out.println("Dec in Degrees = " + degrees);
         System.out.println("Dec in Minutes = " + minutes);
         System.out.println("Dec in Seconds = " + seconds);
@@ -436,9 +437,12 @@ public class Planet extends CelestialObject
         g_declination = Math.atan(zEq / Math.sqrt(Math.pow(xEq, 2) + Math.pow(yEq, 2))) * DEGS;
         distance = Math.sqrt(Math.pow(xEq, 2) + Math.pow(yEq, 2) + Math.pow(zEq, 2));
         
-        System.out.println("(1)g_dec = " + g_declination);
+        //System.out.println("(1)g_dec = " + g_declination);
+        System.out.println("(1)g_RA = " + g_rightAscension);
         
-        //planet_convertRightAscensionToHrsMinSec(g_rightAscension);
+        planet_convertRightAscensionToHrsMinSec(g_rightAscension);
+        
+        
         //planet_convertDeclinationToDegMinSec(g_declination);
 
         
@@ -457,57 +461,127 @@ public class Planet extends CelestialObject
      * @param greenwhichSiderealTime
      * 
     ***************************************************************************/
-    public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime)
+    public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) //throws Exception
     {    
         //need to implement exception statements
         
-        double hourAngle;
-        double decRad;
-        double latRad;
-        double hrRad;
-        double sin_alt;
-        double cos_az;
-
-        hourAngle = planet_meanSiderealTime(longitude, greenwichSiderealTime, g_year, 
-                                                g_month, g_day) - g_rightAscension;
-        if(hourAngle < 0) hourAngle += 360;
-        
-        // Convert Degrees to Radians
-        decRad = g_declination * RADS; //Math.toRadians(g_declination);
-        latRad = latitude * RADS; //Math.toRadians(latitude);
-        hrRad = hourAngle * RADS; //Math.toRadians(hourAngle);
-        
-        // Calculate ELEVATION in Radians
-        sin_alt = (Math.sin(decRad) * Math.sin(latRad)) + (Math.cos(decRad) * Math.cos(latRad) * Math.cos(hrRad));
-        elevation = Math.sin(sin_alt);
-        
-        //Calculate AZIMUTH in Radians
-        try{
-            cos_az = (Math.sin(decRad) - Math.sin(elevation) * Math.sin(latRad)) / (Math.cos(elevation) * Math.cos(latRad));
-            azimuth = Math.acos(cos_az);
-        }catch (Exception ex){
-            azimuth = 0;
-        }
-        
-        // Convert EL and AZ to Degrees
-        elevation = elevation * Math.toDegrees(elevation);
-        azimuth = elevation * Math.toDegrees(elevation);
-        
-        if(Math.sin(hrRad) > 0.0)
-            azimuth = 360.0 - azimuth;
-        
-//        if (elevation < 0)
+//                if (g_rightAscension < 0 || g_rightAscension > 24)
 //        {
-//            elevation += 360;
+//            throw new Exception("Invalid value of " + g_rightAscension + " for rightAscension passed into Planet.calculateHorizonCoordinates");
 //        }
 //        
-        if (azimuth > 360) azimuth -= 360;
-            
-        if(azimuth < 0) azimuth += 360;
+//        if (g_declination < -90 || g_declination > 90)
+//        {
+//            throw new Exception("Invalid value of " + g_declination + " for declination passed into Planet.calculateHorizonCoordinates");
+//        }
+        
+        double decimalHours = greenwichSiderealTime.getHour() + (greenwichSiderealTime.getMinute() / 60.0) + (greenwichSiderealTime.getSecond() / (60.0 * 60));
+        
+        // Longitude passed is negative if west of Greenwich and will be subtracted in this case
+        double hourAngleDegrees = (decimalHours - g_rightAscension) * 15 + longitude;        
+        
+//        System.out.println("hourAngleDegrees = " + hourAngleDegrees);
+        
+        double hourAngleRadians = Calculation.getRadiansFromDegrees(hourAngleDegrees);
+        double declinationRadians = Calculation.getRadiansFromDegrees(g_declination);
+        double latitudeRadians = Calculation.getRadiansFromDegrees(latitude);
+        
+        double elevationRadians = Math.asin(
+                (Math.cos(hourAngleRadians) * Math.cos(declinationRadians) * Math.cos(latitudeRadians))
+                + (Math.sin(declinationRadians) * Math.sin(latitudeRadians)));
+        double azimuthRadians = Math.atan2(
+                -1 * Math.sin(hourAngleRadians),
+                (Math.tan(declinationRadians) * Math.cos(latitudeRadians))
+                        - (Math.sin(latitudeRadians) * Math.cos(hourAngleRadians)));  
+        
+        double azimuthDegrees = Calculation.getDegreesFromRadians(azimuthRadians);
+        double elevationDegrees = Calculation.getDegreesFromRadians(elevationRadians);
+        
+//        System.out.println("azimuthDegrees = " + azimuthDegrees);
+//        System.out.println("elevationDegrees = " + elevationDegrees);  
+        
+        if (azimuthDegrees < 0)
+        {
+            azimuthDegrees += 360;
+        }
+        
+        if (azimuthDegrees > 360)
+        {
+            azimuthDegrees -= 360;
+        }
+        
+//        System.out.println("hourAngleDegrees = " + hourAngleDegrees);
+
+        azimuth = azimuthDegrees;
+        elevation = elevationDegrees;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        double hourAngle;
+//        double decRad;
+//        double latRad;
+//        double hrRad;
+//        double sin_alt;
+//        double cos_az;
+//        
+        
+//
+//        System.out.println("Planet: GST = " + greenwichSiderealTime);
+//        hourAngle = planet_meanSiderealTime(longitude, greenwichSiderealTime, g_year, 
+//                                                g_month, g_day) - g_rightAscension;
+//        if(hourAngle < 0) hourAngle += 360;
+//        
+//        
+//        
+//        // Convert Degrees to Radians
+//        decRad = g_declination * RADS; //Math.toRadians(g_declination);
+//        latRad = latitude * RADS; //Math.toRadians(latitude);
+//        hrRad = hourAngle * RADS; //Math.toRadians(hourAngle);
+//        
+//        // Calculate ELEVATION in Radians
+//        sin_alt = (Math.sin(decRad) * Math.sin(latRad)) + (Math.cos(decRad) * Math.cos(latRad) * Math.cos(hrRad));
+//        elevation = Math.sin(sin_alt);
+//        
+//        //Calculate AZIMUTH in Radians
+//        try{
+//            cos_az = (Math.sin(decRad) - Math.sin(elevation) * Math.sin(latRad)) / (Math.cos(elevation) * Math.cos(latRad));
+//            azimuth = Math.acos(cos_az);
+//        }catch (Exception ex){
+//            azimuth = 0;
+//        }
+//        
+//        // Convert EL and AZ to Degrees
+//        elevation = elevation * Math.toDegrees(elevation);
+//        azimuth = elevation * Math.toDegrees(elevation);
+//        
+//        System.out.println("Planet: hrRad = " + hrRad + "\n");
+//        
+//        if(Math.sin(hrRad) > 0.0)
+//            azimuth = 360.0 - azimuth;
+//        
+////        if (elevation < 0)
+////        {
+////            elevation += 360;
+////        }
+////        
+//        if (azimuth > 360) azimuth -= 360;
+//            
+//        if(azimuth < 0) azimuth += 360;
             
         
-        System.out.println("Azimuth = " + azimuth);
-        System.out.println("Elevation = " + elevation + "\n");
+//        System.out.println("Azimuth = " + azimuth);
+//        System.out.println("Elevation = " + elevation + "\n");
         
     } // End calculateHorizonCoordinates()
     

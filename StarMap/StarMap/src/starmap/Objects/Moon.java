@@ -139,37 +139,37 @@ public class Moon extends CelestialObject
         
         //System.out.println("Amount of cycle elapsed " + amountOfCycleElapsed); 
         
-        if (amountOfCycleElapsed > 0.97 || amountOfCycleElapsed <= 0.03)
+        if (amountOfCycleElapsed > 0.98 || amountOfCycleElapsed <= 0.02)
         {
-            phase = "NEW MOON";
+            phase = "new";
         }
-        else if (amountOfCycleElapsed > 0.03 || amountOfCycleElapsed <= 0.22)
+        else if (amountOfCycleElapsed > 0.02 && amountOfCycleElapsed <= 0.23)
         {
-            phase = "WAXING CRESCENT";
+            phase = "waxing-crescent";
         }
-        else if (amountOfCycleElapsed > 0.22 || amountOfCycleElapsed <= 0.28)
+        else if (amountOfCycleElapsed > 0.23 && amountOfCycleElapsed <= 0.27)
         {
-            phase = "FIRST QUARTER";
+            phase = "first-quarter";
         }
-        else if (amountOfCycleElapsed > 0.28 || amountOfCycleElapsed <= 0.47)
+        else if (amountOfCycleElapsed > 0.27 && amountOfCycleElapsed <= 0.48)
         {
-            phase = "WAXING GIBBOUS";
+            phase = "waxing-gibbous";
         }
-        else if (amountOfCycleElapsed > 0.47 || amountOfCycleElapsed <= 0.53)
+        else if (amountOfCycleElapsed > 0.48 && amountOfCycleElapsed <= 0.52)
         {
-            phase = "FULL MOON";
+            phase = "full";
         }
-        else if (amountOfCycleElapsed > 0.53 || amountOfCycleElapsed <= 0.72)
+        else if (amountOfCycleElapsed > 0.52 && amountOfCycleElapsed <= 0.73)
         {
-            phase = "WANING GIBBOUS";
+            phase = "waning-gibbous";
         }
-        else if (amountOfCycleElapsed > 0.72 || amountOfCycleElapsed <= 0.78)
+        else if (amountOfCycleElapsed > 0.73 && amountOfCycleElapsed <= 0.77)
         {
-            phase = "THIRD QUARTER";
+            phase = "last-quarter";
         }
-        else if (amountOfCycleElapsed > 0.78 || amountOfCycleElapsed <= 0.97)
+        else if (amountOfCycleElapsed > 0.77 && amountOfCycleElapsed <= 0.98)
         {
-            phase = "WANING CRESCENT";
+            phase = "waning-crescent";
         }
         else
         {

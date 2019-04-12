@@ -9,7 +9,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import starmap.Objects.Constellation;
 import starmap.Objects.ConstellationLine;
@@ -154,7 +159,23 @@ public class MapPanel extends JPanel
 
                 int verticalPosition = (int)Math.round((90 + (-1 * star.elevation)) * sizeMultiplier);
 
-                g2d.fillOval(horizontalPosition, verticalPosition, starDiameter, starDiameter);  
+                if (star.name.equalsIgnoreCase("Sol"))
+                {
+                    try
+                    {
+                        BufferedImage icon = ImageIO.read(new File("./src/resources/Icons/Sun-icon.png"));
+                        Image resizedIcon = icon.getScaledInstance(starDiameter, starDiameter, Image.SCALE_DEFAULT);
+                        g2d.drawImage(resizedIcon, horizontalPosition, verticalPosition, null);
+                    }
+                    catch (IOException e)
+                    {
+                        System.out.println(e.toString());
+                    }
+                }  
+                else
+                {
+                    g2d.fillOval(horizontalPosition, verticalPosition, starDiameter, starDiameter);
+                }
 
                 if (starLabelVisibilityFlag && star.name.length() > 0)
                 {
@@ -253,7 +274,7 @@ public class MapPanel extends JPanel
                 // Do not draw Earth/Sun, sun is drawn by the star class
                 if (!planet.name.equalsIgnoreCase("Earth/Sun"))
                 {
-                    int objectDiameter = (int)Math.round(3.0 * sizeMultiplier * objectDiameterMultiplier);
+                    int objectDiameter = (int)Math.round(18.0 * sizeMultiplier * objectDiameterMultiplier);
 
                     int horizontalPosition;
 
@@ -268,7 +289,16 @@ public class MapPanel extends JPanel
 
                     int verticalPosition = (int)Math.round((90 + (-1 * planet.elevation)) * sizeMultiplier);
 
-                    g2d.fillOval(horizontalPosition, verticalPosition, objectDiameter, objectDiameter);  
+                    try
+                    {
+                        BufferedImage icon = ImageIO.read(new File("./src/resources/Icons/" + planet.name + "-icon.png"));
+                        Image resizedIcon = icon.getScaledInstance(objectDiameter, objectDiameter, Image.SCALE_DEFAULT);
+                        g2d.drawImage(resizedIcon, horizontalPosition, verticalPosition, null);
+                    }
+                    catch (IOException e)
+                    {
+                        System.out.println(e.toString());
+                    }
 
                     if (planetLabelVisibilityFlag && planet.name.length() > 0)
                     {
@@ -322,7 +352,7 @@ public class MapPanel extends JPanel
         {
             g2d.setColor(moonColor);
             
-            int objectDiameter = (int)Math.round(13.0 * sizeMultiplier * objectDiameterMultiplier);
+            int objectDiameter = (int)Math.round(18.0 * sizeMultiplier * objectDiameterMultiplier);
 
             int horizontalPosition;
 
@@ -337,7 +367,18 @@ public class MapPanel extends JPanel
 
             int verticalPosition = (int)Math.round((90 + (-1 * moon.elevation)) * sizeMultiplier);
 
-            g2d.fillOval(horizontalPosition, verticalPosition, objectDiameter, objectDiameter);  
+            try
+            {
+                BufferedImage icon = ImageIO.read(new File("./src/resources/Icons/" + moon.phase + "-moon-icon.png"));
+                Image resizedIcon = icon.getScaledInstance(objectDiameter, objectDiameter, Image.SCALE_DEFAULT);
+                g2d.drawImage(resizedIcon, horizontalPosition, verticalPosition, null);
+            }
+            catch (IOException e)
+            {
+                System.out.println(e.toString());
+            }
+            
+            //g2d.fillOval(horizontalPosition, verticalPosition, objectDiameter, objectDiameter);  
 
             //TODO: Implement showing moon phase in some way
             if (moonPhaseVisibilityFlag && moon.name.length() > 0)
@@ -504,216 +545,252 @@ public class MapPanel extends JPanel
         int xValue = imageWidth / 36 * 0;
         String labelText = "180°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 1;
         labelText = "190°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 2;
         labelText = "200°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 3;
         labelText = "210°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 4;
         labelText = "220°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 5;
         labelText = "230°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 6;
         labelText = "240°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 7;
         labelText = "250°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 8;
         labelText = "260°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 9;
         labelText = "270°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 10;
         labelText = "280°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 11;
         labelText = "290°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 12;
         labelText = "300°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 13;
         labelText = "310°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 14;
         labelText = "320°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 15;
         labelText = "330°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 16;
         labelText = "340°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 17;
         labelText = "350°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 18;
         labelText = "0°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 19;
         labelText = "10°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 20;
         labelText = "20°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 21;
         labelText = "30°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 22;
         labelText = "40°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 23;
         labelText = "50°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 24;
         labelText = "60°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 25;
         labelText = "70°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 26;
         labelText = "80°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 27;
         labelText = "90°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 28;
         labelText = "100°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 29;
         labelText = "110°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 30;
         labelText = "120°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 31;
         labelText = "130°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 32;
         labelText = "140°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 33;
         labelText = "150°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 34;
         labelText = "160°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
         
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 35;
         labelText = "170°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
     }
 }

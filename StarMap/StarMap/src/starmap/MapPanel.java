@@ -9,7 +9,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import starmap.Objects.Constellation;
 import starmap.Objects.ConstellationLine;
@@ -154,7 +159,23 @@ public class MapPanel extends JPanel
 
                 int verticalPosition = (int)Math.round((90 + (-1 * star.elevation)) * sizeMultiplier);
 
-                g2d.fillOval(horizontalPosition, verticalPosition, starDiameter, starDiameter);  
+                if (star.name.equalsIgnoreCase("Sol"))
+                {
+                    try
+                    {
+                        BufferedImage icon = ImageIO.read(new File("./src/resources/Icons/Sun-icon.png"));
+                        Image resizedIcon = icon.getScaledInstance(starDiameter, starDiameter, Image.SCALE_DEFAULT);
+                        g2d.drawImage(resizedIcon, horizontalPosition, verticalPosition, null);
+                    }
+                    catch (IOException e)
+                    {
+                        System.out.println(e.toString());
+                    }
+                }  
+                else
+                {
+                    g2d.fillOval(horizontalPosition, verticalPosition, starDiameter, starDiameter);
+                }
 
                 if (starLabelVisibilityFlag && star.name.length() > 0)
                 {
@@ -253,7 +274,7 @@ public class MapPanel extends JPanel
                 // Do not draw Earth/Sun, sun is drawn by the star class
                 if (!planet.name.equalsIgnoreCase("Earth/Sun"))
                 {
-                    int objectDiameter = (int)Math.round(3.0 * sizeMultiplier * objectDiameterMultiplier);
+                    int objectDiameter = (int)Math.round(18.0 * sizeMultiplier * objectDiameterMultiplier);
 
                     int horizontalPosition;
 
@@ -268,7 +289,16 @@ public class MapPanel extends JPanel
 
                     int verticalPosition = (int)Math.round((90 + (-1 * planet.elevation)) * sizeMultiplier);
 
-                    g2d.fillOval(horizontalPosition, verticalPosition, objectDiameter, objectDiameter);  
+                    try
+                    {
+                        BufferedImage icon = ImageIO.read(new File("./src/resources/Icons/" + planet.name + "-icon.png"));
+                        Image resizedIcon = icon.getScaledInstance(objectDiameter, objectDiameter, Image.SCALE_DEFAULT);
+                        g2d.drawImage(resizedIcon, horizontalPosition, verticalPosition, null);
+                    }
+                    catch (IOException e)
+                    {
+                        System.out.println(e.toString());
+                    }
 
                     if (planetLabelVisibilityFlag && planet.name.length() > 0)
                     {

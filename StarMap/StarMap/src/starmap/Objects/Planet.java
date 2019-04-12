@@ -8,7 +8,6 @@ package starmap.Objects;
 import starmap.Calculation;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.io.IOException;
 
 
 /**

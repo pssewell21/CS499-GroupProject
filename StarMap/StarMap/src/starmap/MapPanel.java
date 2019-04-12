@@ -352,7 +352,7 @@ public class MapPanel extends JPanel
         {
             g2d.setColor(moonColor);
             
-            int objectDiameter = (int)Math.round(13.0 * sizeMultiplier * objectDiameterMultiplier);
+            int objectDiameter = (int)Math.round(18.0 * sizeMultiplier * objectDiameterMultiplier);
 
             int horizontalPosition;
 
@@ -367,7 +367,18 @@ public class MapPanel extends JPanel
 
             int verticalPosition = (int)Math.round((90 + (-1 * moon.elevation)) * sizeMultiplier);
 
-            g2d.fillOval(horizontalPosition, verticalPosition, objectDiameter, objectDiameter);  
+            try
+            {
+                BufferedImage icon = ImageIO.read(new File("./src/resources/Icons/" + moon.phase + "-moon-icon.png"));
+                Image resizedIcon = icon.getScaledInstance(objectDiameter, objectDiameter, Image.SCALE_DEFAULT);
+                g2d.drawImage(resizedIcon, horizontalPosition, verticalPosition, null);
+            }
+            catch (IOException e)
+            {
+                System.out.println(e.toString());
+            }
+            
+            //g2d.fillOval(horizontalPosition, verticalPosition, objectDiameter, objectDiameter);  
 
             //TODO: Implement showing moon phase in some way
             if (moonPhaseVisibilityFlag && moon.name.length() > 0)

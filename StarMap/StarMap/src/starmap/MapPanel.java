@@ -248,30 +248,34 @@ public class MapPanel extends JPanel
         {
             g2d.setColor(planetColor);
 
-            for (Planet planet : planetList)
+            for (Planet planet : planetList) 
             {
-                int objectDiameter = (int)Math.round(3.0 * sizeMultiplier * objectDiameterMultiplier);
-
-                int horizontalPosition;
-
-                if (planet.azimuth < 180)
+                // Do not draw Earth/Sun, sun is drawn by the star class
+                if (!planet.name.equalsIgnoreCase("Earth/Sun"))
                 {
-                    horizontalPosition = (int)Math.round((planet.azimuth + 180) * sizeMultiplier);
-                }
-                else
-                {
-                    horizontalPosition = (int)Math.round((planet.azimuth - 180) * sizeMultiplier);
-                }
+                    int objectDiameter = (int)Math.round(3.0 * sizeMultiplier * objectDiameterMultiplier);
 
-                int verticalPosition = (int)Math.round((90 + (-1 * planet.elevation)) * sizeMultiplier);
+                    int horizontalPosition;
 
-                g2d.fillOval(horizontalPosition, verticalPosition, objectDiameter, objectDiameter);  
+                    if (planet.azimuth < 180)
+                    {
+                        horizontalPosition = (int)Math.round((planet.azimuth + 180) * sizeMultiplier);
+                    }
+                    else
+                    {
+                        horizontalPosition = (int)Math.round((planet.azimuth - 180) * sizeMultiplier);
+                    }
 
-                if (planetLabelVisibilityFlag && planet.name.length() > 0)
-                {
-                    g2d.drawString(planet.name, 
-                            (int)Math.round(horizontalPosition + objectDiameter + 2), 
-                            (int)Math.round(verticalPosition + (objectDiameter / 2) + (gridLabelHeight / 2)));                
+                    int verticalPosition = (int)Math.round((90 + (-1 * planet.elevation)) * sizeMultiplier);
+
+                    g2d.fillOval(horizontalPosition, verticalPosition, objectDiameter, objectDiameter);  
+
+                    if (planetLabelVisibilityFlag && planet.name.length() > 0)
+                    {
+                        g2d.drawString(planet.name, 
+                                (int)Math.round(horizontalPosition + objectDiameter + 2), 
+                                (int)Math.round(verticalPosition + (objectDiameter / 2) + (gridLabelHeight / 2)));                
+                    }
                 }
             }  
         }

@@ -248,7 +248,7 @@ public class MapPanel extends JPanel
         {
             g2d.setColor(planetColor);
 
-            for (Planet planet : planetList)
+            for (Planet planet : planetList) 
             {
                 // Do not draw Earth/Sun, sun is drawn by the star class
                 if (!planet.name.equalsIgnoreCase("Earth/Sun"))

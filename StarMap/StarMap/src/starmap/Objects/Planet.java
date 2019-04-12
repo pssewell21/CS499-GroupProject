@@ -29,13 +29,18 @@ public class Planet extends CelestialObject
     
     public double g_declination;
     public double g_rightAscension;
+    public double g_positiveRightAsc;
     
     public double g_eSemiMajorAxis;
     public double g_pSemiMajorAxis;
     
-    public String g_RA_hour;
-    public String g_RA_min;
-    public String g_RA_sec;
+    public double g_RA_hour;
+    public double g_RA_min;
+    public double g_RA_sec;
+    
+    public String g_str_RA_hour;
+    public String g_str_RA_min;
+    public String g_str_RA_sec;
     
     public String g_DEC_deg;
     public String g_DEC_min;
@@ -233,14 +238,22 @@ public class Planet extends CelestialObject
         minutes =  (int) (((RA / 15.0) - hours) * 60.0);
         seconds = (int) (((((RA / 15.0) - hours) * 60.0) - minutes) * 60.0);
         
-        g_RA_hour = Integer.toString(hours);
-        g_RA_min = Integer.toString(minutes);
-        g_RA_sec = Integer.toString(seconds);
+        g_RA_hour = hours;
+        g_RA_min = minutes;
+        g_RA_sec = seconds;
         
-        //System.out.println("RA = " + RA);
-        System.out.println("RA in Hours = " + hours);
-        System.out.println("RA in Minutes = " + minutes);
-        System.out.println("RA in Seconds = " + seconds);
+//        g_str_RA_hour = Integer.toString(hours);
+//        g_str_RA_min = Integer.toString(minutes);
+//        g_str_RA_sec = Integer.toString(seconds);
+//        
+//        System.out.println("str_RA_hr: " + g_str_RA_hour);
+//        System.out.println("str_RA_min: " + g_str_RA_min);
+//        System.out.println("str_RA_sec: " + g_str_RA_sec);
+//       
+//        System.out.println("RA = " + RA);
+//        System.out.println("RA in Hours = " + hours);
+//        System.out.println("RA in Minutes = " + minutes);
+//        System.out.println("RA in Seconds = " + seconds);
 
     } // End convertRightAscensionToHrsMinSec()
     
@@ -285,7 +298,6 @@ public class Planet extends CelestialObject
     public void planet_getIntermediateValues(double julianDate, LocalDateTime dateTime)
     {
         double meanLongitude;
-        double semiMajorAxis;
         double eccentricityOfOrbit; 
         double inclination;
         double longitudeAscNode;
@@ -459,20 +471,24 @@ public class Planet extends CelestialObject
         distance = Math.sqrt(Math.pow(xEq, 2) + Math.pow(yEq, 2) + Math.pow(zEq, 2));
         
         //System.out.println("(1)g_dec = " + g_declination);
-        System.out.println("(1)g_RA = " + g_rightAscension);
+        //System.out.println("(1)g_RA = " + g_rightAscension);
         
         
-        
-        if(g_rightAscension < 0 || g_rightAscension > 24)
-            
-        planet_convertRightAscensionToHrsMinSec(g_rightAscension);
-        
-        
-        
-        
-        //planet_convertDeclinationToDegMinSec(g_declination);
+        System.out.println("Planet: g_RA = " + g_rightAscension);
 
-        
+        // Making RA POSITIVE number, if it's calculated as a negative value:
+        if(g_rightAscension < 0)
+        {
+            g_positiveRightAsc = Math.abs(g_rightAscension);
+            planet_convertRightAscensionToHrsMinSec(g_positiveRightAsc);
+        }
+
+        System.out.println("g_positiverightAsc " + g_positiveRightAsc);
+
+        System.out.println("\nRA_hr = " + g_RA_hour);
+        System.out.println("RA_min = " + g_RA_min);
+        System.out.println("RA_sec = " + g_RA_sec);
+
     } // End planet_getIntermediateValues()
     
     @Override
@@ -488,24 +504,22 @@ public class Planet extends CelestialObject
      * @param greenwhichSiderealTime
      * 
     ***************************************************************************/
-    public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) //throws Exception
+    public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) throws Exception
     {    
-        //need to implement exception statements
+        if (g_RA_hour < 0 || g_RA_hour > 24)
+        {
+            throw new Exception("Invalid value of " + g_RA_hour + " for rightAscension passed into Planet.calculateHorizonCoordinates");
+        }
         
-//                if (g_rightAscension < 0 || g_rightAscension > 24)
-//        {
-//            throw new Exception("Invalid value of " + g_rightAscension + " for rightAscension passed into Planet.calculateHorizonCoordinates");
-//        }
-//        
-//        if (g_declination < -90 || g_declination > 90)
-//        {
-//            throw new Exception("Invalid value of " + g_declination + " for declination passed into Planet.calculateHorizonCoordinates");
-//        }
+        if (g_declination < -90 || g_declination > 90)
+        {
+            throw new Exception("Invalid value of " + g_declination + " for declination passed into Planet.calculateHorizonCoordinates");
+        }
         
         double decimalHours = greenwichSiderealTime.getHour() + (greenwichSiderealTime.getMinute() / 60.0) + (greenwichSiderealTime.getSecond() / (60.0 * 60));
         
         // Longitude passed is negative if west of Greenwich and will be subtracted in this case
-        double hourAngleDegrees = (decimalHours - g_rightAscension) * 15 + longitude;        
+        double hourAngleDegrees = (decimalHours - g_RA_hour) * 15 + longitude;        
         
 //        System.out.println("hourAngleDegrees = " + hourAngleDegrees);
         
@@ -541,100 +555,7 @@ public class Planet extends CelestialObject
 
         azimuth = azimuthDegrees;
         elevation = elevationDegrees;
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-//        double hourAngle;
-//        double decRad;
-//        double latRad;
-//        double hrRad;
-//        double sin_alt;
-//        double cos_az;
-//        
-        
-//
-//        System.out.println("Planet: GST = " + greenwichSiderealTime);
-//        hourAngle = planet_meanSiderealTime(longitude, greenwichSiderealTime, g_year, 
-//                                                g_month, g_day) - g_rightAscension;
-//        if(hourAngle < 0) hourAngle += 360;
-//        
-//        
-//        
-//        // Convert Degrees to Radians
-//        decRad = g_declination * RADS; //Math.toRadians(g_declination);
-//        latRad = latitude * RADS; //Math.toRadians(latitude);
-//        hrRad = hourAngle * RADS; //Math.toRadians(hourAngle);
-//        
-//        // Calculate ELEVATION in Radians
-//        sin_alt = (Math.sin(decRad) * Math.sin(latRad)) + (Math.cos(decRad) * Math.cos(latRad) * Math.cos(hrRad));
-//        elevation = Math.sin(sin_alt);
-//        
-//        //Calculate AZIMUTH in Radians
-//        try{
-//            cos_az = (Math.sin(decRad) - Math.sin(elevation) * Math.sin(latRad)) / (Math.cos(elevation) * Math.cos(latRad));
-//            azimuth = Math.acos(cos_az);
-//        }catch (Exception ex){
-//            azimuth = 0;
-//        }
-//        
-//        // Convert EL and AZ to Degrees
-//        elevation = elevation * Math.toDegrees(elevation);
-//        azimuth = elevation * Math.toDegrees(elevation);
-//        
-//        System.out.println("Planet: hrRad = " + hrRad + "\n");
-//        
-//        if(Math.sin(hrRad) > 0.0)
-//            azimuth = 360.0 - azimuth;
-//        
-////        if (elevation < 0)
-////        {
-////            elevation += 360;
-////        }
-////        
-//        if (azimuth > 360) azimuth -= 360;
-//            
-//        if(azimuth < 0) azimuth += 360;
-            
-        
-//        System.out.println("Azimuth = " + azimuth);
-//        System.out.println("Elevation = " + elevation + "\n");
-        
+
     } // End calculateHorizonCoordinates()
     
 } // End class Planet
-
-
-
-//1) jd = 2458583.597916667
-//2) cy = 67.3123503878622
-
-//Planet name:              Mercury
-//Mean Longitude:           5.747478731799017°
-//Semi-major Axis:          0.38714335615131873 AU
-//Eccentricity Of Orbit:    0.20733167309670356
-//Inclination:              -0.007638280705852504°
-//Longitude Ascending Node: -0.14541099325785878°
-//Argument of Perihelion:   1.5390486173690672
-
-//Current Azimuth/Elevation of Mercury: -52684.63259348455°, 30.53009457198231°
-//Current Azimuth/Elevation of Venus: -43638.16877430354°, 27.82437951270314°
-//Current Azimuth/Elevation of Earth/Sun: -43638.16877430354°, 27.82437951270314°
-//Current Azimuth/Elevation of Mars: -43638.16877430354°, 27.82437951270314°
-//Current Azimuth/Elevation of Jupiter: -43638.16877430354°, 27.82437951270314°
-//Current Azimuth/Elevation of Saturn: -43638.16877430354°, 27.82437951270314°
-//Current Azimuth/Elevation of Uranus: -43638.16877430354°, 27.82437951270314°
-//Current Azimuth/Elevation of Neptune: -43638.16877430354°, 27.82437951270314°
-//Current Azimuth/Elevation of Pluto: -43638.16877430354°, 27.82437951270314°'
-
-//Current Azimuth/Elevation of Moon: 185.26179325774947°, -28.33997908709473°

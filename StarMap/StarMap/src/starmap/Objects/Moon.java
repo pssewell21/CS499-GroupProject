@@ -27,7 +27,7 @@ public class Moon extends CelestialObject
     public double g_JD;
     
     public double rightAscension;
-    public double declination;            
+    public double declination;
     
     public double g_L_angle; // Moon mean LONGITUDE - L
     public double g_M_angle; // Sun mean ANOMALY - M
@@ -37,17 +37,6 @@ public class Moon extends CelestialObject
     public double g_ecc;  //eecentricity
     
     public String phase;
-    
-    public enum Moon_Phases{
-        g_new_moon, 
-        g_first_quarter, 
-        g_full_moon, 
-        g_last_quarter
-    }
-//    enum Moon_Phases{
-//        g_p_new_moon, g_p_first_quarter, g_p_full_moon, g_p_last_quarter,
-//        g_f_new_moon, g_f_first_quarter, g_f_full_moon, g_f_last_quarter,
-//    }
     
      /**************************************************************************
      *
@@ -116,6 +105,8 @@ public class Moon extends CelestialObject
      * DESCRIPTION: gets the calculated values for each planet
      * 
      * @param dateTime access the current year
+     * @param latitude
+     * @param longitude
      * 
     ***************************************************************************/
     public void getIntermediateValues(double latitude, double longitude, LocalDateTime dateTime)
@@ -181,36 +172,35 @@ public class Moon extends CelestialObject
         //Lunar Location calculation:
         //Code used from http://www.geoastro.de/elevazmoon/basics/index.htm
         
-        DecimalFormat df = new DecimalFormat("#.######");
         double T, eps;
         double X, Y, Z, R;
         
-        //double JulianDay = 2448396.04167; // 1991/5/19 at 13 UT
-        
-        System.out.println("moon: JD = " + julianDate);
-
         T = (julianDate - 2451545.0) / 36525.0; // JD - J2000
         
-        eps = (23.0 + (26.0/60.0) + (21.448/3600.0)) - (46.8150*T+ 0.00059*T*T- 0.001813*T*T*T)/3600;
+        eps = 23.0 + (26.0/60.0) + (21.448/3600.0) - (46.8150*T+ 0.00059*T*T
+                                                        - 0.001813*T*T*T)/3600;
         
         X = Math.cos(latitude)*Math.cos(longitude);
-        Y = Math.cos(eps)*Math.cos(latitude)* Math.sin(longitude) - Math.sin(eps)*Math.sin(latitude);
-        Z = Math.sin(eps)*Math.cos(latitude)* Math.sin(longitude) + Math.cos(eps)*Math.sin(latitude);
+        Y = Math.cos(eps)*Math.cos(latitude)* Math.sin(longitude) 
+                                            - Math.sin(eps)*Math.sin(latitude);
+        Z = Math.sin(eps)*Math.cos(latitude)* Math.sin(longitude) 
+                                            + Math.cos(eps)*Math.sin(latitude);
         R = Math.sqrt(1-Z*Z);
         
-        double arc_tan = Math.atan(Y / (X + R));
-        if(arc_tan < 0) arc_tan = arc_tan + Math.PI;
+        //RA is in hrs, DEC is in degrees
+        
+        double arc_tan = Math.atan(Y/(X + R));
+        
+        if(arc_tan < 0)
+            arc_tan = arc_tan + Math.PI;
         
         rightAscension = (24 / Math.PI) * arc_tan; // in hours
-        declination =  (180/Math.PI) * Math.asin(Math.sin(eps)* Math.cos(latitude)* Math.sin(longitude) + Math.cos(eps)* Math.sin(latitude)); // in degrees;
-        //declination = (180/Math.PI) * Math.atan(Z / R); // in hours
-        
-        //rightAscension = (180/Math.PI)*arc_tan; // in degrees  
-        //declination =  (180/Math.PI) * Math.asin(Math.sin(eps)* Math.cos(latitude)* Math.sin(longitude) + Math.cos(eps)* Math.sin(latitude)); // in degrees;
+        declination = (180/Math.PI) * Math.asin(Math.sin(eps)* Math.cos(latitude)
+                                            * Math.sin(longitude) + Math.cos(eps)
+                                            * Math.sin(latitude)); // in degrees;
         
         System.out.println("Moon: RA: " + rightAscension);
         System.out.println("Moon: DEC: " + declination + "\n");
-        
 
     } // End getIntermediateValues()
    

@@ -51,7 +51,7 @@ public class MapPanel extends JPanel
     private final boolean messierLabelVisibilityFlag;    
     
     // Constants used for defining the behavior of object being drawn
-    private final int sizeMultiplier = 10;
+    private final int sizeMultiplier = 12;
     private final double objectDiameterMultiplier = 0.15;
     
     public int imageWidth = 360 * sizeMultiplier;

@@ -42,9 +42,13 @@ public class Planet extends CelestialObject
     public String g_str_RA_min;
     public String g_str_RA_sec;
     
-    public String g_DEC_deg;
-    public String g_DEC_min;
-    public String g_DEC_sec;
+    public double g_DEC_deg;
+    public double g_DEC_min;
+    public double g_DEC_sec;
+    
+//    public String g_DEC_deg;
+//    public String g_DEC_min;
+//    public String g_DEC_sec;
     
     /* Planet variables to determine planet elements */
     public double g_lscal;
@@ -273,14 +277,18 @@ public class Planet extends CelestialObject
         minutes = (int) ((Dec - degrees) * 60.0);
         seconds = (int) ((((Dec - degrees) * 60.0) - minutes) * 60.0);
         
-        g_DEC_deg = Integer.toString(degrees);
-        g_DEC_min = Integer.toString(minutes);
-        g_DEC_sec = Integer.toString(seconds);
+        g_DEC_deg = degrees;
+        g_DEC_min = minutes;
+        g_DEC_sec = seconds;
+        
+//        g_DEC_deg = Integer.toString(degrees);
+//        g_DEC_min = Integer.toString(minutes);
+//        g_DEC_sec = Integer.toString(seconds);
         
         //System.out.println("DEC = " + Dec);
-        System.out.println("Dec in Degrees = " + degrees);
-        System.out.println("Dec in Minutes = " + minutes);
-        System.out.println("Dec in Seconds = " + seconds);
+        System.out.println("Dec in Degrees = " + g_DEC_deg);
+//        System.out.println("Dec in Minutes = " + minutes);
+//        System.out.println("Dec in Seconds = " + seconds);
 
         
     } // End convertRightAscensionToDegMinSec()
@@ -321,8 +329,6 @@ public class Planet extends CelestialObject
         */
         
         // TODO: Remove this when doing stuff for real
-        //double jd = 2458540; //2458534.5; //Julian Day 
-        //double jd = 2458583.597916667;//Calculation.getJulianDate(dateTime); //2458583.597916667
         double cy = julianDate/36525; //67.31235181382614
         System.out.println("1) jd = " + julianDate);
         System.out.println("2) cy = " + cy + "\n");
@@ -470,15 +476,18 @@ public class Planet extends CelestialObject
         
         distance = Math.sqrt(Math.pow(xEq, 2) + Math.pow(yEq, 2) + Math.pow(zEq, 2));
         
-        //System.out.println("(1)g_dec = " + g_declination);
-        //System.out.println("(1)g_RA = " + g_rightAscension);
-        
-        
+        System.out.println("Planet: g_DEC = " + g_declination);
         System.out.println("Planet: g_RA = " + g_rightAscension);
 
+        planet_convertDeclinationToDegMinSec(g_declination);
+        
         // Making RA POSITIVE number, if it's calculated as a negative value:
         if(g_rightAscension < 0)
         {
+//            g_RA_hour = 0;
+//            g_RA_min = 0;
+//            g_RA_sec = 0;
+//            planet_convertRightAscensionToHrsMinSec(g_RA_hour);
             g_positiveRightAsc = Math.abs(g_rightAscension);
             planet_convertRightAscensionToHrsMinSec(g_positiveRightAsc);
         }
@@ -511,9 +520,9 @@ public class Planet extends CelestialObject
             throw new Exception("Invalid value of " + g_RA_hour + " for rightAscension passed into Planet.calculateHorizonCoordinates");
         }
         
-        if (g_declination < -90 || g_declination > 90)
+        if (g_DEC_deg < -90 || g_DEC_deg > 90)
         {
-            throw new Exception("Invalid value of " + g_declination + " for declination passed into Planet.calculateHorizonCoordinates");
+            throw new Exception("Invalid value of " + g_DEC_deg + " for declination passed into Planet.calculateHorizonCoordinates");
         }
         
         double decimalHours = greenwichSiderealTime.getHour() + (greenwichSiderealTime.getMinute() / 60.0) + (greenwichSiderealTime.getSecond() / (60.0 * 60));
@@ -524,7 +533,7 @@ public class Planet extends CelestialObject
 //        System.out.println("hourAngleDegrees = " + hourAngleDegrees);
         
         double hourAngleRadians = Calculation.getRadiansFromDegrees(hourAngleDegrees);
-        double declinationRadians = Calculation.getRadiansFromDegrees(g_declination);
+        double declinationRadians = Calculation.getRadiansFromDegrees(g_DEC_deg);
         double latitudeRadians = Calculation.getRadiansFromDegrees(latitude);
         
         double elevationRadians = Math.asin(

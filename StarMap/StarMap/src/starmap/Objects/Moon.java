@@ -201,7 +201,7 @@ public class Moon extends CelestialObject
         
         System.out.println("Moon: RA: " + rightAscension);
         System.out.println("Moon: DEC: " + declination + "\n");
-
+         
     } // End getIntermediateValues()
    
     @Override

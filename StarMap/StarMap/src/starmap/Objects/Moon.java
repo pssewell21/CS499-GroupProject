@@ -14,6 +14,8 @@ import java.time.LocalTime;
 import starmap.Calculation;
 
 /**
+ * OBJECT: Moon
+ * 
  * DESCRIPTION: This is a child class of CelestialObject that calculates the
  *              moon phase and position based on given Julian date, latitude, 
  *              longitude, date and time.

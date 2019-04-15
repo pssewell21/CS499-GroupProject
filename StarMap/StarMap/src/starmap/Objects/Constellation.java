@@ -9,27 +9,56 @@ import java.time.LocalTime;
 import starmap.Calculation;
 
 /**
- *
- * @author pssewell21
+ * OBJECT: Constellation
+ * 
+ * DESCRIPTION: This is a child class of CelestialObject that creates Constellation
+ *              objects on an image grid based on right ascension, declination,
+ *              distance, and absolute magnitude.
+ * 
+ * DATE: 02-10-2019
+ * 
+ * @author pssewell21 (code) and Dina Brown (javadoc)
  */
 public class Constellation extends CelestialBody
 {
+     /**
+     *  GLOBAL VARIABLES
+     */
     public double rightAscension;
-    
     public double declination;
-    
     public double distance;
-    
     public double absoluteMagnitude;
-            
+    
+     /**************************************************************************
+     *
+     * DESCRIPTION: Constructor for class Constellation
+     * 
+     * @param name this is the name of the Constellation
+     * @param rightAscension the east/west direction in the sky
+     * @param declination the north/south direction in the sky
+     * 
+    ***************************************************************************/
     public Constellation(String name, double rightAscension, double declination)
     {
         this.name = name;
         this.rightAscension = rightAscension;
         this.declination = declination;
-    }
+    } // End Constellation()
     
-    @Override
+     /**************************************************************************
+     *
+     * METHOD: calculateHorizonCoordinates()
+     * 
+     * DESCRIPTION: gets the coordinates and time information that will be used
+     *              to plot Constellation object.
+     * 
+     * @param latitude the north/south direction of the surface of the earth.
+     * @param longitude the east/west direction of the surface of the earth.
+     * @param greenwichSiderealTime
+     * 
+     * @throws Exception
+     * 
+    ***************************************************************************/
     public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) throws Exception
     {
         if (rightAscension < 0 || rightAscension > 24)
@@ -81,5 +110,5 @@ public class Constellation extends CelestialBody
 
         azimuth = azimuthDegrees;
         elevation = elevationDegrees;
-    } 
-}
+    } // End calculateHorizonCoordinates()
+} // End Constellation Class

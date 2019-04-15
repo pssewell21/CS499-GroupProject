@@ -8,8 +8,12 @@ package starmap.Objects;
 import java.time.LocalTime;
 
 /**
- *
- * @author pssewell21
+ * OBJECT: CelestialBody
+ * 
+ * DESCRIPTION: This is the Parent class that shares the 
+ *              calculateHorizonCoordinates() among its children.
+ * 
+ * @author pssewell21 (code) and Dina Brown (javadoc comments)
  */
 public abstract class CelestialBody 
 {
@@ -20,4 +24,4 @@ public abstract class CelestialBody
     public String name;
     
     public abstract void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) throws Exception;
-}
+} // End CelestialBody()

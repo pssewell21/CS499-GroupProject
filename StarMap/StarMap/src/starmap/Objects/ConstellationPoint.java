@@ -9,17 +9,32 @@ import java.time.LocalTime;
 import starmap.Calculation;
 
 /**
- *
- * @author pssewell21
+ * OBJECT: ConstellationPoint
+ * 
+ * DESCRIPTION: This is class provides constellation points that are used for
+ *              drawing.
+ * 
+ * @author pssewell21 (code) and Dina Brown (javadoc)
  */
 public class ConstellationPoint extends CelestialBody
-{    
+{   
+     /**
+     *  GLOBAL VARIABLES
+     */
     public double rightAscension;
-    
     public double declination;
-    
     public String starName;
-            
+    
+     /**************************************************************************
+     *
+     * DESCRIPTION: Constructor for class ConstellationPoint
+     * 
+     * @param name this is the name of the constellation
+     * @param rightAscension the east/west direction in the sky
+     * @param declination the north/south direction in the sky
+     * @param starName name of a star that acts part of the constellation
+     * 
+    ***************************************************************************/
     public ConstellationPoint(String name, double rightAscension, double declination, String starName)
     {
         this.name = name;
@@ -29,6 +44,18 @@ public class ConstellationPoint extends CelestialBody
     }
     
     @Override
+     /**************************************************************************
+     *
+     * METHOD: calculateHorizonCoordinates()
+     * 
+     * DESCRIPTION: gets the coordinates and time information that will be used
+     *              to plot Constellation points.
+     * 
+     * @param latitude the north/south direction of the surface of the earth. 
+     * @param longitude the east/west direction of the surface of the earth.
+     * @param greenwichSiderealTime
+     * 
+    ***************************************************************************/
     public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) throws Exception
     {
         if (rightAscension < 0 || rightAscension > 24)
@@ -80,5 +107,5 @@ public class ConstellationPoint extends CelestialBody
 
         azimuth = azimuthDegrees;
         elevation = elevationDegrees;
-    }   
-}
+    } // End calculateHorizonCoordinates()
+} // End ConstellationPoint()

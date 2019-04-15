@@ -9,7 +9,7 @@ import java.time.LocalTime;
 import starmap.Calculation;
 
 /**
- * OBJECT: Calculation
+ * OBJECT: Star
  * 
  * DESCRIPTION: This is a child class of CelestialObject that creates Star objects
  *              on an image grid based on right ascension, declination, distance,

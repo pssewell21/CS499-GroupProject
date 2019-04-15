@@ -684,11 +684,11 @@ public class Driver extends javax.swing.JFrame {
                 messier.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             // Moon calculations:
-            moon.moon_getIntermediateValues(latitude, longitude, dateTime);
-            moon.getIntermediateValues(greenwichDateTime);
+            //moon.moon_getIntermediateValues(latitude, longitude, dateTime);
+            moon.moon_getIntermediateValues(greenwichDateTime);
             moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             
-            //System.out.println("\n" + moon.phase);
+            System.out.println("\n" + moon.phase);
             
             // Output positions of objects
 //            for (Planet planet : planetList)
@@ -697,8 +697,8 @@ public class Driver extends javax.swing.JFrame {
 //                    + planet.azimuth + "°, " + planet.elevation + "°");
 //            }
 //
-//            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
-//                + moon.azimuth + "°, " + moon.elevation + "°");
+            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
+                + moon.azimuth + "°, " + moon.elevation + "°");
 
             mapPanel = new MapPanel(starList, 
                     constellationList, 

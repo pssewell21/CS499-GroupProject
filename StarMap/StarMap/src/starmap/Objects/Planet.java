@@ -501,8 +501,8 @@ public class Planet extends CelestialBody
      * DESCRIPTION: gets the coordinates and time information that will be used
      *              to plot each of the planets.
      * 
-     * @param latitude
-     * @param longitude
+     * @param latitude the north/south direction of the surface of the earth.
+     * @param longitude the east/west direction of the surface of the earth.
      * @param greenwhichSiderealTime
      * 
     ***************************************************************************/

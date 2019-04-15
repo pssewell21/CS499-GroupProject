@@ -5,6 +5,10 @@
  */
 package starmap.Objects;
 
+import com.sun.javafx.css.CalculatedValue;
+import java.lang.String;
+import java.lang.Math;
+import java.text.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import starmap.Calculation;
@@ -18,7 +22,7 @@ import starmap.Calculation;
  * 
  * @author Dina Brown and Patrick Sewell
  */
-public class Moon extends CelestialObject
+public class Moon extends CelestialBody
 {
     
     /**
@@ -48,15 +52,66 @@ public class Moon extends CelestialObject
      /**************************************************************************
      * 
      * METHOD: getIntermediateValues()
-     * 
+     *
      * DESCRIPTION: gets the calculated moon phases, right ascension and declination
+     * DESCRIPTION: gets the calculated values for each planet
      * 
-     * @param dateTime access the current year
-     * @param latitude
-     * @param longitude
+     * @param julianDate
      * 
     ***************************************************************************/
+    public void moon_convertJulianDateToCalanderDate(double julianDate)
+    {
+        double A, B, C, D, E, F, Z, alpha;
+        double JD;
+        
+        //Step 1:
+        JD = julianDate + 0.5;
+        
+        //Step 2:
+        Z = (int) JD;
+        F = JD - Z;
+        
+        if(Z < 229161)
+            A = Z;
+        else
+        {
+            alpha = (int) ((Z - 1867216.25) / 36524.25);
+            A = Z + 1 + alpha - (int) (alpha / 4);
+        }
+        //Step 3:
+        B = A + 1524;
+        C = (int) ((B - 122.1) / 365.25);
+        D = (int) (365.25 * C);
+        E = (int) ((B - D) / 30.6001);
+        
+        //Step 4: Get the Day, Month, and Year in Calendar Date
+        g_calander_day = B - D - (int)((30.6001 * E) + F);
+        
+        if(E < 13.5)
+            g_calander_month = E - 1;
+        else
+            g_calander_month = E - 13;
+        
+        if(g_calander_month > 2.5)
+            g_calander_year = C - 4716;
+        else
+            g_calander_year = C - 4715;
+        
+        
+    } //moon_convertJulianDateToCalanderDate
+    
+     /**************************************************************************
+     * 
+     * METHOD: getIntermediateValues()
+     * 
+     * DESCRIPTION: gets the calculated values for the moon
+     * 
+     * @param greenwichDateTime
+     * 
+    ***************************************************************************/
+
     public void moon_getIntermediateValues(double latitude, double longitude, LocalDateTime dateTime)
+    public void getIntermediateValues(LocalDateTime greenwichDateTime)
     {
         // TODO: Remove julian date argument from method signature - PS
         
@@ -65,9 +120,9 @@ public class Moon extends CelestialObject
         double newMoonJulianDate = 2451549.5;
         double periodLength = 29.53;
         
-        double julianDate = Calculation.getJulianDate(dateTime);
+        double greenwichJulianDate = Calculation.getJulianDate(greenwichDateTime);
         
-        double dateDifference = julianDate - newMoonJulianDate;
+        double dateDifference = greenwichJulianDate - newMoonJulianDate;
         
         double numNewMoons = dateDifference / periodLength;
         
@@ -115,31 +170,32 @@ public class Moon extends CelestialObject
         }
         // END MOON PHASE CALCULATIONS
         
- 
-        //Lunar Location calculation:
-        //Code used from http://www.geoastro.de/elevazmoon/basics/index.htm
+        // START MOON POSITION CALCULCATIONS
         
-        double T, eps;
-        double X, Y, Z, R;
+        // Reference: https://aa.quae.nl/en/reken/hemelpositie.html
+        double baselineJulianDate = Calculation.getJulianDate(LocalDateTime.of(2000, 1, 1, 12, 0));
         
-        T = (julianDate - 2451545.0) / 36525.0; // JD - J2000
+        dateDifference = greenwichJulianDate - baselineJulianDate;
         
-        eps = 23.0 + (26.0/60.0) + (21.448/3600.0) - (46.8150*T+ 0.00059*T*T
-                                                        - 0.001813*T*T*T)/3600;
+//        System.out.println("greenwichJulianDate = " + greenwichJulianDate);
+//        System.out.println("baselineJulianDate = " + baselineJulianDate);
+//        System.out.println("dateDifference = " + dateDifference);
         
-        X = Math.cos(latitude)*Math.cos(longitude);
-        Y = Math.cos(eps)*Math.cos(latitude)* Math.sin(longitude) 
-                                            - Math.sin(eps)*Math.sin(latitude);
-        Z = Math.sin(eps)*Math.cos(latitude)* Math.sin(longitude) 
-                                            + Math.cos(eps)*Math.sin(latitude);
-        R = Math.sqrt(1-Z*Z);
+        double l = (218.316 + (13.176396 * dateDifference)) % 360.0;
+        double m = (134.963 + (13.064993 * dateDifference)) % 360.0;
+        double f = (93.272 + (13.229350 * dateDifference)) % 360.0;
         
-        //RA is in hrs, DEC is in degrees
+//        System.out.println("l = " + l);
+//        System.out.println("m = " + m);
+//        System.out.println("f = " + f);
         
-        double arc_tan = Math.atan(Y/(X + R));
+        double longitude = l + (6.289 * Math.sin(Calculation.getRadiansFromDegrees(m)));
+        double latitude = 5.128 * Math.sin(Calculation.getRadiansFromDegrees(f));
+        double distance = 385001 - (20905 * Math.cos(Calculation.getRadiansFromDegrees(m)));
         
-        if(arc_tan < 0)
-            arc_tan = arc_tan + Math.PI;
+//        System.out.println("longitude = " + longitude);
+//        System.out.println("latitude = " + latitude);
+//        System.out.println("distance = " + distance);
         
         g_rightAscension = (24 / Math.PI) * arc_tan; // in hours
         g_declination = (180/Math.PI) * Math.asin(Math.sin(eps)* Math.cos(latitude)
@@ -148,6 +204,68 @@ public class Moon extends CelestialObject
         
         System.out.println("Moon class: RA: " + g_rightAscension);
         System.out.println("Moon class: DEC: " + g_declination + "\n");
+        final double epsilon = 23.4397;
+        
+//        double step21Result = (Math.sin(Calculation.getRadiansFromDegrees(longitude)) * Math.cos(Calculation.getRadiansFromDegrees(latitude)) * Math.cos(Calculation.getRadiansFromDegrees(epsilon)))
+//                - (Math.sin(Calculation.getRadiansFromDegrees(latitude)) * Math.sin(Calculation.getRadiansFromDegrees(epsilon)));
+//        double step22Result = Math.cos(Calculation.getRadiansFromDegrees(longitude)) * Math.cos(Calculation.getRadiansFromDegrees(latitude));
+        
+        double latitideRadians = Calculation.getRadiansFromDegrees(latitude);
+        double longitudeRadians = Calculation.getRadiansFromDegrees(longitude);
+        double epsilonRadians = Calculation.getRadiansFromDegrees(epsilon);
+        
+        double rightAscensionRadians = Math.atan2((Math.sin(longitudeRadians) * Math.cos(epsilonRadians)) - (Math.tan(latitideRadians) * Math.sin(epsilonRadians)), Math.cos(longitudeRadians));
+        double rightAscensionDegrees = Calculation.getDegreesFromRadians(rightAscensionRadians);
+        
+        if (rightAscensionDegrees < 0)
+        {
+            rightAscensionDegrees += 360;
+        }
+        
+        rightAscension = rightAscensionDegrees / 15.0;
+                                
+        double declinationRadians = Math.asin((Math.sin(latitideRadians) * Math.cos(epsilonRadians)) 
+                + (Math.cos(latitideRadians) * Math.sin(epsilonRadians) * Math.sin(longitudeRadians))); 
+        declination = Calculation.getDegreesFromRadians(declinationRadians);
+        
+        //System.out.println("rightAscension in hours = " + rightAscension);
+        //System.out.println("declination = " + declination);
+        
+        // END MOON POSITION CALCULCATIONS
+        
+ 
+        //Lunar Location calculation:
+        //Code used from http://www.geoastro.de/elevazmoon/basics/index.htm
+        
+//        double T, eps;
+//        double X, Y, Z, R;
+//        
+//        T = (julianDate - 2451545.0) / 36525.0; // JD - J2000
+//        
+//        eps = 23.0 + (26.0/60.0) + (21.448/3600.0) - (46.8150*T+ 0.00059*T*T
+//                                                        - 0.001813*T*T*T)/3600;
+//        
+//        X = Math.cos(latitude)*Math.cos(longitude);
+//        Y = Math.cos(eps)*Math.cos(latitude)* Math.sin(longitude) 
+//                                            - Math.sin(eps)*Math.sin(latitude);
+//        Z = Math.sin(eps)*Math.cos(latitude)* Math.sin(longitude) 
+//                                            + Math.cos(eps)*Math.sin(latitude);
+//        R = Math.sqrt(1-Z*Z);
+//        
+//        //RA is in hrs, DEC is in degrees
+//        
+//        double arc_tan = Math.atan(Y/(X + R));
+//        
+//        if(arc_tan < 0)
+//            arc_tan = arc_tan + Math.PI;
+//        
+//        rightAscension = (24 / Math.PI) * arc_tan; // in hours
+//        declination = (180/Math.PI) * Math.asin(Math.sin(eps)* Math.cos(latitude)
+//                                            * Math.sin(longitude) + Math.cos(eps)
+//                                            * Math.sin(latitude)); // in degrees;
+//        
+//        System.out.println("Moon: RA: " + rightAscension);
+//        System.out.println("Moon: DEC: " + declination + "\n");
          
     } // End getIntermediateValues()
    
@@ -170,12 +288,14 @@ public class Moon extends CelestialObject
         if (g_rightAscension < 0 || g_rightAscension > 24)
         {
             throw new Exception("Invalid value of " + g_rightAscension + " for rightAscension passed into Star.calculateHorizonCoordinates");
+            throw new Exception("Invalid value of " + rightAscension + " for rightAscension passed into Moon.calculateHorizonCoordinates");
         }
         
 
         if (g_declination < -90 || g_declination > 90)
         {
             throw new Exception("Invalid value of " + g_declination + " for declination passed into Star.calculateHorizonCoordinates");
+            throw new Exception("Invalid value of " + declination + " for declination passed into Moon.calculateHorizonCoordinates");
         }
         
         double decimalHours = greenwichSiderealTime.getHour() + (greenwichSiderealTime.getMinute() / 60.0) + (greenwichSiderealTime.getSecond() / (60.0 * 60));

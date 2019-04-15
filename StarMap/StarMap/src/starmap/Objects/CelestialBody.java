@@ -11,7 +11,7 @@ import java.time.LocalTime;
  *
  * @author pssewell21
  */
-public abstract class CelestialObject 
+public abstract class CelestialBody 
 {
     public double azimuth;
     

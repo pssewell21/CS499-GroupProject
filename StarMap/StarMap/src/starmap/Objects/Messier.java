@@ -13,7 +13,7 @@ import starmap.Calculation;
  *              objects based on right ascension and declination.
  * @author pssewell21 (code), Dina Brown (javadoc comments)
  */
-public class Messier extends CelestialObject
+public class Messier extends CelestialBody
 {
     /**
     *  GLOBAL VARIABLES

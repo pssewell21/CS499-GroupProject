@@ -12,7 +12,7 @@ import starmap.Calculation;
  *
  * @author pssewell21
  */
-public class Constellation extends CelestialObject
+public class Constellation extends CelestialBody
 {
     public double rightAscension;
     

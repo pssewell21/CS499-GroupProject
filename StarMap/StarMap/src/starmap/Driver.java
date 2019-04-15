@@ -602,32 +602,23 @@ public class Driver extends javax.swing.JFrame {
             int hourOffset = Integer.parseInt(hourOffsetComboBox.getSelectedItem().toString());
                         
             int greenwichDay = selectedDate.get(Calendar.DAY_OF_MONTH);
-            int greenwichHour = hour - hourOffset;
+            int greenwichHour = hour - hourOffset;   
             
-            if (greenwichHour < 0)
-            {
-                greenwichHour += 24;
-                greenwichDay -= 1;
-            }
-            
-            if (greenwichHour > 23)
+            if (greenwichHour >= 24)
             {
                 greenwichHour -= 24;
                 greenwichDay += 1;
-            }        
+            }
             
             int minute = Integer.parseInt(minuteTextField.getText());  
             
-            LocalDateTime dateTime = LocalDateTime.of(
+            LocalDateTime greenwichDateTime = LocalDateTime.of(
                     selectedDate.get(Calendar.YEAR), 
                     selectedDate.get(Calendar.MONTH) + 1, 
                     greenwichDay, 
                     greenwichHour, 
                     minute);
-            
-            double julianDate = Calculation.getJulianDate(dateTime);      
-            //System.out.println("Julian Date: " + julianDate);
-            
+                           
             int latitudeDegrees = Integer.parseInt(latDegreeTextField.getText());
             int latitudeMinutes = Integer.parseInt(minLatTextField.getText());
             double latitudeSeconds = Double.parseDouble(secLatTextField.getText());
@@ -656,7 +647,7 @@ public class Driver extends javax.swing.JFrame {
                 longitudeDirection = "East";
             }                    
                      
-            LocalTime greenwichSiderealTime = Calculation.getGreenwichSiderealTime(dateTime);            
+            LocalTime greenwichSiderealTime = Calculation.getGreenwichSiderealTime(greenwichDateTime);            
             
             // Coordinates for UAH are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W   
             double latitude = Calculation.getDecimalCoordinate(latitudeDegrees, latitudeMinutes, latitudeSeconds, latitudeDirection);
@@ -684,7 +675,7 @@ public class Driver extends javax.swing.JFrame {
             
             for (Planet planet : planetList)
             {
-                planet.planet_getIntermediateValues(julianDate, dateTime);
+                planet.planet_getIntermediateValues(greenwichDateTime);
                 planet.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
             }
             
@@ -694,18 +685,20 @@ public class Driver extends javax.swing.JFrame {
             }
             // Moon calculations:
             moon.moon_getIntermediateValues(latitude, longitude, dateTime);
+            moon.getIntermediateValues(greenwichDateTime);
             moon.calculateHorizonCoordinates(latitude, longitude, greenwichSiderealTime);
-            System.out.println("\n" + moon.phase);
+            
+            //System.out.println("\n" + moon.phase);
             
             // Output positions of objects
-            for (Planet planet : planetList)
-            {
-                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
-                    + planet.azimuth + "°, " + planet.elevation + "°");
-            }
-
-            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
-                + moon.azimuth + "°, " + moon.elevation + "°");
+//            for (Planet planet : planetList)
+//            {
+//                System.out.println("Current Azimuth/Elevation of " + planet.name + ": "
+//                    + planet.azimuth + "°, " + planet.elevation + "°");
+//            }
+//
+//            System.out.println("Current Azimuth/Elevation of " + moon.name + ": "
+//                + moon.azimuth + "°, " + moon.elevation + "°");
 
             mapPanel = new MapPanel(starList, 
                     constellationList, 
@@ -738,6 +731,24 @@ public class Driver extends javax.swing.JFrame {
             mapFrame.setVisible(true);            
             
             saveImageButton.setEnabled(true);
+            
+            
+            
+            // Unit testing of Calculation.GetJulianDate()
+//            double julianDate1 = Calculation.getJulianDate(LocalDateTime.of(2019, 04, 14, 23, 25, 0));
+//            System.out.println("julianDate1 = " + julianDate1 + ". Should be 2458588.475694");
+//            
+//            double julianDate2 = Calculation.getJulianDate(LocalDateTime.of(1999, 04, 14, 23, 25, 0));
+//            System.out.println("julianDate2 = " + julianDate2 + ". Should be 2451283.475694");
+//            
+//            double julianDate3 = Calculation.getJulianDate(LocalDateTime.of(2000, 1, 1, 12, 00, 0));
+//            System.out.println("julianDate3 = " + julianDate3 + ". Should be 2451545.000000");
+//            
+//            double julianDate4 = Calculation.getJulianDate(LocalDateTime.of(2019, 04, 14, 11, 25, 0));
+//            System.out.println("julianDate4 = " + julianDate4 + ". Should be 2458587.975694");
+//            
+//            double julianDate5 = Calculation.getJulianDate(LocalDateTime.of(1999, 04, 14, 11, 25, 0));
+//            System.out.println("julianDate5 = " + julianDate5 + ". Should be 2451282.975694");
         } 
         catch (Exception ex) 
         {
@@ -878,9 +889,9 @@ public class Driver extends javax.swing.JFrame {
     private void secLatTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_secLatTextFieldKeyReleased
         try
         {
-            int latMinutes = Integer.parseInt(secLatTextField.getText());
+            double latSeconds = Double.parseDouble(secLatTextField.getText());
         
-            if((latMinutes < 0) || (latMinutes > 59))
+            if((latSeconds < 0) || (latSeconds >= 60))
             {
                 secLatTextField.setBackground(errorBackgroundColor);
             }          
@@ -945,9 +956,9 @@ public class Driver extends javax.swing.JFrame {
     private void secLongTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_secLongTextFieldKeyReleased
         try
         {  
-            int latMinutes = Integer.parseInt(secLongTextField.getText());
+            double latMinutes = Double.parseDouble(secLongTextField.getText());
         
-            if((latMinutes < 0) || (latMinutes > 59))
+            if((latMinutes < 0) || (latMinutes >= 60))
             {
                 secLongTextField.setBackground(errorBackgroundColor);
             }          

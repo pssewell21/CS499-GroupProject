@@ -19,7 +19,7 @@ import starmap.Calculation;
  * 
  * @author  Dina Brown and Patrick Sewell
  */
-public class Planet extends CelestialObject
+public class Planet extends CelestialBody
 {   
     /**
      *  GLOBAL VARIABLES
@@ -276,7 +276,7 @@ public class Planet extends CelestialObject
         g_DEC_sec = seconds;
         
         //System.out.println("DEC = " + Dec);
-        System.out.println("Dec in Degrees = " + g_DEC_deg);
+//        System.out.println("Dec in Degrees = " + g_DEC_deg);
 //        System.out.println("Dec in Minutes = " + minutes);
 //        System.out.println("Dec in Seconds = " + seconds);
 
@@ -294,8 +294,10 @@ public class Planet extends CelestialObject
      * //@return calculated values
      * 
     ***************************************************************************/
-    public void planet_getIntermediateValues(double julianDate, LocalDateTime dateTime)
+    public void planet_getIntermediateValues(LocalDateTime dateTime)
     {
+        double julianDate = Calculation.getJulianDate(dateTime);
+        
         double meanLongitude;
         double eccentricityOfOrbit; 
         double inclination;
@@ -321,8 +323,8 @@ public class Planet extends CelestialObject
         
         // TODO: Remove this when doing stuff for real
         double cy = julianDate/36525; //67.31235181382614
-        System.out.println("1) jd = " + julianDate);
-        System.out.println("2) cy = " + cy + "\n");
+//        System.out.println("1) jd = " + julianDate);
+//        System.out.println("2) cy = " + cy + "\n");
         
         // This is used to set the Year, Month, and Day so that meanSideralTime()
         // can then access these global values in the getHorizonCoordinates() without
@@ -467,8 +469,8 @@ public class Planet extends CelestialObject
         
         distance = Math.sqrt(Math.pow(xEq, 2) + Math.pow(yEq, 2) + Math.pow(zEq, 2));
         
-        System.out.println("Planet: g_DEC = " + g_declination);
-        System.out.println("Planet: g_RA = " + g_rightAscension);
+//        System.out.println("Planet: g_DEC = " + g_declination);
+//        System.out.println("Planet: g_RA = " + g_rightAscension);
 
         planet_convertDeclinationToDegMinSec(g_declination);
         
@@ -483,11 +485,11 @@ public class Planet extends CelestialObject
             planet_convertRightAscensionToHrsMinSec(g_positiveRightAsc);
         }
 
-        System.out.println("g_positiverightAsc " + g_positiveRightAsc);
-
-        System.out.println("\nRA_hr = " + g_RA_hour);
-        System.out.println("RA_min = " + g_RA_min);
-        System.out.println("RA_sec = " + g_RA_sec);
+//        System.out.println("g_positiverightAsc " + g_positiveRightAsc);
+//
+//        System.out.println("\nRA_hr = " + g_RA_hour);
+//        System.out.println("RA_min = " + g_RA_min);
+//        System.out.println("RA_sec = " + g_RA_sec);
 
     } // End planet_getIntermediateValues()
     

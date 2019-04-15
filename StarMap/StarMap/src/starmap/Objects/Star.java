@@ -17,7 +17,7 @@ import starmap.Calculation;
  * 
  * @author pssewell21 (code) and Dina Brown (javadoc comments)
  */
-public class Star extends CelestialObject
+public class Star extends CelestialBody
 {
     /**
     *  GLOBAL VARIABLES
@@ -73,10 +73,10 @@ public class Star extends CelestialObject
             throw new Exception("Invalid value of " + declination + " for declination passed into Star.calculateHorizonCoordinates");
         }
         
-        double decimalHours = greenwichSiderealTime.getHour() + (greenwichSiderealTime.getMinute() / 60.0) + (greenwichSiderealTime.getSecond() / (60.0 * 60));
+        double greenwichSiderealTimeDecimalHours = greenwichSiderealTime.getHour() + (greenwichSiderealTime.getMinute() / 60.0) + (greenwichSiderealTime.getSecond() / (60.0 * 60));
         
         // Longitude passed is negative if west of Greenwich and will be subtracted in this case
-        double hourAngleDegrees = (decimalHours - rightAscension) * 15 + longitude;        
+        double hourAngleDegrees = (greenwichSiderealTimeDecimalHours - rightAscension) * 15 + longitude;            
         
 //        System.out.println("hourAngleDegrees = " + hourAngleDegrees);
         

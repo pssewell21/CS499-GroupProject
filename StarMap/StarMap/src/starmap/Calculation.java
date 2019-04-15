@@ -39,14 +39,17 @@ public class Calculation
         double decimalHours = Calculation.getDecimalHours(dateTime.getHour(), 
                 dateTime.getMinute(), dateTime.getSecond());
         
-        // Adjust for hour of day
-        if (decimalHours >= 12)
+        // Add the day fraction for time of day
+        julianDate += (decimalHours - 12) / 24.0;
+        
+        // Adjust date in certain conditions that cause an error of 1 day to occur
+        if (duration.getSeconds() < 0 && decimalHours > 12)
         {
-            julianDate += ((decimalHours - 12) / 24.0) - 1;            
+            julianDate -= 1;            
         }
-        else
+        else if (duration.getSeconds() > 0 && decimalHours < 12)
         {
-            julianDate += ((decimalHours - 12) / 24.0) + 1;            
+            julianDate += 1;
         }
         
 //        System.out.println("julianDate with time adjustment = " + julianDate);

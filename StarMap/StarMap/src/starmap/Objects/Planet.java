@@ -290,7 +290,9 @@ public class Planet extends CelestialBody
      * METHOD: planet_getIntermediateValues()
      * 
      * DESCRIPTION: gets the calculated values for each planet. The pseudocode
-     *              for this function was provided by Dr. Rick Coleman (UAH).
+     *              for this function (different name) was provided by Dr. 
+     *              Rick Coleman (UAH).
+     * 
      * @param julianDate 
      * @param dateTime given date that is used to set 
      * //@return calculated values
@@ -501,7 +503,8 @@ public class Planet extends CelestialBody
      * METHOD: calculateHorizionCoordinates()
      * 
      * DESCRIPTION: gets the coordinates and time information that will be used
-     *              to plot each of the planets.
+     *              to plot each of the planets. The pseudocode
+     *              for this function was provided by Dr. Rick Coleman (UAH).
      * 
      * @param latitude the north/south direction of the surface of the earth.
      * @param longitude the east/west direction of the surface of the earth.

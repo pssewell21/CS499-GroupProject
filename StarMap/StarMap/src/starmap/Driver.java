@@ -602,7 +602,15 @@ public class Driver extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /***************************************************************************
+    * METHOD: generateStarMapButtonActionPerformed()
+    *
+    * DESCRIPTION: this method allows the user to click the generate button,
+    *               that will allow the user display a star map image.
+    * 
+    * @param evt
+    * 
+    ***************************************************************************/
     private void generateStarMapButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateStarMapButtonActionPerformed
         try 
         {

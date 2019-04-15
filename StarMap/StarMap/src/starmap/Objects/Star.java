@@ -56,7 +56,8 @@ public class Star extends CelestialBody
      * METHOD: calculateHorizonCoordinates()
      * 
      * DESCRIPTION: gets the coordinates and time information that will be used
-     *              to plot Stars.
+     *              to plot Stars. The pseudocode for this function was provided 
+     *              by Dr. Rick Coleman (UAH).
      * 
      * @param latitude the north/south direction of the surface of the earth. 
      * @param longitude the east/west direction of the surface of the earth.

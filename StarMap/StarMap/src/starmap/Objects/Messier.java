@@ -9,23 +9,47 @@ import java.time.LocalTime;
 import starmap.Calculation;
 
 /**
- *
- * @author pssewell21
+ * DESCRIPTION: This is a child class of CelestialObject that creates Messier
+ *              objects based on right ascension and declination.
+ * @author pssewell21 (code), Dina Brown (javadoc comments)
  */
 public class Messier extends CelestialObject
 {
+    /**
+    *  GLOBAL VARIABLES
+    */
     public double rightAscension;
-    
     public double declination;
     
-    public Messier(double rightAscension, double declination, String name)
+     /**************************************************************************
+     *
+     * DESCRIPTION: Constructor for class Messier
+     * 
+     * @param name this is the name of the Messier object
+     * @param rightAscension the east/west direction in the sky
+     * @param declination the north/south direction in the sky
+     * 
+    ***************************************************************************/
+    public Messier(String name, double rightAscension, double declination)
     {
         this.rightAscension = rightAscension;
         this.declination = declination;
         this.name = name;
-    }
+    } // End Messier()
     
     @Override
+     /**************************************************************************
+     *
+     * METHOD: calculateHorizonCoordinates()
+     * 
+     * DESCRIPTION: gets the coordinates and time information that will be used
+     *              to plot Messier objects.
+     * 
+     * @param latitude the north/south direction of the surface of the earth. 
+     * @param longitude the east/west direction of the surface of the earth.
+     * @param greenwichSiderealTime
+     * 
+    ***************************************************************************/
     public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) throws Exception
     {
         if (rightAscension < 0 || rightAscension > 24)
@@ -77,5 +101,5 @@ public class Messier extends CelestialObject
 
         azimuth = azimuthDegrees;
         elevation = elevationDegrees;
-    }   
-}
+    } // End calculateHorizonCoordinates()
+} // End Messier Class

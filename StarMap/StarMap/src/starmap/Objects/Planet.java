@@ -5,20 +5,25 @@
  */
 package starmap.Objects;
 
-import starmap.Calculation;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import starmap.Calculation;
 
 
 /**
  * DESCRIPTION: This object contains the calculated planet elements. The elements
- *              are then used to determine the positions of 9 major planets.
+ *              are then used to determine the positions of 9 major planets. 
+ *              The planet elements data file was provided by Dr. Rick Coleman (UAH).
  * 
- * Date: 02-10-2019
+ * DATE: 02-10-2019
+ * 
  * @author  Dina Brown and Patrick Sewell
  */
 public class Planet extends CelestialObject
 {   
+    /**
+     *  GLOBAL VARIABLES
+     */
     public final static double RADS = Math.PI / 180.0;
     public final static double DEGS = 180 / Math.PI;
     
@@ -44,10 +49,6 @@ public class Planet extends CelestialObject
     public double g_DEC_deg;
     public double g_DEC_min;
     public double g_DEC_sec;
-    
-//    public String g_DEC_deg;
-//    public String g_DEC_min;
-//    public String g_DEC_sec;
     
     /* Planet variables to determine planet elements */
     public double g_lscal;
@@ -107,7 +108,8 @@ public class Planet extends CelestialObject
      * 
      * METHOD: planet_calculateMeanSiderealTime()
      * 
-     * DESCRIPTION: calculates the mean sidereal time
+     * DESCRIPTION: calculates the mean sidereal time. The pseudocode
+     *              for this function was provided by Dr. Rick Coleman (UAH).
      * 
      * @param new_longitude longitude value
      * @param new_time given time that is used to access hour, min, and sec 
@@ -118,7 +120,7 @@ public class Planet extends CelestialObject
      * @return calculated true anomaly
      * 
     ***************************************************************************/
-    public double planet_meanSiderealTime (double new_longitude, LocalTime new_time, int year, int month, int day)// LocalDateTime new_date)
+    public static double planet_meanSiderealTime (double new_longitude, LocalTime new_time, int year, int month, int day)// LocalDateTime new_date)
     {
         double a, b, c, d, jd, jt, mst;
         int hour, min, sec;
@@ -172,14 +174,15 @@ public class Planet extends CelestialObject
      * 
      * METHOD: planet_true_anomaly()
      * 
-     * DESCRIPTION: calculates the true anomaly from the mean anomaly
+     * DESCRIPTION: calculates the true anomaly from the mean anomaly. The pseudocode
+     *              for this function was provided by Dr. Rick Coleman (UAH).
      * 
      * @param M
      * @param e this is the Eccentricity for a given planet
      * @return calculated true anomaly
      * 
     ***************************************************************************/
-    public double planet_true_anomaly(double M, double e)
+    public static double planet_true_anomaly(double M, double e)
     {   
         double E, E1, V;
         
@@ -204,13 +207,15 @@ public class Planet extends CelestialObject
      * 
      * DESCRIPTION: Takes an angle over 360 degrees and converts it to an
      *              equivalent angle on the interval [0,360]
-     *              example: 450 degrees is 90 degrees on the interval [0,360]
+     *              example: 450 degrees is 90 degrees on the interval [0,360].
+     *              The pseudocode for this function was provided by 
+     *              Dr. Rick Coleman (UAH).
      * 
      * @param X Angle that will be converted to a new value.
      * @return an angle in radians
      * 
     ***************************************************************************/
-    public double planet_mod2Pi(double X)
+    public static double planet_mod2Pi(double X)
     {
         // Angle X is already in Radians when it's calculuated in this function:
         double A, B;
@@ -228,7 +233,9 @@ public class Planet extends CelestialObject
      * 
      * METHOD: planet_convertRightAscensionToHrsMinSec()
      * 
-     * DESCRIPTION: converts Right Ascension to HOURS, MINUTES, SECCONDS
+     * DESCRIPTION: converts Right Ascension to HOURS, MINUTES, SECCONDS. The
+     *              pseudocode for this function was provided by Dr. Rick Coleman
+     *              (UAH).
      * 
      * @param RA Given Right Ascension
      * 
@@ -244,26 +251,14 @@ public class Planet extends CelestialObject
         g_RA_hour = hours;
         g_RA_min = minutes;
         g_RA_sec = seconds;
-        
-//        g_str_RA_hour = Integer.toString(hours);
-//        g_str_RA_min = Integer.toString(minutes);
-//        g_str_RA_sec = Integer.toString(seconds);
-//        
-//        System.out.println("str_RA_hr: " + g_str_RA_hour);
-//        System.out.println("str_RA_min: " + g_str_RA_min);
-//        System.out.println("str_RA_sec: " + g_str_RA_sec);
-//       
-//        System.out.println("RA = " + RA);
-//        System.out.println("RA in Hours = " + hours);
-//        System.out.println("RA in Minutes = " + minutes);
-//        System.out.println("RA in Seconds = " + seconds);
 
-    } // End convertRightAscensionToHrsMinSec()
+    } // End planet_convertRightAscensionToHrsMinSec()
     
     /*************************************************************************** 
     *  NAME: planet_convertDeclinationToDegMinSec()
     *
-    *  DESCRIPTION: converts Declination to DEGREES, MINUTES, SECCONDS
+    *  DESCRIPTION: converts Declination to DEGREES, MINUTES, SECCONDS. The pseudocode
+    *              for this function was provided by Dr. Rick Coleman (UAH).
     *  
     *  @param Dec Given Declination value
     *
@@ -280,10 +275,6 @@ public class Planet extends CelestialObject
         g_DEC_min = minutes;
         g_DEC_sec = seconds;
         
-//        g_DEC_deg = Integer.toString(degrees);
-//        g_DEC_min = Integer.toString(minutes);
-//        g_DEC_sec = Integer.toString(seconds);
-        
         //System.out.println("DEC = " + Dec);
         System.out.println("Dec in Degrees = " + g_DEC_deg);
 //        System.out.println("Dec in Minutes = " + minutes);
@@ -296,7 +287,8 @@ public class Planet extends CelestialObject
      * 
      * METHOD: planet_getIntermediateValues()
      * 
-     * DESCRIPTION: gets the calculated values for each planet
+     * DESCRIPTION: gets the calculated values for each planet. The pseudocode
+     *              for this function was provided by Dr. Rick Coleman (UAH).
      * @param julianDate 
      * @param dateTime given date that is used to set 
      * //@return calculated values

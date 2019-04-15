@@ -98,7 +98,7 @@ public class MessierDataReader extends DataReader
                 
                     String name = lineItems[12];
 
-                    Messier messier = new Messier(rightAscension, declination, name);
+                    Messier messier = new Messier(name, rightAscension, declination);
                 
                     list.add(messier);
                 }

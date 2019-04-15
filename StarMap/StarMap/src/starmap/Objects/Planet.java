@@ -297,6 +297,7 @@ public class Planet extends CelestialBody
      * METHOD: planet_getIntermediateValues()
      * 
      * DESCRIPTION: gets the calculated values for each planet
+     * @param julianDate 
      * @param dateTime given date that is used to set 
      * //@return calculated values
      * 

@@ -9,18 +9,18 @@ import java.awt.*;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+import java.util.TimeZone;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -41,8 +41,12 @@ import starmap.Objects.Star;
 
 
 /**
- *
- * @author pssew
+ * OBJECT: Driver
+ * 
+ * DESCRIPTION: This object creates the star map based on user inputs in GUI.
+ * 
+ * DATE: 02-01-2019
+ * @author pssew (code) and Dina Brown (code, javadoc comments)
  */
 public class Driver extends javax.swing.JFrame {
     
@@ -246,6 +250,11 @@ public class Driver extends javax.swing.JFrame {
         eastRadioButton.setText("E");
 
         westRadioButton.setText("W");
+        westRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                westRadioButtonActionPerformed(evt);
+            }
+        });
 
         southRadioButton.setText("S");
 
@@ -755,12 +764,13 @@ public class Driver extends javax.swing.JFrame {
             Logger.getLogger(Driver.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_generateStarMapButtonActionPerformed
-    /*
+    /***************************************************************************
     * METHOD: starsCheckBoxActionPerformed()
     *
     * DESCRIPTION: this method prints a message when the stars check box has
     *               been selected.
-    */
+    * 
+    ***************************************************************************/
     private void starObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_starObjectCheckBoxActionPerformed
         starVisibilityFlag = starObjectCheckBox.isSelected();
         
@@ -776,12 +786,13 @@ public class Driver extends javax.swing.JFrame {
             starLabelCheckBox.setEnabled(true);
         } 
     }//GEN-LAST:event_starObjectCheckBoxActionPerformed
-    /*
-    * METHOD: planetsCheckBoxActionPerformed
+    /***************************************************************************
+    * METHOD: planetsCheckBoxActionPerformed()
     *
     * DESCRIPTION: this method prints a message when the planets check box has
     *               been selected.
-    */
+    * 
+    ***************************************************************************/
     private void planetObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planetObjectCheckBoxActionPerformed
         planetVisibilityFlag = planetObjectCheckBox.isSelected();     
         
@@ -797,12 +808,13 @@ public class Driver extends javax.swing.JFrame {
             planetLabelCheckBox.setEnabled(true);
         } 
     }//GEN-LAST:event_planetObjectCheckBoxActionPerformed
-    /*
-    * METHOD: constellationsCheckBoxActionPerformed
+    /**************************************************************************
+    * METHOD: constellationsCheckBoxActionPerformed()
     *
     * DESCRIPTION: this method prints a message when the constellations check 
     *               box has been selected.
-    */
+    * 
+    ***************************************************************************/
     private void constellationObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_constellationObjectCheckBoxActionPerformed
         constellationVisibilityFlag = constellationObjectCheckBox.isSelected();
         
@@ -818,12 +830,13 @@ public class Driver extends javax.swing.JFrame {
             constellationLabelCheckBox.setEnabled(true);
         } 
     }//GEN-LAST:event_constellationObjectCheckBoxActionPerformed
-    /*
-    * METHOD: messierCheckBoxActionPerformed
+    /***************************************************************************
+    * METHOD: messierCheckBoxActionPerformed()
     *
     * DESCRIPTION: this method prints a message when the Messier check box has
     *               been selected.
-    */
+    * 
+    ***************************************************************************/
     private void moonObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moonObjectCheckBoxActionPerformed
         moonVisibilityFlag = moonObjectCheckBox.isSelected(); 
         
@@ -839,7 +852,12 @@ public class Driver extends javax.swing.JFrame {
             moonPhaseCheckBox.setEnabled(true);
         } 
     }//GEN-LAST:event_moonObjectCheckBoxActionPerformed
-
+    /***************************************************************************
+    * METHOD: latDegreeTextFieldKeyReleased()
+    *
+    * DESCRIPTION: sets the text field to YELLOW if the latitude degree is invalid.
+    * 
+    ***************************************************************************/
     private void latDegreeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_latDegreeTextFieldKeyReleased
         // Gets the Longitude Degree value from user:
         try
@@ -862,7 +880,12 @@ public class Driver extends javax.swing.JFrame {
         
         setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_latDegreeTextFieldKeyReleased
-
+    /***************************************************************************
+    * METHOD: minLatTextFieldKeyReleased()
+    *
+    * DESCRIPTION: sets the text field to YELLOW if the latitude degree is invalid.
+    * 
+    ***************************************************************************/
     private void minLatTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_minLatTextFieldKeyReleased
         // Gets the Latitude Hours value from user:
         try
@@ -885,7 +908,12 @@ public class Driver extends javax.swing.JFrame {
         
         setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_minLatTextFieldKeyReleased
-
+    /***************************************************************************
+    * METHOD: secLatTextFieldKeyReleased()
+    *
+    * DESCRIPTION: sets the text field to YELLOW if the latitude second is invalid.
+    * 
+    ***************************************************************************/
     private void secLatTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_secLatTextFieldKeyReleased
         try
         {
@@ -907,7 +935,12 @@ public class Driver extends javax.swing.JFrame {
         
         setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_secLatTextFieldKeyReleased
-
+    /***************************************************************************
+    * METHOD: longDegreeTextFieldKeyReleased()
+    *
+    * DESCRIPTION: sets the text field to YELLOW if the longitude degree is invalid.
+    * 
+    ***************************************************************************/
     private void longDegreeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_longDegreeTextFieldKeyReleased
         // Gets the Longitude Degree value from user:
         try
@@ -930,7 +963,12 @@ public class Driver extends javax.swing.JFrame {
         
         setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_longDegreeTextFieldKeyReleased
-
+   /***************************************************************************
+    * METHOD: minLongTextFieldKeyReleased
+    *
+    * DESCRIPTION: sets the text field to YELLOW if the longitude degree is invalid.
+    * 
+    ***************************************************************************/
     private void minLongTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_minLongTextFieldKeyReleased
         try
         { 
@@ -952,7 +990,12 @@ public class Driver extends javax.swing.JFrame {
         
         setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_minLongTextFieldKeyReleased
-
+   /***************************************************************************
+    * METHOD: secLongTextFieldKeyReleased()
+    *
+    * DESCRIPTION: sets the text field to YELLOW if the longitude second is invalid.
+    * 
+    ***************************************************************************/
     private void secLongTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_secLongTextFieldKeyReleased
         try
         {  
@@ -974,7 +1017,12 @@ public class Driver extends javax.swing.JFrame {
         
         setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_secLongTextFieldKeyReleased
-
+   /***************************************************************************
+    * METHOD: hourTextFieldKeyReleased()
+    *
+    * DESCRIPTION: sets the text field to YELLOW if the input hour is invalid.
+    * 
+    ***************************************************************************/
     private void hourTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_hourTextFieldKeyReleased
         try
         {
@@ -996,7 +1044,12 @@ public class Driver extends javax.swing.JFrame {
         
         setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_hourTextFieldKeyReleased
-
+   /***************************************************************************
+    * METHOD: minuteTextFieldKeyReleased()
+    *
+    * DESCRIPTION: sets the text field to YELLOW if the input minute is invalid.
+    * 
+    ***************************************************************************/
     private void minuteTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_minuteTextFieldKeyReleased
         try
         {            
@@ -1018,7 +1071,13 @@ public class Driver extends javax.swing.JFrame {
         
         setGenerateStarMapButtonIsEnabled();
     }//GEN-LAST:event_minuteTextFieldKeyReleased
-
+   /***************************************************************************
+    * METHOD: messierObjectCheckBoxActionPerformed()
+    *
+    * DESCRIPTION: when the check box is not selected for Messier object, both
+    *               the object and labels are hidden.
+    * 
+    ***************************************************************************/
     private void messierObjectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messierObjectCheckBoxActionPerformed
         messierVisibilityFlag = messierObjectCheckBox.isSelected();
         
@@ -1034,27 +1093,58 @@ public class Driver extends javax.swing.JFrame {
             messierLabelCheckBox.setEnabled(true);
         }
     }//GEN-LAST:event_messierObjectCheckBoxActionPerformed
-
+   /***************************************************************************
+    * METHOD: starLabelCheckBoxActionPerformed()
+    *
+    * DESCRIPTION: displays star labels on map.
+    * 
+    ***************************************************************************/
     private void starLabelCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_starLabelCheckBoxActionPerformed
         starLabelVisibilityFlag = starLabelCheckBox.isSelected();
     }//GEN-LAST:event_starLabelCheckBoxActionPerformed
-
+   /***************************************************************************
+    * METHOD: constellationLabelCheckBoxActionPerformed()
+    *
+    * DESCRIPTION: displays constellations labels on map.
+    * 
+    ***************************************************************************/
     private void constellationLabelCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_constellationLabelCheckBoxActionPerformed
         constellationLabelVisibilityFlag = constellationLabelCheckBox.isSelected();
     }//GEN-LAST:event_constellationLabelCheckBoxActionPerformed
-
+   /***************************************************************************
+    * METHOD: planetLabelCheckBoxActionPerformed()
+    *
+    * DESCRIPTION: displays planet labels on map.
+    * 
+    ***************************************************************************/
     private void planetLabelCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planetLabelCheckBoxActionPerformed
         planetLabelVisibilityFlag = planetLabelCheckBox.isSelected();
     }//GEN-LAST:event_planetLabelCheckBoxActionPerformed
-
+   /***************************************************************************
+    * METHOD: moonPhaseCheckBoxActionPerformed()
+    *
+    * DESCRIPTION: displays moon phases label on map.
+    * 
+    ***************************************************************************/
     private void moonPhaseCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moonPhaseCheckBoxActionPerformed
         moonPhaseVisibilityFlag = moonPhaseCheckBox.isSelected();
     }//GEN-LAST:event_moonPhaseCheckBoxActionPerformed
-
+   /***************************************************************************
+    * METHOD: messierLabelCheckBoxActionPerformed()
+    *
+    * DESCRIPTION: displays Messier labels on map.
+    * 
+    ***************************************************************************/
     private void messierLabelCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messierLabelCheckBoxActionPerformed
         messierLabelVisibilityFlag = messierLabelCheckBox.isSelected();
     }//GEN-LAST:event_messierLabelCheckBoxActionPerformed
-
+   /***************************************************************************
+    * METHOD: saveImageButtonActionPerformed()
+    *
+    * DESCRIPTION: When an image is generated by user. The user then has an option
+    *               to save that image by selecting the save image button.
+    * 
+    ***************************************************************************/
     private void saveImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveImageButtonActionPerformed
         try
         {
@@ -1105,10 +1195,15 @@ public class Driver extends javax.swing.JFrame {
     private void dateTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dateTextFieldKeyReleased
         
     }//GEN-LAST:event_dateTextFieldKeyReleased
+
+    private void westRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_westRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_westRadioButtonActionPerformed
     
     // </editor-fold>
         
     /**
+     * MAIN
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -1135,8 +1230,14 @@ public class Driver extends javax.swing.JFrame {
         {
             new Driver().setVisible(true);
         });
-    }
+    } // End main()
     
+    /***************************************************************************
+    * METHOD: load()
+    *
+    * DESCRIPTION: 
+    * 
+    ***************************************************************************/
     private void load()
     {        
         Runnable r = () -> 
@@ -1146,8 +1247,14 @@ public class Driver extends javax.swing.JFrame {
         
         ExecutorService executor = Executors.newCachedThreadPool();
         executor.submit(r);
-    }
+    } // End load()
     
+    /***************************************************************************
+    * METHOD: readData()
+    *
+    * DESCRIPTION: This method reads all of the provided data for each object.
+    * 
+    ***************************************************************************/
     private void readData()
     {
         System.out.println("Reading data from file");
@@ -1177,8 +1284,14 @@ public class Driver extends javax.swing.JFrame {
         moon = new Moon();
         
         this.setCursor(Cursor.getDefaultCursor());        
-    }
+    } // End readData()
     
+    /***************************************************************************
+    * METHOD: setGenerateStarMapButtonIsEnabled()
+    *
+    * DESCRIPTION: ??
+    * 
+    ***************************************************************************/
     void setGenerateStarMapButtonIsEnabled()
     {
         if (latDegreeTextField.getBackground() == errorBackgroundColor
@@ -1196,7 +1309,7 @@ public class Driver extends javax.swing.JFrame {
         {
             generateStarMapButton.setEnabled(true);
         }
-    }
+    } // End setGenerateStarMapButtonIsEnabled()
     
     // <editor-fold defaultstate="collapsed" desc="Generated Members">
 

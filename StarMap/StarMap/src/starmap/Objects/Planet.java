@@ -11,6 +11,8 @@ import starmap.Calculation;
 
 
 /**
+ * OBJECT: Planet
+ * 
  * DESCRIPTION: This object contains the calculated planet elements. The elements
  *              are then used to determine the positions of 9 major planets. 
  *              The planet elements data file was provided by Dr. Rick Coleman (UAH).

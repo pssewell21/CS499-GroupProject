@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
+ * OBJECT: Calculation
+ * 
  * DESCRIPTION: This class provides general calculations used in all of the
  *              classes in order to display each celestial object.
  * 

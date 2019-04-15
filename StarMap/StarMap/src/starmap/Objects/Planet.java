@@ -294,6 +294,8 @@ public class Planet extends CelestialBody
      *              Rick Coleman (UAH).
      * 
      * @param julianDate 
+     *              for this function was provided by Dr. Rick Coleman (UAH). 
+
      * @param dateTime given date that is used to set 
      * //@return calculated values
      * 
@@ -313,7 +315,6 @@ public class Planet extends CelestialBody
         double xG, yG, zG;
         double ecl;
         double xEq, yEq, zEq;
-        double distance;
         
         /* 
         *  cy = JD/36525 
@@ -470,8 +471,6 @@ public class Planet extends CelestialBody
         /* Step 9: Calculate RIGHT ASCENSION and DECLINATION from rectangular equatorial coordinates: */
         g_rightAscension = planet_mod2Pi(Math.atan2(yEq, xEq)) * DEGS; // right ascension is in degrees
         g_declination = Math.atan(zEq / Math.sqrt(Math.pow(xEq, 2) + Math.pow(yEq, 2))) * DEGS;
-        
-        distance = Math.sqrt(Math.pow(xEq, 2) + Math.pow(yEq, 2) + Math.pow(zEq, 2));
         
 //        System.out.println("Planet: g_DEC = " + g_declination);
 //        System.out.println("Planet: g_RA = " + g_rightAscension);

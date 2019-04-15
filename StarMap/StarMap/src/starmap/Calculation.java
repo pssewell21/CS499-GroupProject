@@ -9,14 +9,20 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-// Coordinates for Tech Hall are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W
-
 /**
- *
- * @author pssewell21
+ * DESCRIPTION: This class provides general calculations used in all of the
+ *              classes in order to display each celestial object.
+ * 
+ * DATE: 02-??-2019
+ * 
+ * @author pssewell21 (code), Dina Brown (javadoc comments)
  */
 public class Calculation 
 {
+    /**
+    *  GLOBAL VARIABLES
+    */
+    // Coordinates for Tech Hall are 34° 43' 8.0904'' N, 86° 38' 47.3532'' W
     // The julian date on JAN 1, 2000
     static double baselineJulianDate = 2451545.0;
     static LocalDateTime baselineDate = LocalDateTime.of(2000, 1, 1, 12, 0, 0);
@@ -49,8 +55,17 @@ public class Calculation
 //        System.out.println("julianDate with time adjustment = " + julianDate);
         
         return julianDate;
-    }
+    } // End getJulianDate()
   
+     /**************************************************************************
+     *
+     * METHOD: getGreenwichSiderealTime()
+     * 
+     * DESCRIPTION: gets the Greenwich Sidereal Time
+     * 
+     * @param dateTime given date and time
+     * 
+    ***************************************************************************/
     public static LocalTime getGreenwichSiderealTime(LocalDateTime dateTime)
     {        
         // Reference: https://aa.usno.navy.mil/faq/docs/GAST.php
@@ -83,8 +98,22 @@ public class Calculation
 //        System.out.println("second = " + second);
         
         return LocalTime.of(hour, minute, second);
-    }
+        
+    } // End getGreenwichSiderealTime()
     
+     /**************************************************************************
+     *
+     * METHOD: getDecimalCoordinate()
+     * 
+     * DESCRIPTION: gets the Greenwich Sidereal Time
+     * 
+     * @param degrees given degrees
+     * @param minutes given minutes
+     * @param seconds given seconds
+     * @param direction given direction
+     * @throws Exception for degrees, minutes, seconds and direction
+     * 
+    ***************************************************************************/
     public static double getDecimalCoordinate(int degrees, int minutes, double seconds, String direction) throws Exception
     {   
         // Valudate input
@@ -125,22 +154,57 @@ public class Calculation
         }
         
         return longitude;
-    }
+        
+    } // End getDecimalCoordinate()
     
+     /**************************************************************************
+     *
+     * METHOD: getDecimalHours()
+     * 
+     * DESCRIPTION: converts time to decimal value.
+     * 
+     * @param hour given hour
+     * @param minute given minute
+     * @param second given second
+     * 
+    ***************************************************************************/
     public static double getDecimalHours(int hour, int minute, int second)
     {
         double decimalHours = hour + (minute / 60.0) + (second / (60.0 * 60));
         
         return decimalHours;
-    }
+        
+    } // End getDecimalHours()
     
+     /**************************************************************************
+     *
+     * METHOD: getRadiansFromDegrees()
+     * 
+     * DESCRIPTION: converts degrees to radians
+     * 
+     * @param degrees given degrees
+     * @return radians
+     * 
+    ***************************************************************************/
     public static double getRadiansFromDegrees(double degrees)
     {
         return Math.toRadians(degrees);
-    }
+        
+    } // End getRadiansFromDegrees()
     
+     /**************************************************************************
+     *
+     * METHOD: getDegreesFromRadians()
+     * 
+     * DESCRIPTION: converts radians to degrees
+     * 
+     * @param radians given radians
+     * @return degrees
+     * 
+    ***************************************************************************/
     public static double getDegreesFromRadians(double radians)
     {
         return Math.toDegrees(radians);
-    }
-}
+        
+    }// End getDegreesFromRadians()
+} // End Calculation Class()

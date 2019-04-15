@@ -9,19 +9,36 @@ import java.time.LocalTime;
 import starmap.Calculation;
 
 /**
- *
- * @author pssewell21
+ * DESCRIPTION: This is a child class of CelestialObject that creates Star objects
+ *              on an image grid based on right ascension, declination, distance,
+ *              and magnitude.
+ * 
+ * DATE: 02-15-2019
+ * 
+ * @author pssewell21 (code) and Dina Brown (javadoc comments)
  */
 public class Star extends CelestialBody
 {
+    /**
+    *  GLOBAL VARIABLES
+    */
     public double rightAscension;
-    
     public double declination;
-    
     public double distance;
-    
     public double magnitude;
-            
+     
+    /**************************************************************************
+     *
+     * DESCRIPTION: Constructor for class Star. Builds the Star object based on
+     *              given parameters.
+     * 
+     * @param name this is the name of the star
+     * @param rightAscension the east/west direction in the sky
+     * @param declination the north/south direction in the sky
+     * @param distance
+     * @param magnitude the brightness of star object
+     * 
+    ***************************************************************************/
     public Star(String name, double rightAscension, double declination, double distance, double magnitude)
     {
         this.name = name;
@@ -29,9 +46,21 @@ public class Star extends CelestialBody
         this.declination = declination;
         this.distance = distance;
         this.magnitude = magnitude;
-    }            
+    } // End Star()      
             
     @Override
+     /**************************************************************************
+     *
+     * METHOD: calculateHorizonCoordinates()
+     * 
+     * DESCRIPTION: gets the coordinates and time information that will be used
+     *              to plot Stars.
+     * 
+     * @param latitude the north/south direction of the surface of the earth. 
+     * @param longitude the east/west direction of the surface of the earth.
+     * @param greenwichSiderealTime
+     * 
+    ***************************************************************************/
     public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) throws Exception
     {
         if (rightAscension < 0 || rightAscension > 24)
@@ -83,5 +112,5 @@ public class Star extends CelestialBody
 
         azimuth = azimuthDegrees;
         elevation = elevationDegrees;
-    }   
-}
+    } // End calculateHorizonCoordinates()
+} // End Star Class

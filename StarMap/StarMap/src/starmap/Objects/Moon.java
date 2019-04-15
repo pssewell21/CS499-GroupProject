@@ -14,29 +14,29 @@ import java.time.LocalTime;
 import starmap.Calculation;
 
 /**
- *
+ * DESCRIPTION: This is a child class of CelestialObject that calculates the
+ *              moon phase and position based on given Julian date, latitude, 
+ *              longitude, date and time.
+ * 
+ * DATE: 03-12-2019
+ * 
  * @author Dina Brown and Patrick Sewell
  */
 public class Moon extends CelestialBody
 {
+    
+    /**
+     *  GLOBAL VARIABLES
+     */
     public final static double RADS = Math.PI / 180.0;
     
+    public double g_JD;
     public int g_year;
     public double g_calander_year;
     public double g_calander_month;
     public double g_calander_day;
-    public double g_JD;
-    
-    public double rightAscension;
-    public double declination;
-    
-    public double g_L_angle; // Moon mean LONGITUDE - L
-    public double g_M_angle; // Sun mean ANOMALY - M
-    public double g_Mp_angle; // Moon mean ANOMALY - M'
-    public double g_D_angle; // Moon mean ELONGATION - D
-    public double g_F_angle; // Mean DISTANCE of Moon - F
-    public double g_ecc;  //eecentricity
-    
+    public double g_rightAscension;
+    public double g_declination;
     public String phase;
     
      /**************************************************************************
@@ -52,7 +52,8 @@ public class Moon extends CelestialBody
      /**************************************************************************
      * 
      * METHOD: getIntermediateValues()
-     * 
+     *
+     * DESCRIPTION: gets the calculated moon phases, right ascension and declination
      * DESCRIPTION: gets the calculated values for each planet
      * 
      * @param julianDate
@@ -101,14 +102,14 @@ public class Moon extends CelestialBody
     
      /**************************************************************************
      * 
-     * METHOD: getIntermediateValues()
+     * METHOD: moon_getIntermediateValues()
      * 
      * DESCRIPTION: gets the calculated values for the moon
      * 
      * @param greenwichDateTime
      * 
     ***************************************************************************/
-    public void getIntermediateValues(LocalDateTime greenwichDateTime)
+    public void moon_getIntermediateValues(LocalDateTime greenwichDateTime)
     {
         // TODO: Remove julian date argument from method signature - PS
         
@@ -194,6 +195,13 @@ public class Moon extends CelestialBody
 //        System.out.println("latitude = " + latitude);
 //        System.out.println("distance = " + distance);
         
+//        g_rightAscension = (24 / Math.PI) * arc_tan; // in hours
+//        g_declination = (180/Math.PI) * Math.asin(Math.sin(eps)* Math.cos(latitude)
+//                                            * Math.sin(longitude) + Math.cos(eps)
+//                                            * Math.sin(latitude)); // in degrees;
+//        
+//        System.out.println("Moon class: RA: " + g_rightAscension);
+//        System.out.println("Moon class: DEC: " + g_declination + "\n");
         final double epsilon = 23.4397;
         
 //        double step21Result = (Math.sin(Calculation.getRadiansFromDegrees(longitude)) * Math.cos(Calculation.getRadiansFromDegrees(latitude)) * Math.cos(Calculation.getRadiansFromDegrees(epsilon)))
@@ -212,11 +220,11 @@ public class Moon extends CelestialBody
             rightAscensionDegrees += 360;
         }
         
-        rightAscension = rightAscensionDegrees / 15.0;
+        g_rightAscension = rightAscensionDegrees / 15.0;
                                 
         double declinationRadians = Math.asin((Math.sin(latitideRadians) * Math.cos(epsilonRadians)) 
                 + (Math.cos(latitideRadians) * Math.sin(epsilonRadians) * Math.sin(longitudeRadians))); 
-        declination = Calculation.getDegreesFromRadians(declinationRadians);
+        g_declination = Calculation.getDegreesFromRadians(declinationRadians);
         
         //System.out.println("rightAscension in hours = " + rightAscension);
         //System.out.println("declination = " + declination);
@@ -257,7 +265,7 @@ public class Moon extends CelestialBody
 //        System.out.println("Moon: RA: " + rightAscension);
 //        System.out.println("Moon: DEC: " + declination + "\n");
          
-    } // End getIntermediateValues()
+    } // End moon_getIntermediateValues()
    
     @Override
     /**************************************************************************
@@ -267,33 +275,33 @@ public class Moon extends CelestialBody
      * DESCRIPTION: gets the coordinates and time information that will be used
      *              to plot Moon.
      * 
-     * @param latitude
-     * @param longitude
+     * @param latitude the north/south direction of the surface of the earth.
+     * @param longitude the east/west direction of the surface of the earth.
      * @param greenwichSiderealTime
      * 
     ***************************************************************************/
     public void calculateHorizonCoordinates(double latitude, double longitude, LocalTime greenwichSiderealTime) throws Exception
     {
 
-        if (rightAscension < 0 || rightAscension > 24)
+        if (g_rightAscension < 0 || g_rightAscension > 24)
         {
-            throw new Exception("Invalid value of " + rightAscension + " for rightAscension passed into Moon.calculateHorizonCoordinates");
+            throw new Exception("Invalid value of " + g_rightAscension + " for rightAscension passed into Moon.calculateHorizonCoordinates");
         }
         
 
-        if (declination < -90 || declination > 90)
+        if (g_declination < -90 || g_declination > 90)
         {
-            throw new Exception("Invalid value of " + declination + " for declination passed into Moon.calculateHorizonCoordinates");
+            throw new Exception("Invalid value of " + g_declination + " for declination passed into Moon.calculateHorizonCoordinates");
         }
         
         double decimalHours = greenwichSiderealTime.getHour() + (greenwichSiderealTime.getMinute() / 60.0) + (greenwichSiderealTime.getSecond() / (60.0 * 60));
         
         // Longitude passed is negative if west of Greenwich and will be subtracted in this case
-        double hourAngleDegrees = (decimalHours - rightAscension) * 15 + longitude;        
+        double hourAngleDegrees = (decimalHours - g_rightAscension) * 15 + longitude;        
         
         
         double hourAngleRadians = Calculation.getRadiansFromDegrees(hourAngleDegrees);
-        double declinationRadians = Calculation.getRadiansFromDegrees(declination);
+        double declinationRadians = Calculation.getRadiansFromDegrees(g_declination);
         double latitudeRadians = Calculation.getRadiansFromDegrees(latitude);
         
         double elevationRadians = Math.asin(
@@ -320,5 +328,6 @@ public class Moon extends CelestialBody
 
         azimuth = azimuthDegrees;
         elevation = elevationDegrees;
-    }
-}
+        
+    } // End calculateHorizonCoordinates()
+} // End Moon Class

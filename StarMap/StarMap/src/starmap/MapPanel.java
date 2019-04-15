@@ -11,11 +11,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import java.util.ArrayList;
 import starmap.Objects.Constellation;
 import starmap.Objects.ConstellationLine;
 import starmap.Objects.ConstellationPoint;
@@ -25,11 +25,18 @@ import starmap.Objects.Planet;
 import starmap.Objects.Star;
 
 /**
- *
- * @author pssewell21
+ * OBJECT: MapPanel
+ * 
+ * DESCRIPTION: This object creates a new window that will display the generated
+ *              image.
+ * 
+ * @author pssewell21 (code) and Dina Brown (javadoc)
  */
 public class MapPanel extends JPanel
 {
+     /**
+     *  GLOBAL VARIABLES
+     */
     private final ArrayList<Star> starList;
     private final ArrayList<Constellation> constellationList;
     private final ArrayList<ConstellationLine> constellationLineList;
@@ -73,6 +80,28 @@ public class MapPanel extends JPanel
     private final Color messierColor = Color.MAGENTA;
     private final Color moonColor = Color.LIGHT_GRAY;
     
+     /**************************************************************************
+     *
+     * DESCRIPTION: Constructor for class MapPanel
+     * 
+     * @param starList
+     * @param constellationList the east/west direction in the sky
+     * @param constellationLineList
+     * @param planetList
+     * @param messierList
+     * @param moon
+     * @param starVisibilityFlag
+     * @param starLabelVisibilityFlag 
+     * @param constellationVisibilityFlag
+     * @param constellationLabelVisibilityFlag 
+     * @param planetVisibilityFlag 
+     * @param planetLabelVisibilityFlag 
+     * @param messierVisibilityFlag, 
+     * @param messierLabelVisibilityFlag
+     * @param moonVisibilityFlag
+     * @param moonPhaseVisibilityFlag
+     * 
+    ***************************************************************************/
     public MapPanel(ArrayList<Star> starList, 
                     ArrayList<Constellation> constellationList, 
                     ArrayList<ConstellationLine> constellationLineList, 
@@ -106,9 +135,18 @@ public class MapPanel extends JPanel
         this.messierLabelVisibilityFlag = messierLabelVisibilityFlag;
         this.moonVisibilityFlag = moonVisibilityFlag;
         this.moonPhaseVisibilityFlag = moonPhaseVisibilityFlag;
-    }
+    } // End MapPanel()
     
     @Override
+     /**************************************************************************
+     * 
+     * METHOD: paintComponent()
+     * 
+     * DESCRIPTION: draws the Star Map image
+     * 
+     * @param g
+     * 
+    ***************************************************************************/
     public void paintComponent(Graphics g) 
     {
         super.paintComponent(g);
@@ -125,7 +163,15 @@ public class MapPanel extends JPanel
         plotMessierObjects(g2d);
         plotMoon(g2d);
     }
-    
+     /**************************************************************************
+     * 
+     * METHOD: plotStars()
+     * 
+     * DESCRIPTION: draws the stars
+     * 
+     * @param g2d
+     * 
+    ***************************************************************************/
     private void plotStars(Graphics2D g2d)
     {
         if (starVisibilityFlag)
@@ -192,8 +238,16 @@ public class MapPanel extends JPanel
                 }
             }
         }
-    }
-
+    } // End plotStars()
+    /**************************************************************************
+     * 
+     * METHOD: plotConstellations()
+     * 
+     * DESCRIPTION: draws the constellations
+     * 
+     * @param g2d
+     * 
+    ***************************************************************************/
     private void plotConstellations(Graphics2D g2d)
     {
         if (constellationVisibilityFlag)
@@ -261,8 +315,17 @@ public class MapPanel extends JPanel
                 g2d.drawLine(pointAHorizontalPosition, pointAVerticalPosition, pointBHorizontalPosition, pointBVerticalPosition);
             }
         }
-    }  
-
+    }  // End plotConstellations()
+    
+    /**************************************************************************
+     * 
+     * METHOD: plotPlanets()
+     * 
+     * DESCRIPTION: draws planets
+     * 
+     * @param g2d
+     * 
+    ***************************************************************************/
     private void plotPlanets(Graphics2D g2d)
     {
         if (planetVisibilityFlag)
@@ -309,8 +372,17 @@ public class MapPanel extends JPanel
                 }
             }  
         }
-    }  
-
+    }  // End plotPlanets()
+    
+    /**************************************************************************
+     * 
+     * METHOD: plotMessierObjects()
+     * 
+     * DESCRIPTION: draws the Messier objects
+     * 
+     * @param g2d
+     * 
+    ***************************************************************************/
     private void plotMessierObjects(Graphics2D g2d)
     {
         if (messierVisibilityFlag)
@@ -344,8 +416,16 @@ public class MapPanel extends JPanel
                 }
             }
         }
-    }  
-
+    } // End plotMessierObjects()
+    /**************************************************************************
+     * 
+     * METHOD: plotMoon()
+     * 
+     * DESCRIPTION: draws Moon
+     * 
+     * @param g2d
+     * 
+    ***************************************************************************/
     private void plotMoon(Graphics2D g2d)
     {
         if (moonVisibilityFlag)
@@ -390,8 +470,16 @@ public class MapPanel extends JPanel
 
             //System.out.println("Drawing moon " + moon.phase + " at " + moon.azimuth + ", " + moon.elevation);
         }
-    }  
-    
+    } // plotMoon()
+     /**************************************************************************
+     * 
+     * METHOD: plotBackground()
+     * 
+     * DESCRIPTION: draws background
+     * 
+     * @param g2d
+     * 
+    ***************************************************************************/  
     private void drawBackground(Graphics2D g2d)
     {
         g2d.setColor(backgroundColor);
@@ -538,8 +626,17 @@ public class MapPanel extends JPanel
         g2d.drawString(labelText, horizontalGridLabelXOffset, yValue + horizontalGridLabelYOffset);
         g2d.drawString(labelText, imageWidth - horizontalGridLabelXOffset - horizontalGridLabelWidth, yValue + horizontalGridLabelYOffset);
         g2d.drawLine(0, yValue, imageWidth, yValue);
-    }
+    } // drawBackground()
     
+     /**************************************************************************
+     * 
+     * METHOD: drawVerticalGridLines()
+     * 
+     * DESCRIPTION: draws vertical grid lines
+     * 
+     * @param g2d
+     * 
+    ***************************************************************************/
     private void drawVerticalGridLines(Graphics2D g2d)
     {
         int xValue = imageWidth / 36 * 0;
@@ -792,5 +889,5 @@ public class MapPanel extends JPanel
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
-    }
-}
+    } // End drawVerticalGridLines()
+} // End MapPanel Class

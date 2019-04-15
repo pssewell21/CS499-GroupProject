@@ -12,7 +12,7 @@ import starmap.Calculation;
  *
  * @author pssewell21
  */
-public class Messier extends CelestialObject
+public class Messier extends CelestialBody
 {
     public double rightAscension;
     

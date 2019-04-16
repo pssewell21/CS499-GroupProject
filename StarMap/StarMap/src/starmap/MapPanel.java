@@ -286,33 +286,82 @@ public class MapPanel extends JPanel
                 ConstellationPoint pointA = constellationLine.pointA;
                 ConstellationPoint pointB = constellationLine.pointB;
                 
-                int pointAHorizontalPosition;
-
-                if (pointA.azimuth < 180)
+                // If the line will wrap around the image horizontally, draw 2 lines
+                if ((pointA.azimuth > 180 && pointB.azimuth <= 180 && pointA.azimuth - pointB.azimuth < 180) 
+                        || (pointA.azimuth <= 180 && pointB.azimuth > 180 && pointB.azimuth - pointA.azimuth < 180))
                 {
-                    pointAHorizontalPosition = (int)Math.round((pointA.azimuth + 180) * sizeMultiplier);
+                    // line from point A to off screen                    
+                    double azimuthDifference = pointB.azimuth - pointA.azimuth;
+                    double elevationDifference = pointB.elevation - pointA.elevation;
+                    
+                    int pointAHorizontalPosition;
+                            
+                    if (pointA.azimuth < 180)
+                    {
+                        pointAHorizontalPosition = (int)Math.round((pointA.azimuth + 180) * sizeMultiplier);
+                    }
+                    else
+                    {
+                        pointAHorizontalPosition = (int)Math.round((pointA.azimuth - 180) * sizeMultiplier);
+                    }
+
+                    int pointAVerticalPosition = (int)Math.round((90 + (-1 * pointA.elevation)) * sizeMultiplier);
+                    
+                    int pointBHorizontalPosition = (int)Math.round(pointAHorizontalPosition + (azimuthDifference * sizeMultiplier));
+                    int pointBVerticalPosition = (int)Math.round(pointAVerticalPosition - (elevationDifference * sizeMultiplier));
+                    
+                    g2d.drawLine(pointAHorizontalPosition, pointAVerticalPosition, pointBHorizontalPosition, pointBVerticalPosition);
+                            
+                    // line from point B to off screen       
+                    azimuthDifference = pointA.azimuth - pointB.azimuth;
+                    elevationDifference = pointA.elevation - pointB.elevation;
+                            
+                    if (pointB.azimuth < 180)
+                    {
+                        pointBHorizontalPosition = (int)Math.round((pointB.azimuth + 180) * sizeMultiplier);
+                    }
+                    else
+                    {
+                        pointBHorizontalPosition = (int)Math.round((pointB.azimuth - 180) * sizeMultiplier);
+                    }
+
+                    pointBVerticalPosition = (int)Math.round((90 + (-1 * pointB.elevation)) * sizeMultiplier);
+                    
+                    pointAHorizontalPosition = (int)Math.round(pointBHorizontalPosition + (azimuthDifference * sizeMultiplier));
+                    pointAVerticalPosition = (int)Math.round(pointBVerticalPosition - (elevationDifference * sizeMultiplier));
+                    
+                    g2d.drawLine(pointBHorizontalPosition, pointBVerticalPosition, pointAHorizontalPosition, pointAVerticalPosition);
                 }
                 else
                 {
-                    pointAHorizontalPosition = (int)Math.round((pointA.azimuth - 180) * sizeMultiplier);
-                }
+                    int pointAHorizontalPosition;
 
-                int pointAVerticalPosition = (int)Math.round((90 + (-1 * pointA.elevation)) * sizeMultiplier);
-                
-                int pointBHorizontalPosition;
+                    if (pointA.azimuth < 180)
+                    {
+                        pointAHorizontalPosition = (int)Math.round((pointA.azimuth + 180) * sizeMultiplier);
+                    }
+                    else
+                    {
+                        pointAHorizontalPosition = (int)Math.round((pointA.azimuth - 180) * sizeMultiplier);
+                    }
 
-                if (pointB.azimuth < 180)
-                {
-                    pointBHorizontalPosition = (int)Math.round((pointB.azimuth + 180) * sizeMultiplier);
-                }
-                else
-                {
-                    pointBHorizontalPosition = (int)Math.round((pointB.azimuth - 180) * sizeMultiplier);
-                }
+                    int pointAVerticalPosition = (int)Math.round((90 + (-1 * pointA.elevation)) * sizeMultiplier);
 
-                int pointBVerticalPosition = (int)Math.round((90 + (-1 * pointB.elevation)) * sizeMultiplier);
-                
-                g2d.drawLine(pointAHorizontalPosition, pointAVerticalPosition, pointBHorizontalPosition, pointBVerticalPosition);
+                    int pointBHorizontalPosition;
+
+                    if (pointB.azimuth < 180)
+                    {
+                        pointBHorizontalPosition = (int)Math.round((pointB.azimuth + 180) * sizeMultiplier);
+                    }
+                    else
+                    {
+                        pointBHorizontalPosition = (int)Math.round((pointB.azimuth - 180) * sizeMultiplier);
+                    }
+
+                    int pointBVerticalPosition = (int)Math.round((90 + (-1 * pointB.elevation)) * sizeMultiplier);
+
+                    g2d.drawLine(pointAHorizontalPosition, pointAVerticalPosition, pointBHorizontalPosition, pointBVerticalPosition);                    
+                }
             }
         }
     }  // End plotConstellations()
@@ -638,16 +687,10 @@ public class MapPanel extends JPanel
      * 
     ***************************************************************************/
     private void drawVerticalGridLines(Graphics2D g2d)
-    {
-        int xValue = imageWidth / 36 * 0;
-        String labelText = "180°";
-        g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
-        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
-        g2d.drawLine(xValue, 0, xValue, imageHeight);
-        
+    {        
         g2d.setColor(gridLineColor);
-        xValue = imageWidth / 36 * 1;
-        labelText = "190°";
+        int xValue = imageWidth / 36 * 1;
+        String labelText = "190°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);
@@ -886,6 +929,12 @@ public class MapPanel extends JPanel
         g2d.setColor(gridLineColor);
         xValue = imageWidth / 36 * 35;
         labelText = "170°";
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
+        g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
+        g2d.drawLine(xValue, 0, xValue, imageHeight);        
+        
+        xValue = imageWidth / 36 * 36;
+        labelText = "180°";
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, gridLabelHeight);
         g2d.drawString(labelText, xValue - verticalGridLabelWidth, imageHeight - gridLabelHeight);
         g2d.drawLine(xValue, 0, xValue, imageHeight);

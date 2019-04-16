@@ -32,35 +32,8 @@ public class ConstellationDataReader extends DataReader
         {
             String lineFromFile;
             
-            BufferedReader reader = new BufferedReader(new FileReader(file));            
-            int rowCount = 0;
+            BufferedReader reader = new BufferedReader(new FileReader(file));
             
-            while ((reader.readLine()) != null)
-            {
-                rowCount++;
-            }
-            
-            //System.out.println(rowCount + " rows found");
-            
-            reader = new BufferedReader(new FileReader(file));
-            
-            if ((lineFromFile = reader.readLine()) != null)
-            {
-                int commas = 0;
-                        
-                for(int i = 0; i < lineFromFile.length(); i++) 
-                {
-                    if (lineFromFile.charAt(i) == ',') 
-                    {
-                        commas++;
-                    }
-                }
-                
-                int columnCount = commas + 1;
-                //System.out.println(columnCount + " columns found");
-            }
-            
-            reader = new BufferedReader(new FileReader(file));
             int i = 0;
             
             while ((lineFromFile = reader.readLine()) != null)

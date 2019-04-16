@@ -33,35 +33,8 @@ public class StarDataReader extends DataReader
         {
             String lineFromFile;
             
-            BufferedReader reader = new BufferedReader(new FileReader(file));            
-            int rowCount = 0;
+            BufferedReader reader = new BufferedReader(new FileReader(file)); 
             
-            while ((reader.readLine()) != null)
-            {
-                rowCount++;
-            }
-            
-            //System.out.println(rowCount + " rows found");
-            
-            reader = new BufferedReader(new FileReader(file));
-            
-            if ((lineFromFile = reader.readLine()) != null)
-            {
-                int commas = 0;
-                        
-                for(int i = 0; i < lineFromFile.length(); i++) 
-                {
-                    if (lineFromFile.charAt(i) == ',') 
-                    {
-                        commas++;
-                    }
-                }
-                
-                int columnCount = commas + 1;
-                //System.out.println(columnCount + " columns found");
-            }
-            
-            reader = new BufferedReader(new FileReader(file));
             int i = 0;
             
             while ((lineFromFile = reader.readLine()) != null)
@@ -75,18 +48,10 @@ public class StarDataReader extends DataReader
                     double declination = Double.parseDouble(lineItems[8]);
                     double distance = Double.parseDouble(lineItems[9]);
                     double magnitude = Double.parseDouble(lineItems[10]);
-
-//                    if (name.equalsIgnoreCase("Polaris")
-//                            || name.equalsIgnoreCase("Diphda")
-//                            || name.equalsIgnoreCase("Mirach")
-//                            || name.equalsIgnoreCase("Alphard")
-//                            || name.equalsIgnoreCase("Tarazed")
-//                            || name.equalsIgnoreCase("Alnair"))
-//                    {
+                    
                     Star star = new Star(name, rightAscension, declination, distance, magnitude);  
 
-                    list.add(star);                      
-//                    }
+                    list.add(star);
                 }
                 
                 i++;

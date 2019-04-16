@@ -7,7 +7,6 @@ package starmap.DataReaders;
 
 import java.util.ArrayList;
 
-
 /**
  *
  * @author pssewell21

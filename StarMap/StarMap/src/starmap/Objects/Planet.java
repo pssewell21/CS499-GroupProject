@@ -292,12 +292,8 @@ public class Planet extends CelestialBody
      * DESCRIPTION: gets the calculated values for each planet. The pseudocode
      *              for this function (different name) was provided by Dr. 
      *              Rick Coleman (UAH).
-     * 
-     * @param julianDate 
-     *              for this function was provided by Dr. Rick Coleman (UAH). 
 
-     * @param dateTime given date that is used to set 
-     * //@return calculated values
+     * @param dateTime given date that is used to set the year, month, and day
      * 
     ***************************************************************************/
     public void planet_getIntermediateValues(LocalDateTime dateTime)
